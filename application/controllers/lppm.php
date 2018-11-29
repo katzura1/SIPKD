@@ -14,6 +14,7 @@ class Lppm extends CI_Controller
   function index(){
     $hak_akses = $this->session->userdata('hak_akses');
     if($hak_akses==1 || $hak_akses==2){
+      //arahkan ke page lihat data personal jika hak akses dosen biasa
       redirect(site_url('lppm/lihat_data'));
     }
   }
