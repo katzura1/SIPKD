@@ -20,7 +20,8 @@ class Dashboard extends CI_Controller {
 		$data_ta = $this->tahun_akademik_model->get_status_aktif();
 		$view='';
 		$data = array();
-		if ($hak_akses==1) {
+		//sementara semua dashbarod ssama
+		if ($hak_akses>1) {
 			$view = 'dosen';
 			$data = array(
 				'title' => 'Dashboard Dosen',

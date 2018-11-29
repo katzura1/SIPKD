@@ -17,3 +17,4 @@
                   <li><a href="<?=site_url('kuesioner')?>"><i class="fa fa-circle-o"></i> Kuesioner</a></li>
               </ul>
             </li>
+            <li><a href="<?=site_url('lppm')?>"><i class="fa fa-archive"></i>Data LPPM Prodi</a></li>
