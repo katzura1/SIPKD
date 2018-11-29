@@ -9,12 +9,24 @@ class Lppm extends CI_Controller
   {
     parent::__construct();
     $this->load->model('lppm_model');
+    //check login
+    if($this->session->userdata('logged')!=1){
+      redirect(site_url().'auth');
+    }
   }
 
   function index(){
     $hak_akses = $this->session->userdata('hak_akses');
     if($hak_akses==1 || $hak_akses==2){
       //arahkan ke page lihat data personal jika hak akses dosen biasa
+      redirect(site_url('lppm/lihat_data'));
+    }
+  }
+
+  function lihat_data_prodi(){
+    //cek hak_akses
+    $hak_akses = $this->session->userdata('hak_akses');
+    if ($hak_akses<3 || $hak_akses>9) {
       redirect(site_url('lppm/lihat_data'));
     }
   }
