@@ -1,0 +1,5 @@
+PROJECT SKRIPSI
+<ul>
+<li>FRAMEWORK : CODEIGNITER</li>
+<li>DATABASE : MYSQL</li>
+</ul>
