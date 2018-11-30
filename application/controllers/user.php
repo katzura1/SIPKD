@@ -42,7 +42,7 @@ class user extends CI_Controller{
       'pass_dosen' => set_value('pass_dosen',''),
       'data_dosen' => $this->dosen_model->get_dosen_not_user(),
       'read_only' => '',
-      'button' => 'SUBMIT',
+      'button' => 'SIMPAN',
     );
 
     $this->load->view('user/user_form',$data);

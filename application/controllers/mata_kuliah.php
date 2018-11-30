@@ -46,7 +46,7 @@ class mata_kuliah extends CI_Controller
     {
         $data = array(
             'title' => 'Tambah Mata Kuliah',
-            'button' => 'SUBMIT',
+            'button' => 'SIMPAN',
             'action' => site_url('mata_kuliah/create_action'),
       	    'kode_mk' => set_value('kode_mk'),
       	    'nama_mk' => set_value('nama_mk'),

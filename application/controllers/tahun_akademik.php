@@ -32,7 +32,7 @@ class tahun_akademik extends CI_Controller{
     $data = array(
       'title' => 'Tambah Tahun Akademik',
       'action' => site_url('tahun_akademik/aksitambah'),
-      'button' => 'SUBMIT',
+      'button' => 'SIMPAN',
       'tahun_akademik' => set_value('thnAkademik',''),
       'kd_semester' => set_value('kd_semester',''),
       'key_ta' => '',
