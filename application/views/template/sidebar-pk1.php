@@ -31,8 +31,8 @@
                       </span>
                     </a>
                     <ul class="treeview-menu">
-                      <li><a href="<?=site_url('Kompetensi/tambah')?>"><i class="fa fa-circle-o"></i> Input Kompetensi</a></li>
-                      <li><a href="<?=site_url('Kompetensi')?>"><i class="fa fa-circle-o"></i> List Kompetensi</a></li>
+                      <li><a href="<?=site_url('kompetensi/tambah')?>"><i class="fa fa-circle-o"></i> Input Kompetensi</a></li>
+                      <li><a href="<?=site_url('kompetensi')?>"><i class="fa fa-circle-o"></i> List Kompetensi</a></li>
                     </ul>
                   </li>
                   <li><a href="<?=site_url('kuesioner')?>"><i class="fa fa-circle-o"></i> Kuesioner</a></li>

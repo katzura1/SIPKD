@@ -21,16 +21,28 @@ class Kompetensi extends CI_Controller {
 		$this->load->view('kuesioner/kompetensi/list_kompetensi',$data);
 	}
 
+	public function cek_unik(){
+		$key_nama = $this->input->post('key_nama');
+		$nama_kompetensi = $this->input->post('kompetensi');
+		if($key_nama == $nama_kompetensi){
+			return TRUE;
+		}else if($this->kompetensi_model->get_row_by_nama($nama_kompetensi)>0){
+			$this->form_validation->set_message('cek_unik', '{field} telah ada');
+      return FALSE;
+		}
+	}
+
 	public function form_valid(){
     $this->form_validation->set_error_delimiters('<div class="alert-danger" style="padding:10px;">','</div>');
     $this->form_validation->set_rules('kategori_kinerja','Kategori Kinerja','trim|required');
-		$this->form_validation->set_rules('kompetensi','Kompetensi','trim|required');
+		$this->form_validation->set_rules('kompetensi','Kompetensi','trim|required|callback_cek_unik');
   }
 
   public function tambah(){
 		$data = array(
 			'title' => 'Tambah Data Kompetensi',
 			'action' => site_url('kompetensi/aksitambah'),
+			'key_nama' => '',
 			'dd_kategori_kinerja' => $this->kategori_kinerja_model->dd_kategori_kinerja(),
 			'kategori_selected' => set_value('kategori_kinerja',''),
 			'kompetensi' => set_value('kompetensi',''),
@@ -64,6 +76,7 @@ class Kompetensi extends CI_Controller {
 		$data = array(
 			'title' => 'Ubah Data Kompetensi',
 			'action' => site_url('kompetensi/aksiupdate'),
+			'key_nama' => set_value('key_nama',$data_kompetensi->nama_kompetensi),
 			'dd_kategori_kinerja' => $this->kategori_kinerja_model->dd_kategori_kinerja(),
 			'kategori_selected' => set_value('kategori_kinerja',$data_kompetensi->kd_kategori),
 			'kompetensi' => set_value('kompetensi', $data_kompetensi->nama_kompetensi),

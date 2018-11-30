@@ -37,6 +37,7 @@ $this->load->view('template/sidebar');
                 </div>
                 <div class="form-group">
                   <label>Kompetensi</label>
+                  <input type="hidden" name="key_nama" value="<?=$key_nama?>">
                   <input type="text" name="kompetensi" value="<?=$kompetensi?>" class="form-control">
                   <?php echo form_error('kompetensi') ?>
                 </div>

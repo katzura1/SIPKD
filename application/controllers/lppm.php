@@ -29,12 +29,11 @@ class Lppm extends CI_Controller
 
   function index(){
     $hak_akses = $this->session->userdata('hak_akses');
-    if($hak_akses==1 || $hak_akses==2){
+    if($hak_akses>2 && $hak_akses<10){
+      $this->lihat_data_prodi();
+    }else{
       //arahkan ke page lihat data personal jika hak akses dosen biasa
       redirect(site_url('lppm/lihat_data'));
-    }
-    else if($hak_akses>2 && $hak_akses<10){
-      $this->lihat_data_prodi();
     }
   }
 

@@ -32,6 +32,7 @@ $this->load->view('template/sidebar');
                   </div>
                   <div class="form-group">
                     <label>Nama Kategori Kinerja</label>
+                    <input type="hidden" name="key_nama" value="<?=$key_nama?>">
                     <input type="text" name="nama_kategori" value="<?=$nama_kategori?>" class="form-control">
                     <?=form_error('nama_kategori')?>
                   </div>

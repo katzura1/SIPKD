@@ -11,6 +11,9 @@ class tahun_akademik extends CI_Controller{
       if($this->session->userdata('logged')!=1){
         redirect(site_url().'auth');
       }
+      if($this->session->userdata('hak_akses')<12){
+        redirect(site_url('dashboard'));
+      }
   }
 
   public function index(){
@@ -63,7 +66,7 @@ class tahun_akademik extends CI_Controller{
   public function _rules()
   {
     $this->form_validation->set_rules('thnAkademik', 'Tahun Akademik', 'required|trim|callback_cek_ta');
-    $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
+    $this->form_validation->set_error_delimiters('<div class="alert alert-danger">', '</div>');
   }
 
   public function aksitambah(){
