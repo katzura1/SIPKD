@@ -19,6 +19,8 @@ class Kuesioner extends CI_Controller
     11 => array('2')
   );
 
+  private $data_ta;
+
   public function __construct()
   {
     parent::__construct();
@@ -33,7 +35,7 @@ class Kuesioner extends CI_Controller
     if($this->session->userdata('logged')!=1){
       redirect(site_url().'auth');
     }
-
+    $this->data_ta = $this->tahun_akademik_model->get_status_aktif();
   }
 
   public function index(){
@@ -43,8 +45,8 @@ class Kuesioner extends CI_Controller
       redirect('kuesioner/lihat_data');
     }
     //load list dosen
-    $thnAkademik = $this->session->userdata('thn_akademik');
-    $kd_semester = $this->session->userdata('kd_semester');
+    $thnAkademik = $this->data_ta->tahunAkademik;
+    $kd_semester = $this->data_ta->kd_semester;
     $penilai = strpos($this->session->userdata('hak'),'KAPRODI')!==false?'1':'2';
     //if penilai 1 data prodi if 2 data institusi
     if ($penilai=='1') {
@@ -99,8 +101,8 @@ class Kuesioner extends CI_Controller
       $data_kompetensi = $this->kompetensi_model->get_all();
       $data = array(
         'title' => 'Daftar Kuesioner',
-        'thnAkademik' => $this->session->userdata('thn_akademik'),
-        'kd_semester' => $this->session->userdata('kd_semester'),
+        'thnAkademik' => $this->data_ta->tahunAkademik,
+        'kd_semester' => $this->data_ta->kd_semester,
         'data_kategori' => $data_kategori,
         'data_kompetensi' => $data_kompetensi,
         'data_dosen' => $d_dosen,
@@ -125,8 +127,8 @@ class Kuesioner extends CI_Controller
       $data_kompetensi = $this->kompetensi_model->get_all();
       $data = array(
         'title' => 'Daftar Kuesioner',
-        'thnAkademik' => $this->session->userdata('thn_akademik'),
-        'kd_semester' => $this->session->userdata('kd_semester'),
+        'thnAkademik' => $this->data_ta->tahunAkademik,
+        'kd_semester' => $this->data_ta->kd_semester,
         'data_kategori' => $data_kategori,
         'data_kompetensi' => $data_kompetensi,
         'data_dosen' => $d_dosen,
@@ -201,8 +203,8 @@ class Kuesioner extends CI_Controller
       $data = array(
         'title' => 'Update Data Kuesioner',
         'action' => site_url('kuesioner/aksi_ubah'),
-        'thnAkademik' => $this->session->userdata('thn_akademik'),
-        'kd_semester' => $this->session->userdata('kd_semester'),
+        'thnAkademik' => $this->data_ta->tahunAkademik,
+        'kd_semester' => $this->data_ta->kd_semester,
         'data_kategori' => $data_kategori,
         'data_kompetensi' => $data_kompetensi,
         'data_dosen' => $d_dosen,
@@ -254,7 +256,7 @@ class Kuesioner extends CI_Controller
     $data_kompetensi = $this->kuesioner_model->get_detail_by_id($id);
     $data = array(
       'title' => 'Detail Data Kuesioner',
-      'thnAkademik' => $this->session->userdata('thn_akademik'),
+      'thnAkademik' => $this->data_ta->tahunAkademik,
       'data_kategori' => $data_kategori,
       'data_kompetensi' => $data_kompetensi,
       'data_dosen' => $d_dosen,

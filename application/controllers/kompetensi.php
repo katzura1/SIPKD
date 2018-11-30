@@ -47,7 +47,7 @@ class Kompetensi extends CI_Controller {
 			'kategori_selected' => set_value('kategori_kinerja',''),
 			'kompetensi' => set_value('kompetensi',''),
 			'id' => set_value('id',''),
-			'button' => 'SAVE'
+			'button' => 'SIMPAN'
  		);
 
     $this->load->view('kuesioner/kompetensi/form_kompetensi',$data);

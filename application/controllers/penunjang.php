@@ -18,6 +18,8 @@ class Penunjang extends CI_Controller {
     11 => array('2')
   );
 
+  private $data_ta;
+
   public function __construct(){
     parent::__construct();
     $this->load->library('form_validation');
@@ -30,6 +32,7 @@ class Penunjang extends CI_Controller {
     }
     //seleksi hak akses (cuma kaprodi yang boleh akses )
     //..kode
+    $this->data_ta = $this->tahun_akademik_model->get_status_aktif();
   }
 
   public function form_valid(){
@@ -55,8 +58,8 @@ class Penunjang extends CI_Controller {
   }
 
   public function tambah(){
-    $thn_akademik = $this->session->userdata('thn_akademik');
-    $kd_semester = $this->session->userdata('kd_semester');
+    $thn_akademik = $this->data_ta->tahunAkademik;
+    $kd_semester = $this->data_ta->kd_semester;
     $data = array(
       'title' => 'Tambah Data Penunjang',
       'thnAkademik' => set_value('thnAkademik',$thn_akademik),
@@ -117,7 +120,7 @@ class Penunjang extends CI_Controller {
   public function update($id){
     $kd_dosen = $this->session->userdata('nik');
     $data_penunjang = $this->penunjang_model->get_data_penunjang($id,$kd_dosen);
-    $thnAkademik = $this->session->userdata('thn_akademik');
+    $thnAkademik = $this->data_ta->tahunAkademik;
     //apabila data penunjang ada dan tahun akademik sama dengan yang aktif dan status belum di validasi
     if($data_penunjang && $data_penunjang->thnAkademik==$thnAkademik && $data_penunjang->status_periksa=='belum'){
       $data = array(
@@ -188,8 +191,8 @@ class Penunjang extends CI_Controller {
     }
 
     //menampilkan daftar penunjang yang belum di perlu di validasi sesuai dengan program studi
-    $thn_akademik = $this->session->userdata('thn_akademik');
-    $kd_semester = $this->session->userdata('kd_semester');
+    $thnAkademik = $this->data_ta->tahunAkademik;
+    $kd_semester = $this->data_ta->kd_semester;
     $kode_prodi = $this->arr_prodi[$this->session->userdata('hak_akses')];
 
     $data_penunjang = $this->penunjang_model->tampil_penunjang_prodi($thn_akademik,$kd_semester,$kode_prodi,'belum');
@@ -229,8 +232,8 @@ class Penunjang extends CI_Controller {
     $kode_prodi = $this->arr_prodi[$this->session->userdata('hak_akses')];
 
     //cek apakah ada data POST jika tidak tampil berdasarkan tahun yang aktif
-    $thn_akademik = set_value('thnAkademik',$this->session->userdata('thn_akademik'));
-    $kd_semester = set_value('semester',$this->session->userdata('kd_semester'));
+    $thn_akademik = set_value('thnAkademik',$this->data_ta->tahunAkademik);
+    $kd_semester = set_value('semester',$this->data_ta->kd_semester);
 
     //ambil data berdasrakan filter
     $data_penunjang = $this->penunjang_model->tampil_penunjang_prodi($thn_akademik, $kd_semester, $kode_prodi, '');
@@ -251,8 +254,8 @@ class Penunjang extends CI_Controller {
 
     $kode_institusi = $this->arr_institusi[$this->session->userdata('hak_akses')];
     //cek apakah ada data POST jika tidak tampil berdasarkan tahun yang aktif
-    $thnAkademik = set_value('thnAkademik',$this->session->userdata('thn_akademik'));
-    $kd_semester = set_value('kd_semester',$this->session->userdata('kd_semester'));
+    $thnAkademik = set_value('thnAkademik',$this->data_ta->tahunAkademik);
+    $kd_semester = set_value('semester',$this->data_ta->kd_semester);
     //ambil data berdasrakan filter
     if($this->input->post('kode_prodi')){
       $data_penunjang = $this->penunjang_model->tampil_penunjang_prodi($thnAkademik, $kd_semester, $this->input->post('kode_prodi'), '');
@@ -283,8 +286,8 @@ class Penunjang extends CI_Controller {
       $thn_akademik = $this->input->post('thnAkademik');
       $kd_semester = $this->input->post('semester');
     }else{
-      $thn_akademik = $this->session->userdata('thn_akademik');
-      $kd_semester = $this->session->userdata('kd_semester');
+      $thn_akademik = $this->data_ta->tahunAkademik;
+      $kd_semester = $this->data_ta->kd_semester;
     }
     //ambil data berdasrakan filter
     $data_penunjang = $this->penunjang_model->tampil_penunjang_dosen($kd_dosen, $thn_akademik, $kd_semester);

@@ -11,11 +11,14 @@ class Open_km extends CI_Controller
     12 => array('1','2','3')
   );
 
+  private $data_ta;
+
   function __construct()
   {
     parent::__construct();
     $this->load->library('form_validation');
     $this->load->model('open_km_model');
+    $this->load->model('tahun_akademik_model');
     //cek login
     if($this->session->userdata('logged')!=1){
       redirect(site_url().'auth');
@@ -24,6 +27,7 @@ class Open_km extends CI_Controller
     if($this->session->userdata('hak_akses')<10){
       redirect('blank');
     }
+    $this->data_ta = $this->tahun_akademik_model->get_status_aktif();
   }
 
   function index(){
@@ -32,7 +36,7 @@ class Open_km extends CI_Controller
     }
     //get kode kode_institusi berdasrakn level dan tahun akademik yg aktif
     $kode_institusi = $this->arr_institusi[$this->session->userdata('hak_akses')];
-    $thnAkademik = $this->session->userdata('thn_akademik');
+    $thnAkademik = $this->data_ta->tahunAkademik;
 
     $data = array(
       'title' => 'Open KM',
@@ -48,7 +52,7 @@ class Open_km extends CI_Controller
     $kd_dosen = $this->input->post('kd_dosen');
     $skor = $this->input->post('skor');
     $data = array(
-      'thnAkademik' => $this->session->userdata('thn_akademik'),
+      'thnAkademik' => $this->data_ta->tahunAkademik,
       'kd_dosen' => $kd_dosen,
       'skor' => $skor
     );
