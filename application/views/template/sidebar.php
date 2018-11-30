@@ -14,6 +14,7 @@
       </div>
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
+        <li class="header">MENU DASHBOARD</li>
         <li><a href="<?=site_url('dashboard')?>"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
         <?php
         //cek level user

@@ -4,21 +4,22 @@
  */
 class Open_km_model extends CI_Model
 {
-  function list_institusi_not_done($kode_institusi, $thnAkademik){
+  function list_institusi_not_done($kode_institusi, $thnAkademik, $kd_semester){
     $this->db->from('dosen');
     $this->db->join('program_studi','program_studi.kode_prodi=dosen.kode_prodi');
-    $this->db->where(" NOT EXISTS (SELECT kd_dosen FROM open_km WHERE thnAkademik='$thnAkademik' AND open_km.kd_dosen=dosen.kd_dosen)");
+    $this->db->where(" NOT EXISTS (SELECT kd_dosen FROM open_km WHERE thnAkademik='$thnAkademik' AND kd_semester='$kd_semester' AND open_km.kd_dosen=dosen.kd_dosen)");
     $this->db->where_in('kode_institusi',$kode_institusi);
     // echo $this->db->get_compiled_select();
     // die();
     return $this->db->get()->result();
   }
 
-  function list_institusi_done($kode_institusi, $thnAkademik){
+  function list_institusi_done($kode_institusi, $thnAkademik, $kd_semester){
     $this->db->from('open_km');
     $this->db->join('dosen','dosen.kd_dosen=open_km.kd_dosen');
     $this->db->join('program_studi','program_studi.kode_prodi=dosen.kode_prodi');
     $this->db->where('thnAkademik',$thnAkademik);
+    $this->db->where('kd_semester',$kd_semester);
     $this->db->where_in('kode_institusi',$kode_institusi);
     return $this->db->get()->result();
   }

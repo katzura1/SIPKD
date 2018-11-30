@@ -37,11 +37,11 @@ class Open_km extends CI_Controller
     //get kode kode_institusi berdasrakn level dan tahun akademik yg aktif
     $kode_institusi = $this->arr_institusi[$this->session->userdata('hak_akses')];
     $thnAkademik = $this->data_ta->tahunAkademik;
-
+    $kd_semester = $this->data_ta->kd_semester;
     $data = array(
       'title' => 'Open KM',
-      'list_blm_selesai' => $this->open_km_model->list_institusi_not_done($kode_institusi,$thnAkademik),
-      'list_selesai' => $this->open_km_model->list_institusi_done($kode_institusi,$thnAkademik),
+      'list_blm_selesai' => $this->open_km_model->list_institusi_not_done($kode_institusi,$thnAkademik,$kd_semester),
+      'list_selesai' => $this->open_km_model->list_institusi_done($kode_institusi,$thnAkademik,$kd_semester),
       'action' => site_url('open_km/aksi_isi'),
       'dd_option'=> array(''=>'Pilih','0'=>'Tidak ada sama sekali','2'=>'Ada dan tidak lengkap','5'=>'Lengkap'),
     );
@@ -53,6 +53,7 @@ class Open_km extends CI_Controller
     $skor = $this->input->post('skor');
     $data = array(
       'thnAkademik' => $this->data_ta->tahunAkademik,
+      'kd_semester' => $this->data_ta->kd_semester,
       'kd_dosen' => $kd_dosen,
       'skor' => $skor
     );

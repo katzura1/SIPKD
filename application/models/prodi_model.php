@@ -39,6 +39,18 @@ class Prodi_model extends CI_Model{
     return $dd;
   }
 
+  public function get_dd_all_prodi(){
+    $this->db->from($this->nama_tabel);
+    $result = $this->db->get();
+
+    if($result->num_rows()>0){
+      foreach ($result->result() as $data) {
+        $dd[$data->kode_prodi] = $data->nama_prodi;
+      }
+    }
+    return $dd;
+  }
+
   public function getByKode($kode_prodi){
     $this->db->where($this->primary_key,$kode_prodi);
     return $this->db->get($this->nama_tabel)->row();

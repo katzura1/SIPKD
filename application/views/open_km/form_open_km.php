@@ -41,6 +41,10 @@ $this->load->view('template/sidebar');
                   <input class="form-control" type="text" name="thnAkademik" value="<?=$data_okm->thnAkademik?>" readonly>
                 </div>
                 <div class="form-group">
+                  <label>Semester</label>
+                  <input class="form-control" type="text" name="kd_semester" value="<?=$data_okm->kd_semester?>" readonly>
+                </div>
+                <div class="form-group">
                   <label>Kode Dosen</label>
                   <input class="form-control" type="text" name="kd_dosen" value="<?=$data_okm->kd_dosen?>" readonly>
                 </div>
