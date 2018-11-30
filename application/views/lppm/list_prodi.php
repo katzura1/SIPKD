@@ -105,10 +105,10 @@ $(document).ready(function() {
       };
   };
 
-  var table = $("#table1").dataTable({
+  var table1 = $("#table1").dataTable({
       initComplete: function() {
           var api = this.api();
-          $('#tableUser_filter input')
+          $('#table1_filter input')
               .off('.DT')
               .on('input.DT', function() {
                   api.search(this.value).draw();
@@ -138,19 +138,65 @@ $(document).ready(function() {
       }
 
   });
-  // end setup datatables
-} );
-  function load_penelitian(id){
-    $.ajax({
-      type:"POST",
-      url: "<?=site_url('lppm/get_data_penelitian')?>",
-      data: 'id='+id,
-      success: function(response){
-        $(".modal-penelitian").html(response);
-        $(".modal-penelitian").modal('show');
+  var table2 = $("#table2").dataTable({
+      initComplete: function() {
+          var api = this.api();
+          $('#table1_filter input')
+              .off('.DT')
+              .on('input.DT', function() {
+                  api.search(this.value).draw();
+          });
+      },
+          oLanguage: {
+          sProcessing: "loading..."
+      },
+          processing: true,
+          serverSide: true,
+          ajax: {"url": "<?php echo site_url('lppm/get_pengabdian_prodi_json/'.$tahun_akademik.'/'.$kd_semester.'/'.$kode_prodi)?>", "type": "POST"},
+              columns: [
+                  {'data': "kd_dosen","orderable": false,},
+                  {"data": "kd_dosen"},
+                  {"data": "nm_dosen"},
+                  {"data": "nama_prodi"},
+                  {"data": "judul"},
+                  {"data": "view","orderable": false,}
+            ],
+            order: [[0, 'asc']],
+      rowCallback: function(row, data, iDisplayIndex) {
+        var info = this.fnPagingInfo();
+        var page = info.iPage;
+        var length = info.iLength;
+        var index = page * length + (iDisplayIndex + 1);
+        $('td:eq(0)', row).html(index);
       }
-    });
-  }
+
+  });
+  // end setup datatables
+});
+//function load modal penelitian
+function load_penelitian(id){
+  $.ajax({
+    type:"POST",
+    url: "<?=site_url('lppm/get_data_penelitian')?>",
+    data: 'id='+id,
+    success: function(response){
+      $(".modal-penelitian").html(response);
+      $(".modal-penelitian").modal('show');
+    }
+  });
+}
+//function load modal pengabdian
+function load_pengabdian(id){
+  $.ajax({
+    type:"POST",
+    url: "<?=site_url('lppm/get_data_pengabdian')?>",
+    data: 'id='+id,
+    success: function(response){
+      $(".modal-penelitian").html(response);
+      $(".modal-penelitian").modal('show');
+    }
+  });
+}
 </script>
 <div class="modal fade modal-penelitian" tabindex="-1" role="dialog" id="myModal">
 </div>

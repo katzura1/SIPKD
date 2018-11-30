@@ -41,9 +41,17 @@ class Lppm extends CI_Controller
   public function get_data_penelitian(){
     $id = $this->input->post('id');
     $data = array(
-      'data_penelitian' => $this->lppm_model->get_data_modal($id),
+      'data_penelitian' => $this->lppm_model->get_data_modal($id,'data_penelitian'),
     );
     $this->load->view('lppm/modal_penelitian',$data);
+  }
+
+  public function get_data_pengabdian(){
+    $id = $this->input->post('id');
+    $data = array(
+      'data_pengabdian' => $this->lppm_model->get_data_modal($id,'data_proposal'),
+    );
+    $this->load->view('lppm/modal_pengabdian',$data);
   }
 
   function get_penelitian_prodi_json($t1,$t2,$s,$kode_prodi){
@@ -51,6 +59,13 @@ class Lppm extends CI_Controller
     $kd_semester = $s;
     header('Content-Type: application/json');
     echo $this->lppm_model->get_penelitian_prodi($thnAkademik,$kd_semester,$kode_prodi);
+  }
+
+  function get_pengabdian_prodi_json($t1,$t2,$s,$kode_prodi){
+    $thnAkademik = $t1.'/'.$t2;
+    $kd_semester = $s;
+    header('Content-Type: application/json');
+    echo $this->lppm_model->get_pengabdian_prodi($thnAkademik,$kd_semester,$kode_prodi);
   }
 
   function lihat_data_prodi(){

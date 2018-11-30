@@ -50,8 +50,21 @@ class Lppm_model extends CI_Model
     return $this->datatables->generate();
   }
 
-  public function get_data_modal($id){
-    $this->db->from('data_penelitian as dp');
+  public function get_pengabdian_prodi($ta,$s,$kd_prodi){
+    $this->datatables->select('ddp.kd_dosen, d.nm_dosen, p.nama_prodi, dp.judul, id');
+    $this->datatables->from('data_proposal as dp');
+    $this->datatables->join('data_dosen_proposal as ddp','ddp.id_proposal=dp.id');
+    $this->datatables->join('dosen as d','d.kd_dosen=ddp.kd_dosen');
+    $this->datatables->join('program_studi as p','p.kode_prodi=d.kode_prodi');
+    $this->datatables->where('dp.thn_akademik',$ta);
+    $this->datatables->where('dp.kd_semester',$s);
+    $this->datatables->where('d.kode_prodi',$kd_prodi);
+    $this->datatables->add_column('view','<a data-toggle="modal" onclick="javascript:load_pengabdian($1)" class="btn btn-success"><i class="fa fa-eye"></i> View</a>','id');
+    return $this->datatables->generate();
+  }
+
+  public function get_data_modal($id,$tb){
+    $this->db->from($tb);
     $this->db->where('id',$id);
     return $this->db->get()->row();
   }
