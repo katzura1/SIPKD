@@ -42,7 +42,7 @@ class Prodi_model extends CI_Model{
   public function get_dd_all_prodi(){
     $this->db->from($this->nama_tabel);
     $result = $this->db->get();
-
+    $dd[''] = 'Pilih Prodi';
     if($result->num_rows()>0){
       foreach ($result->result() as $data) {
         $dd[$data->kode_prodi] = $data->nama_prodi;

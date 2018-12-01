@@ -30,7 +30,7 @@ $this->load->view('template/sidebar');
           <form action="<?=$action?>" method="post">
             <div class="col-md-3">
               <label>Program Studi</label>
-              <?=form_dropdown('kode_prodi',$dd_prodi,$kode_prodi,"class='form-control'")?>
+              <?=form_dropdown('kode_prodi',$dd_prodi,$kode_prodi,"class='form-control' required")?>
             </div>
             <div class="col-md2">
               <label style="color:white;display:block">BUTTON</label>
