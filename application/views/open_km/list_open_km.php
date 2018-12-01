@@ -27,7 +27,7 @@ $this->load->view('template/sidebar');
     <!-- Default box -->
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Open KM Dosen</h3>
+            <h3 class="box-title">Open KM Dosen - TA : <?=$thnAkademik?> - Semester : <?=$kd_semester?></h3>
         </div>
         <div class="box-body">
           <?php

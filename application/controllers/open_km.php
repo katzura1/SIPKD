@@ -25,7 +25,7 @@ class Open_km extends CI_Controller
     }
 
     if($this->session->userdata('hak_akses')<10){
-      redirect('blank');
+      redirect('dashboard');
     }
     $this->data_ta = $this->tahun_akademik_model->get_status_aktif();
   }
@@ -40,6 +40,8 @@ class Open_km extends CI_Controller
     $kd_semester = $this->data_ta->kd_semester;
     $data = array(
       'title' => 'Open KM',
+      'thnAkademik' => $thnAkademik,
+      'kd_semester' => $kd_semester,
       'list_blm_selesai' => $this->open_km_model->list_institusi_not_done($kode_institusi,$thnAkademik,$kd_semester),
       'list_selesai' => $this->open_km_model->list_institusi_done($kode_institusi,$thnAkademik,$kd_semester),
       'action' => site_url('open_km/aksi_isi'),
