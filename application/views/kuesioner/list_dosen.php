@@ -83,7 +83,7 @@ $this->load->view('template/sidebar');
                         <td><?=$data->kd_dosen?></td>
                         <td><?=($data->gelar_depan." ".$data->nm_dosen." ".$data->gelar_belakang)?></td>
                         <td>
-                          <a href="<?=site_url('kuesioner/ubah/'.$data->id)?>" class="btn btn-success"> UBAH</a>
+                          <a href="<?=site_url('kuesioner/ubah/'.$data->id)?>" class="btn btn-danger"> UBAH</a>
                           <a href="<?=site_url('kuesioner/detail/'.$data->id)?>" class="btn btn-primary"> VIEW</a>
                         </td>
                       </tr>
@@ -118,7 +118,7 @@ $(document).ready(function() {
               "orderable": false
             },
             {
-              "targets": [ 3 ],
+              "targets": [ 4 ],
               "orderable": false
             }
         ]
@@ -136,7 +136,7 @@ $(document).ready(function() {
               "orderable": false
             },
             {
-              "targets": [ 3 ],
+              "targets": [ 4 ],
               "orderable": false
             }
         ]

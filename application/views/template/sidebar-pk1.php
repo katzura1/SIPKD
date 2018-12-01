@@ -20,7 +20,6 @@
                       </span>
                     </a>
                     <ul class="treeview-menu">
-                      <li><a href="<?=site_url('kategori_kinerja/tambah')?>"><i class="fa fa-circle-o"></i> Input Kateogri Kinerja</a></li>
                       <li><a href="<?=site_url('kategori_kinerja')?>"><i class="fa fa-circle-o"></i> List Kategori Kinerja</a></li>
                     </ul>
                   </li>
@@ -31,7 +30,6 @@
                       </span>
                     </a>
                     <ul class="treeview-menu">
-                      <li><a href="<?=site_url('kompetensi/tambah')?>"><i class="fa fa-circle-o"></i> Input Kompetensi</a></li>
                       <li><a href="<?=site_url('kompetensi')?>"><i class="fa fa-circle-o"></i> List Kompetensi</a></li>
                     </ul>
                   </li>
