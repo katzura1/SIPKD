@@ -43,7 +43,8 @@ class Dosen extends CI_Controller
       's3' => set_value('s3',''),
       'tgl_lahir' => set_value('tgl_lahir',''),
       'data_jurusan' => $this->prodi_model->tampil()->result(),
-      'read_only' => ''
+      'read_only' => '',
+      'button' => 'SIMPAN'
     );
     //print_r($data);
     $this->load->view('dosen/dosen_form',$data);
@@ -120,7 +121,8 @@ class Dosen extends CI_Controller
       's3' => set_value('s3',$data_dosen->S3),
       'tgl_lahir' => set_value('tgl_lahir',$data_dosen->tgl_lahir),
       'data_jurusan' => $this->prodi_model->tampil()->result(),
-      'read_only' => 'readonly'
+      'read_only' => 'readonly',
+      'button' => 'UPDATE'
     );
 
     $this->load->view('dosen/dosen_form',$data);

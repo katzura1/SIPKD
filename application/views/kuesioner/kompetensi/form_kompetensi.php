@@ -49,7 +49,6 @@ $this->load->view('template/sidebar');
         </div><!-- /.box-body -->
         <div class="box-footer">
             <button type="submit" name="button" class="btn btn-primary"><?=$button?></button>
-            <a href="<?=site_url('kompetensi')?>" class="btn btn-warning">BACK</a>
         </div><!-- /.box-footer-->
       </form>
     </div><!-- /.box -->

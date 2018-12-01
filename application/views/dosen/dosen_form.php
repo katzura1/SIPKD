@@ -97,8 +97,7 @@ $this->load->view('template/sidebar');
 
         </div><!-- /.box-body -->
         <div class="box-footer">
-          <button class="btn btn-secondary" type="submit" name="button">SUBMIT</button>
-          <a class="btn btn-info" href="<?=site_url('dosen')?>">BACK</a>
+          <button class="btn btn-secondary" type="submit" name="button"><?=$button?></button>
         </div><!-- /.box-footer-->
       </form>
     </div><!-- /.box -->

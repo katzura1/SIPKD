@@ -95,7 +95,6 @@ $this->load->view('template/sidebar');
           ?>
         </div><!-- /.box-body -->
         <div class="box-footer">
-          <a href="<?=site_url('kuesioner')?>" class="btn btn-default no-print">BACk</a>
           <!--<a href="javascript:window.print();" class="btn btn-primary no-print pull-right">PRINT</a>-->
           <a href="<?=site_url('kuesioner/ubah/'.$this->uri->segment(3,0))?>" class="btn btn-primary no-print pull-right">UBAH</a>
         </div><!-- /.box-footer-->

@@ -33,7 +33,8 @@ class Prodi extends CI_Controller {
       'nama_prodi' => set_value('nama_prodi',''),
       'kode_institusi' => set_value('kode_institusi',''),
       'data_institusi' => $this->institusi_model->getAll(),
-      'error' => $error
+      'error' => $error,
+      'button' => 'SIMPAN'
     );
 
     $this->load->view('program_studi/prodi_form',$data);
@@ -76,7 +77,8 @@ class Prodi extends CI_Controller {
       'nama_prodi' => $row->nama_prodi,
       'kode_institusi' => $row->kode_institusi,
       'data_institusi' => $this->institusi_model->getAll(),
-      'kode_prodi_ro' => 'readonly'
+      'kode_prodi_ro' => 'readonly',
+      'button' => 'UPDATE'
     );
 
     $this->load->view('program_studi/prodi_form',$data);

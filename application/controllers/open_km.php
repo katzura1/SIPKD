@@ -73,6 +73,7 @@ class Open_km extends CI_Controller
         'title' => 'Update Open KM',
         'action' => site_url('open_km/aksiubah'),
         'data_okm' => $data_okm,
+        'button' => 'UPDATE',
         'dd_option'=> array(''=>'Pilih','0'=>'Tidak ada sama sekali','2'=>'Ada dan tidak lengkap','5'=>'Lengkap'),
       );
       $this->load->view('open_km/form_open_km',$data);

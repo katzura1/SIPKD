@@ -43,7 +43,6 @@ $this->load->view('template/sidebar');
               </div>
               <div class="form-group">
                 <button type="submit" name="button" class="btn btn-primary"><?=$button?></button>
-                <a href="<?=site_url('tahun_akademik')?>" class="btn bg-maroon">BACK</a>
               </div>
             </form>
         </div><!-- /.box-body -->

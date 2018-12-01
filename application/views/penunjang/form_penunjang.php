@@ -81,7 +81,6 @@ $this->load->view('template/sidebar');
               </div>
             </div>
             <button type="submit" name="button" class="btn btn-primary"><?=$button?></button>
-            <a href="<?=site_url('penunjang/list_penunjang')?>" class='btn btn-danger'>BACK</a>
           </form>
         </div><!-- /.box-body -->
         <div class="box-footer">

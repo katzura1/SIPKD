@@ -45,8 +45,7 @@ $this->load->view('template/sidebar');
                 </select>
               </div>
               <div class="form-group">
-                <button class="btn btn-secondary" type="submit" name="button">SUBMIT</button>
-                <a class="btn btn-info" href="<?=site_url()?>prodi/">BACK</a>
+                <button class="btn btn-secondary" type="submit" name="button"><?=$button?></button>
               </div>
             </form>
         </div><!-- /.box-body -->

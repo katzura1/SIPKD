@@ -57,8 +57,7 @@ $this->load->view('template/sidebar');
                   <?=form_dropdown('skor',$dd_option,$data_okm->skor,"class='form-control' required")?>
                 </div>
                 <div class="form-group">
-                  <button type="submit" class="btn btn-primary">SIMPAN</button>
-                  <a href="<?=site_url('open_km')?>" class="btn btn-success">BACK</a>
+                  <button type="submit" class="btn btn-primary"><?=$button?></button>
                 </div>
               </form>
             </div>

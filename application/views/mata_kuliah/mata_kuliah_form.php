@@ -43,7 +43,6 @@ $this->load->view('template/sidebar');
               </div>
               <div class="form-group">
                 <button type="submit" name="button" class="btn btn-primary"><?=$button?></button>
-                <a href="<?=site_url('mata_kuliah')?>" class="btn btn bg-navy margin">BACK</a>
               </div>
             </form>
         </div><!-- /.box-body -->
