@@ -4,6 +4,25 @@
  */
 class Kegiatan_akademik_model extends CI_Model
 {
+  public function get_upload_materi_not_done($kode_prodi,$thnAkademik,$kd_semester){
+    $this->db->from('dosen as d');
+    $this->db->where(" NOT EXISTS (SELECT kd_dosen FROM kegiatan_akademik as ka WHERE thnAkademik='$thnAkademik' AND kd_semester='$kd_semester' AND ka.kd_dosen=d.kd_dosen AND upload_materi IS NOT NULL)");
+    $this->db->where('d.kode_prodi',$kode_prodi);
+    return $this->db->get()->result();
+  }
+
+  public function get_upload_materi_done($kode_prodi,$thnAkademik,$kd_semester){
+    $this->db->from('kegiatan_akademik as ka');
+    $this->db->join('dosen as d','d.kd_dosen=ka.kd_dosen');
+    $this->db->where('thnAkademik',$thnAkademik);
+    $this->db->where('kd_semester',$kd_semester);
+    $this->db->where('d.kode_prodi',$kode_prodi);
+    $this->db->where('upload_materi IS NOT NULL');
+    // echo $this->db->get_compiled_select();
+    // die();
+    return $this->db->get()->result();
+  }
+
   public function get_upload_soal_not_done($kode_prodi,$thnAkademik,$kd_semester){
     $this->db->from('dosen as d');
     $this->db->where(" NOT EXISTS (SELECT kd_dosen FROM kegiatan_akademik as ka WHERE thnAkademik='$thnAkademik' AND kd_semester='$kd_semester' AND ka.kd_dosen=d.kd_dosen AND upload_soal IS NOT NULL)");
@@ -52,8 +71,10 @@ class Kegiatan_akademik_model extends CI_Model
     $this->db->insert('kegiatan_akademik',$data);
   }
 
-  public function ubahIsiNilai($data,$id){
-    $this->db->where('id',$id);
+  public function ubahIsiNilai($data,$thnAkademik,$kd_semester,$kd_dosen){
+    $this->db->where('thnAkademik',$thnAkademik);
+    $this->db->where('kd_semester',$kd_semester);
+    $this->db->where('kd_dosen',$kd_dosen);
     $this->db->update('kegiatan_akademik',$data);
   }
 }

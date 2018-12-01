@@ -74,7 +74,7 @@ $this->load->view('template/sidebar');
                       <?=form_dropdown('skor',$dd_skor,'',"class='form-control' style='width:80%;' required")?>
                     </form>
                   </td>
-                  <td><button type="submit" form="<?="'form$i'"?>" name="btnSimpan" class="btn btn-success">SIMPAN</button></td>
+                  <td><button type="submit" form="<?="'form$i'"?>" name="btnSimpan" class="btn btn-success" value="SIMPAN">SIMPAN</button></td>
                 </tr>
               <?php endforeach; ?>
               <!--not done-->
@@ -93,7 +93,7 @@ $this->load->view('template/sidebar');
                       <?=form_dropdown('skor',$dd_skor,$data->upload_nilai,"class='form-control' style='width:80%;' required")?>
                     </form>
                   </td>
-                  <td><button type="submit" form="<?="'form$i'"?>" name="btnSimpan" class="btn btn-danger">UBAH</button></td>
+                  <td><button type="submit" form="<?="'form$i'"?>" name="btnSimpan" class="btn btn-danger" value="UBAH">UBAH</button></td>
                 </tr>
               <?php endforeach; ?>
               </tbody>

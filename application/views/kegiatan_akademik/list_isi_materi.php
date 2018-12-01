@@ -11,13 +11,13 @@ $this->load->view('template/sidebar');
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        List Kegiatan Upload Soal
+        List Kegiatan Upload Materi
         <small>Kegiatan Akademik</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="#">Kegiatan Akademik</a></li>
-        <li class="active">Ketepatan Upload Soal</li>
+        <li class="active">Ketepatan Upload Materi</li>
     </ol>
 </section>
 
@@ -66,7 +66,7 @@ $this->load->view('template/sidebar');
                   <td><?=$data->kd_dosen?></td>
                   <td><?=$data->gelar_depan.' '.$data->nm_dosen.', '.$data->gelar_belakang?></td>
                   <td>
-                    <form id="<?="'form$i'"?>" action="<?=site_url('kegiatan_akademik/aksi_isi/soal')?>" method="post">
+                    <form id="<?="'form$i'"?>" action="<?=site_url('kegiatan_akademik/aksi_isi/materi')?>" method="post">
                       <input type="hidden" name="kd_dosen" value="<?=$data->kd_dosen?>">
                       <input type="hidden" name="kd_prodi" value=<?=$kode_prodi?>>
                       <input type="hidden" name="thnAkademik" value="<?=$thnAkademik?>">
@@ -84,13 +84,13 @@ $this->load->view('template/sidebar');
                   <td><?=$data->kd_dosen?></td>
                   <td><?=$data->gelar_depan.' '.$data->nm_dosen.', '.$data->gelar_belakang?></td>
                   <td>
-                    <form id="<?="'form$i'"?>" action="<?=site_url('kegiatan_akademik/aksi_isi/soal')?>" method="post">
+                    <form id="<?="'form$i'"?>" action="<?=site_url('kegiatan_akademik/aksi_isi/materi')?>" method="post">
                       <input type="hidden" name="id" value="<?=$data->id?>">
                       <input type="hidden" name="kd_dosen" value="<?=$data->kd_dosen?>">
                       <input type="hidden" name="kd_prodi" value=<?=$kode_prodi?>>
                       <input type="hidden" name="thnAkademik" value="<?=$thnAkademik?>">
                       <input type="hidden" name="kd_semester" value="<?=$kd_semester?>">
-                      <?=form_dropdown('skor',$dd_skor,$data->upload_soal,"class='form-control' style='width:80%;' required")?>
+                      <?=form_dropdown('skor',$dd_skor,$data->upload_materi,"class='form-control' style='width:80%;' required")?>
                     </form>
                   </td>
                   <td><button type="submit" form="<?="'form$i'"?>" name="btnSimpan" class="btn btn-danger" value="UBAH">UBAH</button></td>
