@@ -149,45 +149,45 @@ class Kuesioner_model extends CI_Model{
     $this->db->update($this->tb,$data);
   }
 
-  public function get_all_not_done_by_institusi($kode_institusi,$thnAkademik,$kd_semester,$penilai){
-    //menampilkan data dosen yang belum di isi
-    $this->db->from('dosen');
-    $this->db->join('program_studi','program_studi.kode_prodi=dosen.kode_prodi');
-    $this->db->where(" NOT EXISTS (SELECT kd_dosen FROM $this->tb WHERE thnAkademik='$thnAkademik' AND kd_semester='$kd_semester' AND penilai='$penilai' AND $this->tb.kd_dosen=dosen.kd_dosen)");
-    $this->db->where_in('kode_institusi',$kode_institusi);
-    return $this->db->get()->result();
-  }
-
-  public function get_all_done_by_institusi($kode_institusi,$thnAkademik,$kd_semester,$penilai){
-    $this->db->from($this->tb);
-    $this->db->join('dosen','dosen.kd_dosen=data_kuesioner.kd_dosen');
-    $this->db->join('program_studi','program_studi.kode_prodi=dosen.kode_prodi');
-    $this->db->where('thnAkademik',$thnAkademik);
-    $this->db->where('kd_semester',$kd_semester);
-    $this->db->where('penilai',$penilai);
-    $this->db->where_in('kode_institusi',$kode_institusi);
-    return $this->db->get()->result();
-  }
-
-  public function get_all_not_done($kode_prodi,$thnAkademik,$kd_semester,$penilai){
-    //menampilkan data dosen yang belum di isi
-    $this->db->from('dosen');
-    $this->db->join('program_studi','program_studi.kode_prodi=dosen.kode_prodi');
-    $this->db->where(" NOT EXISTS (SELECT kd_dosen FROM $this->tb WHERE thnAkademik='$thnAkademik' AND kd_semester='$kd_semester' AND penilai='$penilai' AND $this->tb.kd_dosen=dosen.kd_dosen)");
-    $this->db->where('dosen.kode_prodi',$kode_prodi);
-    return $this->db->get()->result();
-  }
-
-  public function get_all_done($kode_prodi,$thnAkademik,$kd_semester,$penilai){
-    $this->db->from($this->tb);
-    $this->db->join('dosen','dosen.kd_dosen=data_kuesioner.kd_dosen');
-    $this->db->join('program_studi','program_studi.kode_prodi=dosen.kode_prodi');
-    $this->db->where('thnAkademik',$thnAkademik);
-    $this->db->where('kd_semester',$kd_semester);
-    $this->db->where('penilai',$penilai);
-    $this->db->where('dosen.kode_prodi',$kode_prodi);
-    return $this->db->get()->result();
-  }
+  // public function get_all_not_done_by_institusi($kode_institusi,$thnAkademik,$kd_semester,$penilai){
+  //   //menampilkan data dosen yang belum di isi
+  //   $this->db->from('dosen');
+  //   $this->db->join('program_studi','program_studi.kode_prodi=dosen.kode_prodi');
+  //   $this->db->where(" NOT EXISTS (SELECT kd_dosen FROM $this->tb WHERE thnAkademik='$thnAkademik' AND kd_semester='$kd_semester' AND penilai='$penilai' AND $this->tb.kd_dosen=dosen.kd_dosen)");
+  //   $this->db->where_in('kode_institusi',$kode_institusi);
+  //   return $this->db->get()->result();
+  // }
+  //
+  // public function get_all_done_by_institusi($kode_institusi,$thnAkademik,$kd_semester,$penilai){
+  //   $this->db->from($this->tb);
+  //   $this->db->join('dosen','dosen.kd_dosen=data_kuesioner.kd_dosen');
+  //   $this->db->join('program_studi','program_studi.kode_prodi=dosen.kode_prodi');
+  //   $this->db->where('thnAkademik',$thnAkademik);
+  //   $this->db->where('kd_semester',$kd_semester);
+  //   $this->db->where('penilai',$penilai);
+  //   $this->db->where_in('kode_institusi',$kode_institusi);
+  //   return $this->db->get()->result();
+  // }
+  //
+  // public function get_all_not_done($kode_prodi,$thnAkademik,$kd_semester,$penilai){
+  //   //menampilkan data dosen yang belum di isi
+  //   $this->db->from('dosen');
+  //   $this->db->join('program_studi','program_studi.kode_prodi=dosen.kode_prodi');
+  //   $this->db->where(" NOT EXISTS (SELECT kd_dosen FROM $this->tb WHERE thnAkademik='$thnAkademik' AND kd_semester='$kd_semester' AND penilai='$penilai' AND $this->tb.kd_dosen=dosen.kd_dosen)");
+  //   $this->db->where('dosen.kode_prodi',$kode_prodi);
+  //   return $this->db->get()->result();
+  // }
+  //
+  // public function get_all_done($kode_prodi,$thnAkademik,$kd_semester,$penilai){
+  //   $this->db->from($this->tb);
+  //   $this->db->join('dosen','dosen.kd_dosen=data_kuesioner.kd_dosen');
+  //   $this->db->join('program_studi','program_studi.kode_prodi=dosen.kode_prodi');
+  //   $this->db->where('thnAkademik',$thnAkademik);
+  //   $this->db->where('kd_semester',$kd_semester);
+  //   $this->db->where('penilai',$penilai);
+  //   $this->db->where('dosen.kode_prodi',$kode_prodi);
+  //   return $this->db->get()->result();
+  // }
 }
 
  ?>
