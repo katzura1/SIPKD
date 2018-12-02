@@ -21,6 +21,14 @@ class Dosen_model extends CI_Model
     return $this->db->get()->result();
   }
 
+  public function get_by_kd($nik){
+    $this->db->from($this->nama_tb);
+    $this->db->where($this->pk,$nik);
+    $this->db->join('program_studi','program_studi.kode_prodi=dosen.kode_prodi');
+    //return $this->db->get_compiled_select();
+    return $this->db->get()->row();
+  }
+
   public function get_foto($kd_dosen){
     $this->db->select('path_foto');
     $this->db->from($this->nama_tb);
@@ -56,14 +64,6 @@ class Dosen_model extends CI_Model
   public function delete($nik){
     $this->db->where($this->pk,$nik);
     $this->db->delete($this->nama_tb);
-  }
-
-  public function get_by_kd($nik){
-    $this->db->from($this->nama_tb);
-    $this->db->where($this->pk,$nik);
-    $this->db->join('program_studi','program_studi.kode_prodi=dosen.kode_prodi');
-    //return $this->db->get_compiled_select();
-    return $this->db->get()->row();
   }
 
   public function update($data, $nik){

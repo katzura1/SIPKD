@@ -41,19 +41,6 @@ $this->load->view('template/sidebar');
                 <th>Aksi</th>
               </tr>
             </thead>
-            <!-- <tbody>
-              <?php foreach ($data_dosen as $data): ?>
-                <tr>
-                  <td></td>
-                  <td><?=$data->kd_dosen?></td>
-                  <td><?=($data->gelar_depan." ".$data->nm_dosen." ".$data->gelar_belakang)?></td>
-                  <td><?=$data->nama_prodi?></td>
-                  <td>
-                    <a href="<?=site_url('kuesioner/isi/'.$data->kd_dosen)?>" class="btn btn-success"> NILAI</a>
-                  </td>
-                </tr>
-              <?php endforeach; ?>
-            </tbody> -->
           </table>
         </div><!-- /.box-body -->
         <div class="box-footer">

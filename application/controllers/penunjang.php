@@ -23,13 +23,14 @@ class Penunjang extends CI_Controller {
   public function __construct(){
     parent::__construct();
     $this->load->library('form_validation');
+    $this->load->model('dosen_model');
     $this->load->model('penunjang_model');
     $this->load->model('tahun_akademik_model');
     $this->load->model('prodi_model');
     //cek login
-    if($this->session->userdata('logged')!=1){
-      redirect(site_url().'auth');
-    }
+    // if($this->session->userdata('logged')!=1){
+    //   redirect(site_url().'auth');
+    // }
     //seleksi hak akses (cuma kaprodi yang boleh akses )
     //..kode
     $this->data_ta = $this->tahun_akademik_model->get_status_aktif();
@@ -301,6 +302,22 @@ class Penunjang extends CI_Controller {
       'semester' => set_value('semester', $kd_semester)
     );
     $this->load->view('penunjang/list_penunjang',$data);
+  }
+
+  public function cetak(){
+    //this->session->userdata('nik');
+    $kd_dosen = $this->session->userdata('nik');
+    $thnAkademik = $this->input->post('thnAkademik');
+    $kd_semester = $this->input->post('semester');
+    $data_dosen = $this->dosen_model->get_by_kd($kd_dosen);
+    $data_penunjang = $this->penunjang_model->tampil_penunjang_dosen($kd_dosen, $thnAkademik, $kd_semester);
+    $data = array(
+      'thn_akademik' => $thnAkademik,
+      'semester' => $kd_semester=='1'?'GASAL':'GENAP',
+      'data_dosen' => $data_dosen,
+      'data_penunjang' => $data_penunjang
+    );
+    $this->load->view('penunjang/laporan',$data);
   }
 }
 ?>

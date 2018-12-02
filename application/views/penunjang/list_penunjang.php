@@ -42,8 +42,8 @@ $this->load->view('template/sidebar');
           }
           ?>
           <div class="row" style="margin-bottom:5px;">
-            <form ction="<?=site_url('penunjang')?>" method="post">
-              <div class="col-md-4">
+            <form method="post">
+              <div class="col-md-2">
                 <label>Tahun Akademik</label>
                 <select class="form-control" name="thnAkademik">
                   <?php foreach ($data_ta as $data): ?>
@@ -51,18 +51,25 @@ $this->load->view('template/sidebar');
                   <?php endforeach; ?>
                 </select>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-2">
                 <label>Semester</label>
                 <select class="form-control" name="semester">
                   <option value="1" <?=$semester=='1'?'selected':''?>>Ganjil</option>
                   <option value="2" <?=$semester=='2'?'selected':''?>>Genap</option>
                 </select>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-1">
                 <label style="color:white;">CARI</label>
-                <button type="submit" name="button" class="btn btn-success" style="display:block;">
+                <button type="submit" formaction="<?=site_url('penunjang/list_penunjang')?>" name="button" class="btn btn-success" style="display:block;">
                   <i class="fa fa-search"></i>
                   CARI
+                </button>
+              </div>
+              <div class="col-md-1">
+                <label style="color:white;">CETAK</label>
+                <button type="submit" formaction="<?=site_url('penunjang/cetak')?>" name="button" class="btn btn-success" style="display:block;" onclick="$('form').attr('target', '_blank');">
+                  <i class="fa fa-print"></i>
+                  CETAK
                 </button>
               </div>
             </form>
@@ -87,11 +94,13 @@ $this->load->view('template/sidebar');
                   <td><?=$data->alamat?></td>
                   <td><?=$data->status_periksa=='belum'?"<span class='label label-danger'>".ucfirst($data->status_periksa.' Validasi')."</span>":"<span class='label label-success'>".ucfirst($data->status_periksa.' Validasi')."</span>"?></td>
                   <td>
+                    <center>
                     <a href="<?=site_url('penunjang/update/'.$data->id)?>" class="btn  <?=$data->status_periksa=='belum'?'btn-primary':'btn-default disabled'?>"><i class="fa fa-pencil"></i> Update</a>
                     <a data-toggle="modal" onclick="javascript:load_penunjang(<?=$data->id?>)" class="btn btn-success">
                       <i class="fa fa-eye"></i>
                       View
                     </a>
+                    </center>
                   </td>
                 </tr>
               <?php endforeach; ?>
@@ -122,12 +131,10 @@ $this->load->view('template/js');
               },
               {
                 "targets" : [ 3 ],
-                'width' : "40%"
               },
               {
                 "targets": [ 5 ],
                 "orderable": false,
-                'width' : "18%"
               }
           ]
       } );

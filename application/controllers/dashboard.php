@@ -21,7 +21,7 @@ class Dashboard extends CI_Controller {
 		$view='';
 		$data = array();
 		//sementara semua dashbarod ssama
-		if ($hak_akses>1) {
+		if ($hak_akses>0) {
 			$view = 'dosen';
 			$data = array(
 				'title' => 'Dashboard Dosen',

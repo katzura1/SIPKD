@@ -108,7 +108,6 @@ $this->load->view('template/js');
                     {
                       data: "kd_dosen",
                       orderable: false,
-                      width : '4%',
                     },
                     {
                       data: "kd_dosen",
