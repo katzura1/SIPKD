@@ -21,7 +21,7 @@ class user extends CI_Controller{
   function index(){
     $rows = $this->user_model->tampil();
     $data = array(
-      'title' => 'List User',
+      'title' => 'List Pengguna',
       'data_user' => $rows
     );
     $this->load->view('user/user_list',$data);
@@ -35,7 +35,7 @@ class user extends CI_Controller{
   function tambah(){
 
     $data = array(
-      'title' => 'Tambah User',
+      'title' => 'Tambah Pengguna',
       'action' => site_url('user/aksitambah'),
       'kd_dosen' => set_value('kd_dosen',''),
       'hak' => set_value('hak',''),
@@ -71,7 +71,7 @@ class user extends CI_Controller{
       );
 
       $this->user_model->tambah($data);
-      $this->session->set_flashdata('message','Data berhasil ditambah!');
+      $this->session->set_flashdata('message','Data berhasil Disimpan!');
       redirect(site_url('user'));
     }
   }

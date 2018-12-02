@@ -144,7 +144,7 @@ class tahun_akademik extends CI_Controller{
       $ta = $this->input->post('key_ta');
       $s = $this->input->post('key_semester');
       $this->tahun_akademik_model->updateTA($data,$ta,$s);
-      $this->session->set_flashdata('message', 'Data Berhasil Disimpan');
+      $this->session->set_flashdata('message', 'Data Berhasil Diubah');
       redirect(site_url('tahun_akademik'));
     }
   }
