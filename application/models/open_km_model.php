@@ -4,6 +4,17 @@
  */
 class Open_km_model extends CI_Model
 {
+  function get_all_by_institusi_json($kode_institusi, $thnAkademik, $kd_semester){
+    $this->datatables->select('d.kd_dosen, d.nm_dosen, pd.nama_prodi');
+    $this->datatables->select(" IFNULL((SELECT skor FROM open_km as okm WHERE thnAkademik='$thnAkademik' AND kd_semester='$kd_semester' AND okm.kd_dosen=d.kd_dosen),'') as skor");
+    $this->datatables->select(" IFNULL((SELECT id FROM open_km as okm WHERE thnAkademik='$thnAkademik' AND kd_semester='$kd_semester' AND okm.kd_dosen=d.kd_dosen),'0') as id");
+    $this->datatables->from('dosen as d');
+    $this->datatables->join('program_studi as pd','pd.kode_prodi=d.kode_prodi');
+    $this->datatables->where_in('kode_institusi',$kode_institusi);
+    $this->datatables->add_column('action_input','<button class="btn btn-success">SIMPAN</button>');
+    $this->datatables->add_column('action_update','<button class="btn btn-danger" value="$1">UPDATE</button>','id');
+    return $this->datatables->generate();
+  }
   function list_institusi_not_done($kode_institusi, $thnAkademik, $kd_semester){
     $this->db->from('dosen');
     $this->db->join('program_studi','program_studi.kode_prodi=dosen.kode_prodi');

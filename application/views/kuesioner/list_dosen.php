@@ -30,69 +30,31 @@ $this->load->view('template/sidebar');
           <h3 class="box-title">Dosen <?=$title_text?> : <?=$title_kode?></h3>
         </div>
         <div class="box-body">
-          <div class="nav-tabs-custom">
-            <ul class="nav nav-tabs">
-              <li class="active">
-                <a href="#tab_1" data-toggle="tab">Belum Dinilai</a>
-              </li>
-              <li>
-                <a href="#tab_2" data-toggle="tab">Sudah Dinilai</a>
-              </li>
-            </ul>
-            <div class="tab-content">
-              <div class="tab-pane active" id="tab_1">
-                <table class="table table-striped" id="tableDosen">
-                  <thead>
-                    <tr>
-                      <th>No.</th>
-                      <th>Kode Dosen</th>
-                      <th>Nama Dosen</th>
-                      <th>Program Studi</th>
-                      <th>Aksi</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php foreach ($data_dosen as $data): ?>
-                      <tr>
-                        <td></td>
-                        <td><?=$data->kd_dosen?></td>
-                        <td><?=($data->gelar_depan." ".$data->nm_dosen." ".$data->gelar_belakang)?></td>
-                        <td><?=$data->nama_prodi?></td>
-                        <td>
-                          <a href="<?=site_url('kuesioner/isi/'.$data->kd_dosen)?>" class="btn btn-success"> NILAI</a>
-                        </td>
-                      </tr>
-                    <?php endforeach; ?>
-                  </tbody>
-                </table>
-              </div><!--tab pane-->
-              <div class="tab-pane" id="tab_2">
-                <table class="table table-striped" id="tableDosens">
-                  <thead>
-                    <tr>
-                      <th>No.</th>
-                      <th>Kode Dosen</th>
-                      <th>Nama Dosen</th>
-                      <th>Aksi</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php foreach ($data_dosen_s as $data): ?>
-                      <tr>
-                        <td></td>
-                        <td><?=$data->kd_dosen?></td>
-                        <td><?=($data->gelar_depan." ".$data->nm_dosen." ".$data->gelar_belakang)?></td>
-                        <td>
-                          <a href="<?=site_url('kuesioner/ubah/'.$data->id)?>" class="btn btn-danger"> UBAH</a>
-                          <a href="<?=site_url('kuesioner/detail/'.$data->id)?>" class="btn btn-primary"> VIEW</a>
-                        </td>
-                      </tr>
-                    <?php endforeach; ?>
-                  </tbody>
-                </table>
-              </div><!--tab pane-->
-            </div>
-          </div>
+          <table class="table table-striped responsive" id="tableDosen">
+            <thead>
+              <tr>
+                <th>No.</th>
+                <th>Kode Dosen</th>
+                <th>Nama Dosen</th>
+                <th>Program Studi</th>
+                <th>Status</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <!-- <tbody>
+              <?php foreach ($data_dosen as $data): ?>
+                <tr>
+                  <td></td>
+                  <td><?=$data->kd_dosen?></td>
+                  <td><?=($data->gelar_depan." ".$data->nm_dosen." ".$data->gelar_belakang)?></td>
+                  <td><?=$data->nama_prodi?></td>
+                  <td>
+                    <a href="<?=site_url('kuesioner/isi/'.$data->kd_dosen)?>" class="btn btn-success"> NILAI</a>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            </tbody> -->
+          </table>
         </div><!-- /.box-body -->
         <div class="box-footer">
 
@@ -111,41 +73,125 @@ $this->load->view('template/js');
 
 <script>
 $(document).ready(function() {
-    var t = $('#tableDosen').DataTable( {
-        "columnDefs": [
-            {
-              "targets": [ 0 ],
-              "orderable": false
-            },
-            {
-              "targets": [ 4 ],
-              "orderable": false
-            }
-        ]
-    } );
-    t.on( 'order.dt search.dt', function () {
-        t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
-            cell.innerHTML = i+1;
-        } );
-    } ).draw();
+  // Setup datatables
+  $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
+  {
+      return {
+          "iStart": oSettings._iDisplayStart,
+          "iEnd": oSettings.fnDisplayEnd(),
+          "iLength": oSettings._iDisplayLength,
+          "iTotal": oSettings.fnRecordsTotal(),
+          "iFilteredTotal": oSettings.fnRecordsDisplay(),
+          "iPage": Math.ceil(oSettings._iDisplayStart / oSettings._iDisplayLength),
+          "iTotalPages": Math.ceil(oSettings.fnRecordsDisplay() / oSettings._iDisplayLength)
+      };
+  };
 
-    var u = $('#tableDosens').DataTable( {
-        "columnDefs": [
-            {
-              "targets": [ 0 ],
-              "orderable": false
+  var table = $("#tableDosen").dataTable({
+      initComplete: function() {
+          var api = this.api();
+          $('#tableDosen_filter input')
+              .off('.DT')
+              .on('input.DT', function() {
+                  api.search(this.value).draw();
+          });
+      },
+          oLanguage: {
+          sProcessing: "<i class='fa fa-refresh fa-spin'></i>"
+      },
+          processing: true,
+          serverSide: true,
+          ajax: {
+            "type": "POST",
+            "url": "<?=$url?>",
+            "data" : {kode:<?=(int)$kode?>,thn_akademik:'<?=$thnAkademik?>',kd_semester:<?=$kd_semester?>,penilai:<?=$penilai?>},
             },
-            {
-              "targets": [ 4 ],
-              "orderable": false
-            }
-        ]
-    } );
-    u.on( 'order.dt search.dt', function () {
-        u.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
-            cell.innerHTML = i+1;
-        } );
-    } ).draw();
+              columns: [
+                  {
+                    data: "kd_dosen",
+                    "orderable": false,
+                    width : '4%',
+                  },
+                  {
+                    data: "kd_dosen",
+                    width: '10%',
+                  },
+                  {
+                    data: "nm_dosen",
+                  },
+                  {
+                    data: "nama_prodi"
+                  },
+                  {
+                    data : "status",
+                    render: function (data, type, row){
+                      if(row.status==0){
+                        return "<label class='label bg-red'>Belum Dinilai</label>";
+                      }else{
+                        return "<label class='label bg-green'>Sudah Dinilai</label>";
+                      }
+                    },
+                  },
+                  {
+                    data: "status, action_nilai, action_ubah",
+                    render: function(data,type,row){
+                      if(row.status==0){
+                        return row.action_nilai;
+                      }else{
+                        return row.action_ubah;
+                      }
+                    },
+                    width:"15%",
+                    orderable: false,
+                    searchable: false,
+                  }
+            ],
+            order: [[4, 'asc']],
+      rowCallback: function(row, data, iDisplayIndex) {
+        var info = this.fnPagingInfo();
+        var page = info.iPage;
+        var length = info.iLength;
+        var index = page * length + (iDisplayIndex + 1);
+        $('td:eq(0)', row).html(index);
+      }
+
+  });
+  // end setup datatables
+    // var t = $('#tableDosen').DataTable( {
+    //     "columnDefs": [
+    //         {
+    //           "targets": [ 0 ],
+    //           "orderable": false
+    //         },
+    //         {
+    //           "targets": [ 4 ],
+    //           "orderable": false
+    //         }
+    //     ]
+    // } );
+    // t.on( 'order.dt search.dt', function () {
+    //     t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+    //         cell.innerHTML = i+1;
+    //     } );
+    // } ).draw();
+    //
+    // var u = $('#tableDosens').DataTable( {
+    //     "columnDefs": [
+    //         {
+    //           "targets": [ 0 ],
+    //           "orderable": false
+    //         },
+    //         {
+    //           "targets": [ 4 ],
+    //           "orderable": false
+    //         }
+    //     ]
+    // } );
+    // u.on( 'order.dt search.dt', function () {
+    //     u.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+    //         cell.innerHTML = i+1;
+    //     } );
+    // } ).draw();
 } );
 </script>
 <?php

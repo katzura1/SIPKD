@@ -17,6 +17,7 @@ class Open_km extends CI_Controller
   {
     parent::__construct();
     $this->load->library('form_validation');
+    $this->load->library('datatables');
     $this->load->model('open_km_model');
     $this->load->model('tahun_akademik_model');
     //cek login
@@ -35,22 +36,31 @@ class Open_km extends CI_Controller
       redirect('blank');
     }
     //get kode kode_institusi berdasrakn level dan tahun akademik yg aktif
-    $kode_institusi = $this->arr_institusi[$this->session->userdata('hak_akses')];
+    //$kode_institusi = $this->arr_institusi[$this->session->userdata('hak_akses')];
     $thnAkademik = $this->data_ta->tahunAkademik;
     $kd_semester = $this->data_ta->kd_semester;
     $data = array(
       'title' => 'Open KM',
       'thnAkademik' => $thnAkademik,
       'kd_semester' => $kd_semester,
-      'list_blm_selesai' => $this->open_km_model->list_institusi_not_done($kode_institusi,$thnAkademik,$kd_semester),
-      'list_selesai' => $this->open_km_model->list_institusi_done($kode_institusi,$thnAkademik,$kd_semester),
+      'kode' => $this->session->userdata('hak_akses'),
+      'url' => site_url('open_km/get_list_insitusi_json'),
       'action' => site_url('open_km/aksi_isi'),
       'dd_option'=> array(''=>'Pilih','0'=>'Tidak ada sama sekali','2'=>'Ada dan tidak lengkap','5'=>'Lengkap'),
     );
     $this->load->view('open_km/list_open_km',$data);
   }
 
+  function get_list_insitusi_json(){
+    $kode_institusi = $this->arr_institusi[$this->input->post('kode')];
+    $thnAkademik = $this->input->post('thn_akademik');
+    $kd_semester = $this->input->post('kd_semester');
+    header('Content-Type: application/json');
+    echo $this->open_km_model->get_all_by_institusi_json($kode_institusi,$thnAkademik,$kd_semester);
+  }
+
   function aksi_isi(){
+    $id = $this->input->post('id');
     $kd_dosen = $this->input->post('kd_dosen');
     $skor = $this->input->post('skor');
     $data = array(
@@ -59,9 +69,15 @@ class Open_km extends CI_Controller
       'kd_dosen' => $kd_dosen,
       'skor' => $skor
     );
-    $this->open_km_model->simpanOpenKM($data);
-    $this->session->set_flashdata('message', "<div class='alert alert-success alert-dismissible' role='alert'>Data Berhasil Disimpan!<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>");
-    redirect(site_url('open_km'));
+    $row_count = $this->open_km_model->get_by_id($id);
+    if ($row_count>0) {
+      $this->open_km_model->ubahOpenKM($data,$id);
+      $this->session->set_flashdata('message', "<div class='alert alert-success alert-dismissible' role='alert'>Data Berhasil Diubah!<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>");
+    }else{
+      $this->open_km_model->simpanOpenKM($data);
+      $this->session->set_flashdata('message', "<div class='alert alert-success alert-dismissible' role='alert'>Data Berhasil Disimpan!<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>");
+    }
+    // redirect(site_url('open_km'));
   }
 
   function ubah($id){

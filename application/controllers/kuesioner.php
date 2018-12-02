@@ -25,6 +25,7 @@ class Kuesioner extends CI_Controller
   {
     parent::__construct();
     $this->load->library('form_validation');
+    $this->load->library('datatables');
     $this->load->model('kuesioner_model');
     $this->load->model('prodi_model');
     $this->load->model('dosen_model');
@@ -51,27 +52,27 @@ class Kuesioner extends CI_Controller
     //if penilai 1 data prodi if 2 data institusi
     if ($penilai=='1') {
       $kode_prodi = $this->arr_prodi[$this->session->userdata('hak_akses')];
-      $data_dosen = $this->kuesioner_model->get_all_not_done($kode_prodi, $thnAkademik, $kd_semester, $penilai);
-      $data_dosen_s = $this->kuesioner_model->get_all_done($kode_prodi, $thnAkademik, $kd_semester, $penilai);
-
       $data = array(
         'title' => 'Kuesioner',
-        'data_dosen' => $data_dosen,
-        'data_dosen_s' => $data_dosen_s,
         'title_text' => 'Program Studi',
-        'title_kode' => $this->prodi_model->getByKode($kode_prodi)->nama_prodi
+        'title_kode' => $this->prodi_model->getByKode($kode_prodi)->nama_prodi,
+        'kode' => $kode_prodi,
+        'thnAkademik' => $thnAkademik,
+        'kd_semester' => $kd_semester,
+        'penilai' => $penilai,
+        'url' => site_url('kuesioner/get_list_prodi_json')
       );
     }else{
       $kode_institusi = $this->arr_institusi[$this->session->userdata('hak_akses')];
-      $data_dosen = $this->kuesioner_model->get_all_not_done_by_institusi($kode_institusi, $thnAkademik, $kd_semester, $penilai);
-      $data_dosen_s = $this->kuesioner_model->get_all_done_by_institusi($kode_institusi, $thnAkademik, $kd_semester, $penilai);
-
       $data = array(
         'title' => 'Kuesioner',
-        'data_dosen' => $data_dosen,
-        'data_dosen_s' => $data_dosen_s,
         'title_text' => 'Institusi',
-        'title_kode' => $this->prodi_model->get_institusi($kode_institusi)
+        'title_kode' => $this->prodi_model->get_institusi($kode_institusi),
+        'kode' => $this->session->userdata('hak_akses'),
+        'thnAkademik' => $thnAkademik,
+        'kd_semester' => $kd_semester,
+        'penilai' => $penilai,
+        'url' => site_url('kuesioner/get_list_insitusi_json')
       );
     }
 
@@ -82,16 +83,48 @@ class Kuesioner extends CI_Controller
   public function isi($kd_dosen=NULL){
     //cek hak akses
     $hak = $this->session->userdata('hak_akses');
+    $thnAkademik = $this->data_ta->tahunAkademik;
+    $kd_semester = $this->data_ta->kd_semester;
     if($hak>2 && $hak<10){
-      $this->isi_prodi($kd_dosen);
+      //cek apakah sudah ada atau belum
+      if($this->kuesioner_model->get_row_count($thnAkademik,$kd_semester,$kd_dosen,'1')>0){
+        redirect('kuesioner');
+      }else{
+        $this->isi_prodi($kd_dosen);
+      }
     }else if($hak>9 && $hak<12){
-      $this->isi_pk1($kd_dosen);
+      //cek apakah sudah ada atau belum
+      if($this->kuesioner_model->get_row_count($thnAkademik,$kd_semester,$kd_dosen,'2')>0){
+        redirect('kuesioner');
+      }else{
+        $this->isi_pk1($kd_dosen);
+      }
     }else{
       redirect('kuesioner/lihat_data');
     }
   }
 
-  public function isi_pk1($kd_dosen){
+  public function get_list_insitusi_json(){
+    $kode_institusi = $this->arr_institusi[$this->input->post('kode')];
+    $thnAkademik = $this->input->post('thn_akademik');
+    $kd_semester = $this->input->post('kd_semester');
+    $penilai = $this->input->post('penilai');
+    header('Content-Type: application/json');
+    $arr = $this->kuesioner_model->get_all_by_institusi_json($kode_institusi,$thnAkademik,$kd_semester,$penilai);
+    echo $arr;
+  }
+
+  public function get_list_prodi_json(){
+    $kode_prodi = $this->input->post('kode');
+    $thnAkademik = $this->input->post('thn_akademik');
+    $kd_semester = $this->input->post('kd_semester');
+    $penilai = $this->input->post('penilai');
+    header('Content-Type: application/json');
+    $arr = $this->kuesioner_model->get_all_by_prodi_json($kode_prodi,$thnAkademik,$kd_semester,$penilai);
+    echo $arr;
+  }
+
+  private function isi_pk1($kd_dosen){
     //1. cek kaprodi sesuai dgn kode prodi dosen
     $d_dosen = $this->dosen_model->get_by_kd($kd_dosen);
     $kode_institusi = $this->arr_institusi[$this->session->userdata('hak_akses')];
@@ -117,7 +150,7 @@ class Kuesioner extends CI_Controller
     }
   }
 
-  public function isi_prodi($kd_dosen){
+  private function isi_prodi($kd_dosen){
     //1. cek kaprodi sesuai dgn kode prodi dosen
     $d_dosen = $this->dosen_model->get_by_kd($kd_dosen);
     $kd_prodi = $this->arr_prodi[$this->session->userdata('hak_akses')];
@@ -299,7 +332,6 @@ class Kuesioner extends CI_Controller
 
     $this->load->view('kuesioner/report_dosen',$data);
   }
-
 
 }
 

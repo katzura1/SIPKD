@@ -87,7 +87,9 @@
                     },
                     processing: true,
                     serverSide: true,
-                    ajax: {"url": "user_tes/json", "type": "POST"},
+                    ajax: {
+                      "url": "user_tes/json",
+                      "type": "POST"},
                     columns: [
                         {
                             "data": "kd_dosen",

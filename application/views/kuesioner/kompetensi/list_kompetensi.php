@@ -25,9 +25,7 @@ $this->load->view('template/sidebar');
 
     <!-- Default box -->
     <div class="box">
-        <div class="box-header with-border">
-            <h3 class="box-title">Title</h3>
-        </div>
+
         <div class="box-body">
           <a href="<?=site_url('kompetensi/tambah')?>" class="btn btn-primary" style="margin-bottom:5px;"><i class="fa fa-plus"></i> TAMBAH</a>
           <?php
