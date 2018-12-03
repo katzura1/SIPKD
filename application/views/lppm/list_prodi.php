@@ -141,7 +141,7 @@ $(document).ready(function() {
   var table2 = $("#table2").dataTable({
       initComplete: function() {
           var api = this.api();
-          $('#table1_filter input')
+          $('#table2_filter input')
               .off('.DT')
               .on('input.DT', function() {
                   api.search(this.value).draw();

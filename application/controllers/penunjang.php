@@ -196,13 +196,13 @@ class Penunjang extends CI_Controller {
     $kd_semester = $this->data_ta->kd_semester;
     $kode_prodi = $this->arr_prodi[$this->session->userdata('hak_akses')];
 
-    $data_penunjang = $this->penunjang_model->tampil_penunjang_prodi($thn_akademik,$kd_semester,$kode_prodi,'belum');
-    $data_penunjang_validasi = $this->penunjang_model->tampil_penunjang_prodi($thn_akademik,$kd_semester,$kode_prodi,'sudah');
+    $data_penunjang = $this->penunjang_model->tampil_penunjang_prodi($thnAkademik,$kd_semester,$kode_prodi,'belum');
+    $data_penunjang_validasi = $this->penunjang_model->tampil_penunjang_prodi($thnAkademik,$kd_semester,$kode_prodi,'sudah');
     $data = array(
       'title' => 'Validasi Penunjang Dosen',
       'data_penunjang' => $data_penunjang,
       'data_penunjang_validasi' => $data_penunjang_validasi,
-      'thn_akademik' => $thn_akademik,
+      'thn_akademik' => $thnAkademik,
       'kd_semester' => $kd_semester,
       'program_studi' => $this->prodi_model->getByKode($kode_prodi)->nama_prodi,
     );

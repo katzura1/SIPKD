@@ -34,79 +34,53 @@ $this->load->view('template/sidebar');
             echo $this->session->userdata('message');
           }
           ?>
-          <div class="nav-tabs-custom">
-            <ul class="nav nav-tabs">
-              <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">Belum Validasi</a></li>
-              <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">Sudah Validasi</a></li>
-            </ul>
-            <div class="tab-content">
-              <div class="tab-pane active" id="tab_1">
-                <table id="table_validasi" class="table table-striped">
-                  <thead>
-                    <tr>
-                      <th>No.</th>
-                      <th>Kode Dosen</th>
-                      <th>Nama Dosen</th>
-                      <th>Nama Kegiatan</th>
-                      <th>Dokumen Hasil</th>
-                      <th>Aksi</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php foreach ($data_penunjang as $data): ?>
-                      <tr>
-                        <td></td>
-                        <td><?=$data->kd_dosen?></td>
-                        <td><?=($data->gelar_depan." ".$data->nm_dosen.", ".$data->gelar_belakang)?></td>
-                        <td><?=$data->nama_kegiatan?></td>
-                        <td>
-                          <a href="<?=base_url($data->dok_path.'/'.$data->dok_hasil)?>" target="_blank" class="btn btn-default">Unduh</a>
-                        </td>
-                        <td>
-                          <a data-toggle="modal" onclick="javascript:load_penunjang(<?=$data->id?>)" class="btn btn-primary">View</a>
-                          <a href="<?=site_url('penunjang/aksivalidasi/'.$data->id.'/sudah')?>" class="btn btn-success">Validasi</a>
-                        </td>
-                      </tr>
-                    <?php endforeach; ?>
-                  </tbody>
-                </table>
-              </div>
-              <!-- /.tab-pane -->
-              <div class="tab-pane" id="tab_2">
-                <table id="table_penunjang_validasi" class="table table-striped">
-                  <thead>
-                    <tr>
-                      <th>No.</th>
-                      <th>Kode Dosen</th>
-                      <th>Nama Dosen</th>
-                      <th>Nama Kegiatan</th>
-                      <th>Dokumen Hasil</th>
-                      <th>Aksi</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php foreach ($data_penunjang_validasi as $data): ?>
-                      <tr>
-                        <td></td>
-                        <td><?=$data->kd_dosen?></td>
-                        <td><?=($data->gelar_depan." ".$data->nm_dosen." ".$data->gelar_belakang)?></td>
-                        <td><?=$data->nama_kegiatan?></td>
-                        <td>
-                          <a href="<?=base_url($data->dok_path.'/'.$data->dok_hasil)?>" target="_blank" class="btn btn-default">Unduh</a>
-                        </td>
-                        <td>
-                          <a data-toggle="modal" onclick="javascript:load_penunjang(<?=$data->id?>)" class="btn btn-primary">View</a>
-                          <a href="<?=site_url('penunjang/aksivalidasi/'.$data->id.'/belum')?>" class="btn btn-danger">Batal Validasi</a>
-                        </td>
-                      </tr>
-                    <?php endforeach; ?>
-                  </tbody>
-                </table>
-              </div>
-              <!-- /.tab-pane -->
-            </div>
-            <!-- /.tab-content -->
-          </div>
+          <table id="table_validasi" class="table table-striped">
+            <thead>
+              <tr>
+                <th>No.</th>
+                <th>Kode Dosen</th>
+                <th>Nama Dosen</th>
+                <th>Nama Kegiatan</th>
+                <th>Dokumen Hasil</th>
+                <th>Status</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php foreach ($data_penunjang as $data): ?>
+                <tr>
+                  <td></td>
+                  <td><?=$data->kd_dosen?></td>
+                  <td><?=($data->gelar_depan." ".$data->nm_dosen.", ".$data->gelar_belakang)?></td>
+                  <td><?=$data->nama_kegiatan?></td>
+                  <td>
+                    <a href="<?=base_url($data->dok_path.'/'.$data->dok_hasil)?>" target="_blank" class="btn btn-default">Unduh</a>
+                  </td>
+                  <td><label class='label bg-red'><?=ucwords($data->status_periksa).' Validasi'?></label></td>
+                  <td>
+                    <a data-toggle="modal" onclick="javascript:load_penunjang(<?=$data->id?>)" class="btn btn-primary">View</a>
+                    <a href="<?=site_url('penunjang/aksivalidasi/'.$data->id.'/sudah')?>" class="btn btn-success">Validasi</a>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+              <?php foreach ($data_penunjang_validasi as $data): ?>
+                <tr>
+                  <td></td>
+                  <td><?=$data->kd_dosen?></td>
+                  <td><?=($data->gelar_depan." ".$data->nm_dosen." ".$data->gelar_belakang)?></td>
+                  <td><?=$data->nama_kegiatan?></td>
+                  <td>
+                    <a href="<?=base_url($data->dok_path.'/'.$data->dok_hasil)?>" target="_blank" class="btn btn-default">Unduh</a>
+                  </td>
+                  <td><label class='label bg-green'><?=ucwords($data->status_periksa).' Validasi'?></label></td>
+                  <td>
+                    <a data-toggle="modal" onclick="javascript:load_penunjang(<?=$data->id?>)" class="btn btn-primary">View</a>
+                    <a href="<?=site_url('penunjang/aksivalidasi/'.$data->id.'/belum')?>" class="btn btn-danger">Batal Validasi</a>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
         </div><!-- /.box-body -->
         <div class="box-footer">
             Footer
@@ -131,8 +105,13 @@ $this->load->view('template/js');
                 "orderable": false
               },
               {
-                "targets": [ 5 ],
+                "targets": [ 4 ],
                 "orderable": false
+              },
+              {
+                "targets": [ 5 ],
+                "orderable": false,
+                "searchable":false
               }
           ]
       } );
