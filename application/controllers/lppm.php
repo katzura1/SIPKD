@@ -14,6 +14,11 @@ class Lppm extends CI_Controller
     9 => '20'
   );
 
+  private $arr_institusi = array(
+    10 => array('1','3'),
+    11 => array('2')
+  );
+
   function __construct()
   {
     parent::__construct();
@@ -31,7 +36,7 @@ class Lppm extends CI_Controller
     $hak_akses = $this->session->userdata('hak_akses');
     if($hak_akses>2 && $hak_akses<10){
       $this->lihat_data_prodi();
-    }else if($hak_akses>10 && $hak_akses<13){
+    }else if($hak_akses>=10 && $hak_akses<13){
       $this->lihat_data_insititusi();
     }else{
       //arahkan ke page lihat data personal jika hak akses dosen biasa
@@ -62,11 +67,27 @@ class Lppm extends CI_Controller
     echo $this->lppm_model->get_penelitian_prodi($thnAkademik,$kd_semester,$kode_prodi);
   }
 
+  function get_penelitian_institusi_json($t1,$t2,$s,$kode){
+    $thnAkademik = $t1.'/'.$t2;
+    $kd_semester = $s;
+    $kode_institusi = $this->arr_institusi[$kode];
+    header('Content-Type: application/json');
+    echo $this->lppm_model->get_penelitian_institusi($thnAkademik,$kd_semester,$kode_institusi);
+  }
+
   function get_pengabdian_prodi_json($t1,$t2,$s,$kode_prodi){
     $thnAkademik = $t1.'/'.$t2;
     $kd_semester = $s;
     header('Content-Type: application/json');
     echo $this->lppm_model->get_pengabdian_prodi($thnAkademik,$kd_semester,$kode_prodi);
+  }
+
+  function get_pengabdian_institusi_json($t1,$t2,$s,$kode){
+    $thnAkademik = $t1.'/'.$t2;
+    $kd_semester = $s;
+    $kode_institusi = $this->arr_institusi[$kode];
+    header('Content-Type: application/json');
+    echo $this->lppm_model->get_pengabdian_institusi($thnAkademik,$kd_semester,$kode_institusi);
   }
 
   function lihat_data_prodi(){
@@ -91,6 +112,44 @@ class Lppm extends CI_Controller
       'action' => site_url('lppm'),
     );
     $this->load->view('lppm/list_prodi',$data);
+  }
+
+  function lihat_data_insititusi(){
+    //cek hak_akses
+    $hak_akses = $this->session->userdata('hak_akses');
+    if ($hak_akses<10 || $hak_akses>11) {
+      redirect(site_url('lppm/lihat_data'));
+    }
+    $data_ta =  $this->tahun_akademik_model->get_status_aktif();
+    $thn_akademik = set_value('thnAkademik', $data_ta->tahunAkademik);
+    $kd_semester = set_value('kd_semester', $data_ta->kd_semester);
+    //jika tidak ada kode prodi berarti semua prodi
+    // var_dump($this->input->post('kd_prodi')!==null && $this->input->post('kd_prodi')!='');
+    // die();
+    if($this->input->post('kd_prodi')!==null && $this->input->post('kd_prodi')!='') {
+      $kode = $this->input->post('kd_prodi');
+      $url1 = site_url("lppm/get_penelitian_prodi_json/$thn_akademik/$kd_semester/$kode");
+      $url2 = site_url("lppm/get_pengabdian_prodi_json/$thn_akademik/$kd_semester/$kode");
+    }else{
+      $kode = $hak_akses;
+      $url1 = site_url("lppm/get_penelitian_institusi_json/$thn_akademik/$kd_semester/$kode");
+      $url2 = site_url("lppm/get_pengabdian_institusi_json/$thn_akademik/$kd_semester/$kode");
+    }
+    $data = array(
+      'title' => 'Data LPPM Institusi',
+      'kode' => $kode,
+      'nama_institusi' => $hak_akses==10?'STMIK,AMIK':'STIE',
+      'dd_prodi'=> $this->prodi_model->get_dd_prodi($this->arr_institusi[$hak_akses]),
+      'kd_prodi'=> set_value('kd_prodi',''),
+      'dd_ta' => $this->tahun_akademik_model->get_dd_thn_akademik(),
+      'tahun_akademik' => $thn_akademik,
+      'dd_s' => array('1'=>'Gasal','2'=>'Genap'),
+      'kd_semester' => $kd_semester,
+      'action' => site_url('lppm'),
+      'url1'=>$url1,
+      'url2'=>$url2
+    );
+    $this->load->view('lppm/list_institusi',$data);
   }
 
   function lihat_data(){

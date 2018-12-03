@@ -30,6 +30,11 @@ $this->load->view('template/sidebar');
           <h3 class="box-title">Dosen <?=$title_text?> : <?=$title_kode?></h3>
         </div>
         <div class="box-body">
+          <?php
+          if($this->session->userdata('message')!=''){
+            echo $this->session->userdata('message');
+          }
+          ?>
           <table class="table table-striped responsive" id="tableDosen">
             <thead>
               <tr>

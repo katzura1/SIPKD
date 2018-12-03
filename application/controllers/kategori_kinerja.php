@@ -38,7 +38,7 @@ class Kategori_kinerja extends CI_Controller {
 	public function tambah()
 	{
     $data = array(
-      'title' => 'Form Kategori Kinerja',
+      'title' => 'Input Kategori Kinerja',
       'kd_kategori' => set_value('kd_kategori',''),
       'key_nama' => '',
       'nama_kategori' => set_value('nama_kategori',''),
@@ -70,7 +70,7 @@ class Kategori_kinerja extends CI_Controller {
       'key_nama' => set_value('key_nama', $data_kategori->nama_kategori),
       'nama_kategori' => set_value('nama_kategori',$data_kategori->nama_kategori),
       'action' => site_url('kategori_kinerja/aksiupdate'),
-      'button' => 'UBAH'
+      'button' => 'UPDATE'
     );
     $this->load->view('kuesioner/kategori_kinerja/form_kategori_kinerja',$data);
   }
@@ -86,7 +86,7 @@ class Kategori_kinerja extends CI_Controller {
         'nama_kategori' => $this->input->post('nama_kategori'),
       );
       $this->kategori_kinerja_model->ubahData($data,$kd_kategori);
-      $this->session->set_flashdata('message', "<div class='alert alert-success alert-dismissible' role='alert'>Data Berhasil Diubah!<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>");
+      $this->session->set_flashdata('message', "<div class='alert alert-success alert-dismissible' role='alert'>Data Berhasil Diupdate!<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>");
       redirect(site_url('kategori_kinerja'));
     }
   }

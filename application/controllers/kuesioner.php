@@ -206,6 +206,7 @@ class Kuesioner extends CI_Controller
       );
       $this->kuesioner_model->tambahDetail($data_detail);
     }
+    $this->session->set_flashdata('message', "<div class='alert alert-success alert-dismissible' role='alert'>Data Berhasil Disimpan!<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>");
     redirect(site_url('kuesioner'));
   }
 
@@ -276,6 +277,7 @@ class Kuesioner extends CI_Controller
       );
       $this->kuesioner_model->ubahDetail($data_detail,$id,$kd_kompetensi[$i]);
     }
+    $this->session->set_flashdata('message', "<div class='alert alert-success alert-dismissible' role='alert'>Data Berhasil Diupdate!<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>");
     redirect(site_url('kuesioner'));
   }
 

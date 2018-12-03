@@ -52,8 +52,10 @@ class Prodi_model extends CI_Model{
   }
 
   public function getByKode($kode_prodi){
+    $this->db->from($this->nama_tabel);
+    $this->db->join('institusi','institusi.kode_institusi='.$this->nama_tabel.'.kode_institusi');
     $this->db->where($this->primary_key,$kode_prodi);
-    return $this->db->get($this->nama_tabel)->row();
+    return $this->db->get()->row();
   }
 
   public function tambahData($data){

@@ -102,7 +102,7 @@ class user extends CI_Controller{
         'hak_akses' => $this->input->post('hak',TRUE),
       );
       $this->user_model->update($data,$this->input->post('kd_dosen',TRUE));
-      $this->session->set_flashdata('message','Data berhasil diubah!');
+      $this->session->set_flashdata('message','Data berhasil Diupdate!');
       redirect(site_url('user'));
     }
   }
@@ -132,7 +132,7 @@ class user extends CI_Controller{
         'password'=>$password
       );
       $this->user_model->update($data,$kd_dosen);
-      $this->session->set_flashdata('message', "<div class='alert alert-success alert-dismissible' role='alert'>Password Berhasil Diubah!<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>");
+      $this->session->set_flashdata('message', "<div class='alert alert-success alert-dismissible' role='alert'>Password Berhasil Diupdate!<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>");
       redirect(site_url('user/profile'));
     }
   }

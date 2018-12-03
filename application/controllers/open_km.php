@@ -72,7 +72,7 @@ class Open_km extends CI_Controller
     $row_count = $this->open_km_model->get_num_rows($id);
     if ($row_count>0) {
       $this->open_km_model->ubahOpenKM($data,$id);
-      $this->session->set_flashdata('message', "<div class='alert alert-success alert-dismissible' role='alert'>Data Berhasil Diubah!<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>");
+      $this->session->set_flashdata('message', "<div class='alert alert-success alert-dismissible' role='alert'>Data Berhasil Diupdate!<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>");
     }else{
       $this->open_km_model->simpanOpenKM($data);
       $this->session->set_flashdata('message', "<div class='alert alert-success alert-dismissible' role='alert'>Data Berhasil Disimpan!<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>");
@@ -105,7 +105,7 @@ class Open_km extends CI_Controller
       'skor' => $this->input->post('skor')
     );
     $this->open_km_model->ubahOpenKM($data,$this->input->post('id'));
-    $this->session->set_flashdata('message', "<div class='alert alert-success alert-dismissible' role='alert'>Data Berhasil Diubah!<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>");
+    $this->session->set_flashdata('message', "<div class='alert alert-success alert-dismissible' role='alert'>Data Berhasil Diupdate!<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>");
     redirect(site_url('open_km'));
   }
 }

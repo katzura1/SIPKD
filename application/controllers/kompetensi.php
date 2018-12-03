@@ -40,7 +40,7 @@ class Kompetensi extends CI_Controller {
 
   public function tambah(){
 		$data = array(
-			'title' => 'Tambah Data Kompetensi',
+			'title' => 'Input Data Kompetensi',
 			'action' => site_url('kompetensi/aksitambah'),
 			'key_nama' => '',
 			'dd_kategori_kinerja' => $this->kategori_kinerja_model->dd_kategori_kinerja(),
@@ -98,7 +98,7 @@ class Kompetensi extends CI_Controller {
 				'nama_kompetensi' => $this->input->post('kompetensi',TRUE)
 			);
 			$this->kompetensi_model->ubahData($data, $this->input->post('id'));
-      $this->session->set_flashdata('message', "<div class='alert alert-success alert-dismissible' role='alert'>Data Berhasil Diubah!<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>");
+      $this->session->set_flashdata('message', "<div class='alert alert-success alert-dismissible' role='alert'>Data Berhasil Diupdate!<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>");
       redirect(site_url('kompetensi'));
 		}
 	}

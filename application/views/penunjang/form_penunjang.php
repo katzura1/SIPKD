@@ -9,8 +9,8 @@ $this->load->view('template/sidebar');
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        Blank page
-        <small>it all starts here</small>
+        <?=$title?>
+        <small>Penunjang</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -25,7 +25,7 @@ $this->load->view('template/sidebar');
     <!-- Default box -->
     <div class="box">
         <div class="box-header with-border">
-          <h3 class="box-title">Title</h3>
+          <h3 class="box-title">Form Penunjang</h3>
         </div>
         <div class="box-body">
           <?php
@@ -36,34 +36,40 @@ $this->load->view('template/sidebar');
           <form action="<?=$action?>" method="post" enctype="multipart/form-data">
             <div class="row">
               <div class="col-md-8" style="margin-left:10px;">
-                <div class="form-group">
-                  <label>Tahun Akademik</label>
-                  <input type="text" name="thnAkademik" value="<?=$thnAkademik?>" class="form-control" readonly>
-                  <?=form_error('thnAkademik')?>
-                </div>
-                <div class="form-group">
-                  <label>Semester</label>
-                  <input type="text" name="kd_semester" value="<?=$kd_semester?>" class="form-control" readonly>
-                  <?=form_error('kd_semester')?>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Tahun Akademik</label>
+                      <input type="text" name="thnAkademik" value="<?=$thnAkademik?>" class="form-control" readonly required>
+                      <?=form_error('thnAkademik')?>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Semester</label>
+                      <input type="text" name="kd_semester" value="<?=$kd_semester?>" class="form-control" readonly required>
+                      <?=form_error('kd_semester')?>
+                    </div>
+                  </div>
                 </div>
                 <div class="form-group">
                   <label>Tanggal</label>
-                  <input type="date" name="tanggal" value="<?=$tanggal?>" min="2001-01-01" max="<?=$tanggal?>" class="form-control">
+                  <input type="date" name="tanggal" value="<?=$tanggal?>" min="2001-01-01" max="<?=$tanggal?>" class="form-control" required>
                   <?=form_error('tanggal')?>
                 </div>
                 <div class="form-group">
                   <label>Nama Kegiatan</label>
-                  <input type="text" name="nama_kegiatan" value="<?=$nama_kegiatan?>" class="form-control">
+                  <input type="text" name="nama_kegiatan" value="<?=$nama_kegiatan?>" class="form-control" required>
                   <?=form_error('nama_kegiatan')?>
                 </div>
                 <div class="form-group">
                   <label>Alamat</label>
-                  <input type="text" name="alamat" value="<?=$alamat?>" class="form-control">
+                  <input type="text" name="alamat" value="<?=$alamat?>" class="form-control" required>
                   <?=form_error('alamat')?>
                 </div>
                 <div class="form-group">
                   <label>Tempat</label>
-                  <input type="text" name="tempat" value="<?=$tempat?>" class="form-control">
+                  <input type="text" name="tempat" value="<?=$tempat?>" class="form-control" required>
                   <?=form_error('tempat')?>
                 </div>
                 <div class="form-group">

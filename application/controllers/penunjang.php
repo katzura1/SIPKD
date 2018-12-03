@@ -139,7 +139,8 @@ class Penunjang extends CI_Controller {
       );
       $this->load->view('penunjang/form_penunjang',$data);
     }else{
-      $this->session->set_flashdata('message', "<div class='alert alert-danger alert-dismissible' role='alert'>Data Gagal Diubah!<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>");
+      //data yang sudah divalidasi tidak dapat diupdate
+      $this->session->set_flashdata('message', "<div class='alert alert-danger alert-dismissible' role='alert'>Data Gagal Diupdate!<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>");
       redirect(site_url('penunjang/list_penunjang'));
     }
   }
@@ -180,7 +181,7 @@ class Penunjang extends CI_Controller {
         }
       }
       $this->penunjang_model->updateData($data,$this->input->post('id',TRUE));
-      $this->session->set_flashdata('message', "<div class='alert alert-success alert-dismissible' role='alert'>Data Berhasil Diubah!<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>");
+      $this->session->set_flashdata('message', "<div class='alert alert-success alert-dismissible' role='alert'>Data Berhasil Diupdate!<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>");
       redirect(site_url('penunjang/list_penunjang'));
     }
   }
