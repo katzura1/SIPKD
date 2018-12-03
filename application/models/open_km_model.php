@@ -11,11 +11,11 @@ class Open_km_model extends CI_Model
     $this->datatables->from('dosen as d');
     $this->datatables->join('program_studi as pd','pd.kode_prodi=d.kode_prodi');
     $this->datatables->where_in('kode_institusi',$kode_institusi);
-    $this->datatables->add_column('action_input','<button class="btn btn-success">SIMPAN</button>');
+    $this->datatables->add_column('action_input','<button class="btn btn-success" value="0">SIMPAN</button>');
     $this->datatables->add_column('action_update','<button class="btn btn-danger" value="$1">UPDATE</button>','id');
     return $this->datatables->generate();
   }
-  
+
   // function list_institusi_not_done($kode_institusi, $thnAkademik, $kd_semester){
   //   $this->db->from('dosen');
   //   $this->db->join('program_studi','program_studi.kode_prodi=dosen.kode_prodi');
@@ -35,6 +35,13 @@ class Open_km_model extends CI_Model
   //   $this->db->where_in('kode_institusi',$kode_institusi);
   //   return $this->db->get()->result();
   // }
+
+  function get_num_rows($id){
+    $this->db->from('open_km');
+    $this->db->join('dosen','dosen.kd_dosen=open_km.kd_dosen');
+    $this->db->where('id',$id);
+    return $this->db->get()->num_rows();
+  }
 
   function get_by_id($id){
     $this->db->from('open_km');

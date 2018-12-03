@@ -27,9 +27,9 @@ class Dashboard extends CI_Controller {
 				'title' => 'Dashboard Dosen',
 				'thnAkdemik' => $data_ta->tahunAkademik,
 				'kd_semester' => $data_ta->kd_semester,
-				'jum_penelitian' => $this->lppm_model->get_jumlah_penelitian_by_dosen($kd_dosen)->total,
-				'jum_pengabdian' => $this->lppm_model->get_jumlah_pengabdian_by_dosen($kd_dosen)->total,
-				'jum_penunjang' => $this->penunjang_model->get_jumlah_penunjang_by_dosen($kd_dosen)->total,
+				'jum_penelitian' => $this->lppm_model->get_jumlah_penelitian_by_dosen($kd_dosen,$data_ta->tahunAkademik,$data_ta->kd_semester)->total,
+				'jum_pengabdian' => $this->lppm_model->get_jumlah_pengabdian_by_dosen($kd_dosen,$data_ta->tahunAkademik,$data_ta->kd_semester)->total,
+				'jum_penunjang' => $this->penunjang_model->get_jumlah_penunjang_by_dosen($kd_dosen,$data_ta->tahunAkademik,$data_ta->kd_semester)->total,
 			);
 		}
 		$this->load->view('dashboard/'.$view,$data);

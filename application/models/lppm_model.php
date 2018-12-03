@@ -69,19 +69,23 @@ class Lppm_model extends CI_Model
     return $this->db->get()->row();
   }
 
-  public function get_jumlah_penelitian_by_dosen($kd_dosen){
+  public function get_jumlah_penelitian_by_dosen($kd_dosen,$thnAkademik,$kd_semester){
     $this->db->select('*, count(id) as total');
     $this->db->from('data_penelitian as dp');
     $this->db->join('data_dosen_penelitian as ddp', 'ddp.id_penelitian=dp.id');
     $this->db->where('kd_dosen',$kd_dosen);
+    $this->db->where('thn_akademik',$thnAkademik);
+    $this->db->where('kd_semester',$kd_semester);
     return $this->db->get()->row();
   }
 
-  public function get_jumlah_pengabdian_by_dosen($kd_dosen){
+  public function get_jumlah_pengabdian_by_dosen($kd_dosen,$thnAkademik,$kd_semester){
     $this->db->select('*, count(id) as total');
     $this->db->from('data_proposal as dp');
     $this->db->join('data_dosen_proposal as ddp', 'ddp.id_proposal=dp.id');
     $this->db->where('kd_dosen',$kd_dosen);
+    $this->db->where('thn_akademik',$thnAkademik);
+    $this->db->where('kd_semester',$kd_semester);
     return $this->db->get()->row();
   }
 

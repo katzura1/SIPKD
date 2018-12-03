@@ -85,10 +85,12 @@
       return $this->db->get()->row();
     }
 
-    public function get_jumlah_penunjang_by_dosen($kd_dosen){
+    public function get_jumlah_penunjang_by_dosen($kd_dosen,$thnAkademik,$kd_semester){
       $this->db->select('count(id) as total');
       $this->db->from($this->nama_tb);
       $this->db->where('kd_dosen',$kd_dosen);
+      $this->db->where('thnAkademik',$thnAkademik);
+      $this->db->where('kd_semester',$kd_semester);
       return $this->db->get()->row();
     }
 

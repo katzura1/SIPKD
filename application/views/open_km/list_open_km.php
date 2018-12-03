@@ -137,7 +137,6 @@ $this->load->view('template/js');
                         });
                         return select.prop("outerHTML");
                       },
-                      orderable:false,
                       searchable:false
                     },
                     {
@@ -163,26 +162,6 @@ $this->load->view('template/js');
         }
 
     });
-
-    $('#tableOpenKm tbody').on( 'click', '.btn-success', function () {
-        //var data = table.row( $(this).parents('tr') ).data();
-        //$(this).parents('tr').attr('data-id')
-        //$(this).parents('tr').find('td:eq(4) select').val()
-        var kd_dosen = $(this).parents('tr').find('td:eq(1)').text();
-        var skor = $(this).parents('tr').find('td:eq(4) select').val();
-        if(skor==''){
-          alert('Harap Isi Pilihan Open KM');
-        }else{
-          $.ajax({
-            url:"<?=$action?>",
-            type:"POST",
-            data:{kd_dosen:kd_dosen,skor:skor,id:0},
-            success: function(data){
-              location.reload();
-            }
-          });
-        }
-    } );
 
     $('#tableOpenKm tbody').on( 'click', '.btn-danger', function () {
         //var data = table.row( $(this).parents('tr') ).data();
@@ -211,13 +190,14 @@ $this->load->view('template/js');
         //$(this).parents('tr').find('td:eq(4) select').val()
         var kd_dosen = $(this).parents('tr').find('td:eq(1)').text();
         var skor = $(this).parents('tr').find('td:eq(4) select').val();
+        var id = $(this).val();
         if(skor==''){
           alert('Harap Isi Pilihan Open KM');
         }else{
           $.ajax({
             url:"<?=$action?>",
             type:"POST",
-            data:{kd_dosen:kd_dosen,skor:skor},
+            data:{kd_dosen:kd_dosen,skor:skor,id:id},
             success: function(data){
               location.reload();
             }

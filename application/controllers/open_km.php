@@ -69,7 +69,7 @@ class Open_km extends CI_Controller
       'kd_dosen' => $kd_dosen,
       'skor' => $skor
     );
-    $row_count = $this->open_km_model->get_by_id($id);
+    $row_count = $this->open_km_model->get_num_rows($id);
     if ($row_count>0) {
       $this->open_km_model->ubahOpenKM($data,$id);
       $this->session->set_flashdata('message', "<div class='alert alert-success alert-dismissible' role='alert'>Data Berhasil Diubah!<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>");
