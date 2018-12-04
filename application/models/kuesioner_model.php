@@ -33,6 +33,33 @@ class Kuesioner_model extends CI_Model{
     return $this->datatables->generate();
   }
 
+  public function get_skor_by_prodi_json($kode_prodi,$thnAkademik,$kd_semester,$penilai){
+    $this->datatables->select($this->tb.'.kd_dosen, nm_dosen, nama_prodi, '.$this->tb.'.id, SUM(skor) as total_skor');
+    $this->datatables->from($this->tb);
+    $this->datatables->join($this->tb_d,$this->tb_d.'.id='.$this->tb.'.id');
+    $this->datatables->join('dosen','dosen.kd_dosen='.$this->tb.'.kd_dosen');
+    $this->datatables->join('program_studi','program_studi.kode_prodi=dosen.kode_prodi');
+    $this->datatables->where('thnAkademik',$thnAkademik);
+    $this->datatables->where('kd_semester',$kd_semester);
+    $this->datatables->where('dosen.kode_prodi',$kode_prodi);
+    $this->datatables->where('penilai',$penilai);
+    $this->datatables->group_by($this->tb.'.id');
+    return $this->datatables->generate();
+  }
+
+  public function get_skor_by_institusi_json($kode_institusi,$thnAkademik,$kd_semester,$penilai){
+    $this->datatables->select($this->tb.'.kd_dosen, nm_dosen, nama_prodi, '.$this->tb.'.id, SUM(skor) as total_skor');
+    $this->datatables->from($this->tb);
+    $this->datatables->join($this->tb_d,$this->tb_d.'.id='.$this->tb.'.id');
+    $this->datatables->join('dosen','dosen.kd_dosen='.$this->tb.'.kd_dosen');
+    $this->datatables->join('program_studi','program_studi.kode_prodi=dosen.kode_prodi');
+    $this->datatables->where('thnAkademik',$thnAkademik);
+    $this->datatables->where('kd_semester',$kd_semester);
+    $this->datatables->where_in('program_studi.kode_institusi',$kode_institusi);
+    $this->datatables->where('penilai',$penilai);
+    $this->datatables->group_by($this->tb.'.id');
+    return $this->datatables->generate();
+  }
   // public function get_done_institusi_json($kode_institusi,$thnAkademik,$kd_semester,$penilai){
   //   $this->datatables->select('dosen.kd_dosen, nm_dosen, nama_prodi,id');
   //   $this->datatables->from($this->tb);
@@ -129,12 +156,12 @@ class Kuesioner_model extends CI_Model{
     return $this->db->get()->result();
   }
 
-  public function tambah($data){
+  public function simpanKuesioner($data){
     $this->db->insert($this->tb,$data);
     return $this->db->insert_id();
   }
 
-  public function tambahDetail($data_detail){
+  public function simpanDetail($data_detail){
     $this->db->insert($this->tb_d,$data_detail);
   }
 

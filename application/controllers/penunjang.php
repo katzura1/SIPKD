@@ -231,12 +231,11 @@ class Penunjang extends CI_Controller {
   public function list_prodi(){
     //ambil data tahun akademik dari database
     $data_ta = $this->tahun_akademik_model->get_all_thn_akamdeik();
-    $kode_prodi = $this->arr_prodi[$this->session->userdata('hak_akses')];
 
     //cek apakah ada data POST jika tidak tampil berdasarkan tahun yang aktif
     $thn_akademik = set_value('thnAkademik',$this->data_ta->tahunAkademik);
     $kd_semester = set_value('semester',$this->data_ta->kd_semester);
-
+    $kode_prodi = $this->arr_prodi[$this->session->userdata('hak_akses')];
     //ambil data berdasrakan filter
     $data_penunjang = $this->penunjang_model->tampil_penunjang_prodi($thn_akademik, $kd_semester, $kode_prodi, '');
 

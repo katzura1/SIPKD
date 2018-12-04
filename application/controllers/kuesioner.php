@@ -193,7 +193,7 @@ class Kuesioner extends CI_Controller
       'tgl_isi' => date('Y-m-d'),
       'tgl_ubah' => date('Y-m-d')
     );
-    $id = $this->kuesioner_model->tambah($data);
+    $id = $this->kuesioner_model->simpanKuesioner($data);
 
     $kd_kompetensi = $this->input->post('kd_kompetensi');
     $skor = $this->input->post('skor');
@@ -204,7 +204,7 @@ class Kuesioner extends CI_Controller
         'kd_kompetensi' => $kd_kompetensi[$i],
         'skor' => $skor[$i]
       );
-      $this->kuesioner_model->tambahDetail($data_detail);
+      $this->kuesioner_model->simpanDetail($data_detail);
     }
     $this->session->set_flashdata('message', "<div class='alert alert-success alert-dismissible' role='alert'>Data Berhasil Disimpan!<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>");
     redirect(site_url('kuesioner'));
@@ -214,11 +214,11 @@ class Kuesioner extends CI_Controller
     //cek hak akses
     $d_dosen = $this->kuesioner_model->get_by_id($id);
     $hak_akses = $this->session->userdata('hak_akses');
-    if($hak_akses<5){
+    if($hak_akses<3 && $hak_akses>11){
       redirect(site_url('kuesioner'));
     }
     //cek apakah kaprodi
-    if($hak_akses>4 && $hak_akses<10){
+    if($hak_akses>2 && $hak_akses<10){
       $kd_prodi = $this->arr_prodi[$hak_akses];
     }
     else{
@@ -231,6 +231,7 @@ class Kuesioner extends CI_Controller
       $kode_institusi = '';
     }
     //1. cek kaprodi sesuai dgn kode prodi dosen
+    //jika kode prodi tidak sama cek kode institusi
     if($d_dosen->kode_prodi==$kd_prodi || in_array($d_dosen->kode_institusi,$kode_institusi)){
       $data_kategori = $this->kategori_kinerja_model->get_all();
       $data_kompetensi = $this->kuesioner_model->get_detail_by_id($id);
@@ -335,6 +336,81 @@ class Kuesioner extends CI_Controller
     $this->load->view('kuesioner/report_dosen',$data);
   }
 
+  function list_nilai(){
+    $hak_akses = $this->session->userdata('hak_akses');
+    if($hak_akses<3 && $hak_akses>11){
+      redirect(site_url('kuesioner'));
+    }else if($hak_akses>=3 && $hak_akses<=9){
+      //kaprodi
+      $kode_prodi = $this->arr_prodi[$hak_akses];
+      $thnAkademik = set_value('thnAkademik', $this->data_ta->tahunAkademik);
+      $kd_semester = set_value('kd_semester', $this->data_ta->kd_semester);
+      $data = array(
+        'title' => 'List Nilai Prodi',
+        'nama_header' => $this->prodi_model->getByKode($kode_prodi)->nama_prodi,
+        'url' => site_url('kuesioner/get_list_skor_prodi_json'),
+        'penilai' => '1',
+        'kode' => $kode_prodi,
+        'dd_ta' => $this->tahun_akademik_model->get_dd_thn_akademik(),
+        'thnAkademik' => $thnAkademik,
+        'dd_s' => array('1'=>'Gasal','2'=>'Genap'),
+        'kd_semester' => $kd_semester,
+      );
+
+      $this->load->view('kuesioner/list_nilai',$data);
+    }else{
+      //pk-1
+      $kode_prodi = set_value('kode_prodi','');
+
+      if($kode_prodi!=''){
+        //pencarian per prodi
+        $kode = $kode_prodi;
+        $url = site_url('kuesioner/get_list_skor_prodi_json');
+      }else{
+        //pencarian per institusi
+        $kode = $hak_akses;
+        $url = site_url('kuesioner/get_list_skor_institusi_json');
+      }
+      $thnAkademik = set_value('thnAkademik', $this->data_ta->tahunAkademik);
+      $kd_semester = set_value('kd_semester', $this->data_ta->kd_semester);
+      $penilai = set_value('penilai','1');
+      $kode_institusi = $this->arr_institusi[$this->session->userdata('hak_akses')];
+      $data = array(
+        'title' => 'List Nilai Institusi',
+        'nama_header' => $this->prodi_model->get_institusi($kode_institusi),
+        'url' => $url,
+        'penilai' => $penilai,
+        'kode' => $kode,
+        'dd_ta' => $this->tahun_akademik_model->get_dd_thn_akademik(),
+        'thnAkademik' => $thnAkademik,
+        'dd_s' => array('1'=>'Gasal','2'=>'Genap'),
+        'kd_semester' => $kd_semester,
+        'dd_prodi' => $this->prodi_model->get_dd_prodi($kode_institusi),
+      );
+
+      $this->load->view('kuesioner/list_nilai',$data);
+    }
+  }
+
+  function get_list_skor_institusi_json(){
+    $thnAkademik = $this->input->post('thn_akademik');
+    $kd_semester = $this->input->post('kd_semester');
+    $kode_institusi = $this->arr_institusi[$this->input->post('kode')];
+    $penilai = $this->input->post('penilai');
+    header('Content-Type: application/json');
+    $arr = $this->kuesioner_model->get_skor_by_institusi_json($kode_institusi,$thnAkademik,$kd_semester,$penilai);
+    echo $arr;
+  }
+
+  function get_list_skor_prodi_json(){
+    $thnAkademik = $this->input->post('thn_akademik');
+    $kd_semester = $this->input->post('kd_semester');
+    $kd_prodi = $this->input->post('kode');
+    $penilai = $this->input->post('penilai');
+    header('Content-Type: application/json');
+    $arr = $this->kuesioner_model->get_skor_by_prodi_json($kd_prodi,$thnAkademik,$kd_semester,$penilai);
+    echo $arr;
+  }
 }
 
 

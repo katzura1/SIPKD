@@ -11,13 +11,13 @@ $this->load->view('template/sidebar');
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        Daftar Dosen
+        List Nilai Kuesioner
         <small>Kuesioner</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="#">Kuesioner</a></li>
-        <li class="active">Daftar Dosen</li>
+        <li class="active">List Nilai</li>
     </ol>
 </section>
 
@@ -27,30 +27,47 @@ $this->load->view('template/sidebar');
     <!-- Default box -->
     <div class="box">
         <div class="box-header with-border">
-          <h3 class="box-title"><b>Dosen <?=$title_text?></b> : <?=$title_kode?> <b>TA</b> : <?=$thnAkademik?> <b>Semester</b> : <?=$kd_semester?></h3>
+          <h3 class="box-title"><?=$title.' '.$nama_header.' TA : '.$thnAkademik.'-'.$kd_semester?></h3>
         </div>
         <div class="box-body">
-          <?php
-          if($this->session->userdata('message')!=''){
-            echo $this->session->userdata('message');
-          }
-          ?>
-          <table class="table table-striped responsive" id="tableDosen">
+          <div class="row" style="margin-bottom:12px;">
+            <form action="<?=site_url('kuesioner/list_nilai')?>" method="post">
+              <div class="col-md-2">
+                <label>Tahun Akademik</label>
+                <?=form_dropdown('thnAkademik',$dd_ta,$thnAkademik,"class='form-control'")?>
+              </div>
+              <div class="col-md-2">
+                <label>Semester</label>
+                <?=form_dropdown('kd_semester',$dd_s,$kd_semester,"class='form-control'")?>
+              </div>
+              <?php if (isset($dd_prodi)): ?>
+              <div class="col-md-2">
+                <label>Program Studi</label>
+                <?=form_dropdown('kode_prodi',$dd_prodi,$kode,"class='form-control'")?>
+              </div>
+              <div class="col-md-2">
+                <label>Penilai</label>
+                <?=form_dropdown('penilai',array('1'=>'Kaprodi','2'=>'PK-1'),$penilai,"class='form-control'")?>
+              </div>
+              <?php endif; ?>
+              <div class="col-md-2">
+                <label style="color:white;display:block">BUTTON</label>
+                <button class="btn btn-primary" type="submit" name="btnFilter">FILTER</button>
+              </div>
+            </form>
+          </div>
+          <table id="table1" class="table table-striped">
             <thead>
               <tr>
-                <th>No.</th>
+                <th>No</th>
                 <th>Kode Dosen</th>
                 <th>Nama Dosen</th>
                 <th>Program Studi</th>
-                <th>Status</th>
-                <th>Aksi</th>
+                <th>Total Skor</th>
               </tr>
             </thead>
           </table>
         </div><!-- /.box-body -->
-        <div class="box-footer">
-
-        </div><!-- /.box-footer-->
     </div><!-- /.box -->
 
 </section><!-- /.content -->
@@ -62,8 +79,7 @@ $this->load->view('template/js');
 <!--DataTables-->
 <script type="text/javascript" src="<?=base_url('assets/AdminLTE-2.0.5/plugins/datatables/jquery.dataTables.min.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('assets/AdminLTE-2.0.5/plugins/datatables/dataTables.bootstrap.js')?>"></script>
-
-<script>
+<script type="text/javascript">
 $(document).ready(function() {
   // Setup datatables
   $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
@@ -79,10 +95,10 @@ $(document).ready(function() {
       };
   };
 
-  var table = $("#tableDosen").dataTable({
+  var table = $("#table1").dataTable({
       initComplete: function() {
           var api = this.api();
-          $('#tableDosen_filter input')
+          $('#table1_filter input')
               .off('.DT')
               .on('input.DT', function() {
                   api.search(this.value).draw();
@@ -106,7 +122,6 @@ $(document).ready(function() {
                   },
                   {
                     data: "kd_dosen",
-                    width: '10%',
                   },
                   {
                     data: "nm_dosen",
@@ -115,30 +130,11 @@ $(document).ready(function() {
                     data: "nama_prodi"
                   },
                   {
-                    data : "status",
-                    render: function (data, type, row){
-                      if(row.status==0){
-                        return "<label class='label bg-red'>Belum Dinilai</label>";
-                      }else{
-                        return "<label class='label bg-green'>Sudah Dinilai</label>";
-                      }
-                    },
-                  },
-                  {
-                    data: "status, action_nilai, action_ubah",
-                    render: function(data,type,row){
-                      if(row.status==0){
-                        return row.action_nilai;
-                      }else{
-                        return row.action_ubah;
-                      }
-                    },
-                    width:"15%",
-                    orderable: false,
-                    searchable: false,
+                    data: "total_skor",
+                    searchable: false
                   }
             ],
-            order: [[4, 'asc']],
+            order: [[4, 'desc']],
       rowCallback: function(row, data, iDisplayIndex) {
         var info = this.fnPagingInfo();
         var page = info.iPage;
@@ -149,41 +145,6 @@ $(document).ready(function() {
 
   });
   // end setup datatables
-    // var t = $('#tableDosen').DataTable( {
-    //     "columnDefs": [
-    //         {
-    //           "targets": [ 0 ],
-    //           "orderable": false
-    //         },
-    //         {
-    //           "targets": [ 4 ],
-    //           "orderable": false
-    //         }
-    //     ]
-    // } );
-    // t.on( 'order.dt search.dt', function () {
-    //     t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
-    //         cell.innerHTML = i+1;
-    //     } );
-    // } ).draw();
-    //
-    // var u = $('#tableDosens').DataTable( {
-    //     "columnDefs": [
-    //         {
-    //           "targets": [ 0 ],
-    //           "orderable": false
-    //         },
-    //         {
-    //           "targets": [ 4 ],
-    //           "orderable": false
-    //         }
-    //     ]
-    // } );
-    // u.on( 'order.dt search.dt', function () {
-    //     u.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
-    //         cell.innerHTML = i+1;
-    //     } );
-    // } ).draw();
 } );
 </script>
 <?php

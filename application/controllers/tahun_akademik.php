@@ -23,9 +23,7 @@ class tahun_akademik extends CI_Controller{
         'title' => 'Tahun Akademik',
         'data_ta' => $data_ta
     );
-
     $this->load->view('tahun_akademik/ta_list',$data);
-
   }
 
   public function tambah(){
