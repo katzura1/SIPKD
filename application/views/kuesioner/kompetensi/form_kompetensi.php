@@ -32,13 +32,13 @@ $this->load->view('template/sidebar');
               <div class="col-md-6">
                 <div class="form-group">
                   <label>Kategori Kinerja</label>
-                  <?=form_dropdown('kategori_kinerja',$dd_kategori_kinerja,$kategori_selected,"class='form-control select2'")?>
+                  <?=form_dropdown('kategori_kinerja',$dd_kategori_kinerja,$kategori_selected,"class='form-control select2' required")?>
                   <?php echo form_error('kategori_kinerja') ?>
                 </div>
                 <div class="form-group">
                   <label>Kompetensi</label>
                   <input type="hidden" name="key_nama" value="<?=$key_nama?>">
-                  <input type="text" name="kompetensi" value="<?=$kompetensi?>" class="form-control">
+                  <input type="text" name="kompetensi" value="<?=$kompetensi?>" class="form-control" required>
                   <?php echo form_error('kompetensi') ?>
                 </div>
                 <div class="form-group">
