@@ -80,14 +80,14 @@ class Open_km extends CI_Controller
     // redirect(site_url('open_km'));
   }
 
-  function ubah($id){
+  function update($id){
     $data_okm = $this->open_km_model->get_by_id($id);
     //https://www.w3schools.com/php/func_array_count.asp
 
     if(count($data_okm)!=0){
       $data = array(
         'title' => 'Update Open KM',
-        'action' => site_url('open_km/aksiubah'),
+        'action' => site_url('open_km/aksiupdate'),
         'data_okm' => $data_okm,
         'button' => 'UPDATE',
         'dd_option'=> array(''=>'Pilih','0'=>'Tidak ada sama sekali','2'=>'Ada dan tidak lengkap','5'=>'Lengkap'),
@@ -98,7 +98,7 @@ class Open_km extends CI_Controller
     }
   }
 
-  function aksiubah(){
+  function aksiupdate(){
     $data = array(
       'thnAkademik' => $this->input->post('thnAkademik'),
       'kd_dosen' => $this->input->post('kd_dosen'),

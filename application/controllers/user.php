@@ -82,7 +82,7 @@ class user extends CI_Controller{
     array_push($arr_dosen,$data_dosen);
     $data = array(
       'title' => 'Update User',
-      'action' => site_url('user/aksiubah'),
+      'action' => site_url('user/aksiupdate'),
       'kd_dosen' => set_value('kd_dosen',$data_dosen->kd_dosen),
       'hak' => set_value('hak',$data_dosen->hak_akses),
       'data_dosen' => $arr_dosen,
@@ -92,7 +92,7 @@ class user extends CI_Controller{
     $this->load->view('user/user_form_update',$data);
   }
 
-  function aksiubah(){
+  function aksiupdate(){
     $this->_rules();
 
     if($this->form_validation->run() == FALSE){

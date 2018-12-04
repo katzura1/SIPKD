@@ -109,7 +109,7 @@ class tahun_akademik extends CI_Controller{
       $data_ta = $this->tahun_akademik_model->get_by_kode($thnAkademik,$kd_semester);
       $data = array(
         'title' => 'Update Tahun Akademik',
-        'action' => site_url('tahun_akademik/aksiubah'),
+        'action' => site_url('tahun_akademik/aksiupdate'),
         'button' => 'UPDATE',
         'tahun_akademik' => set_value('thnAkademik',$data_ta->tahunAkademik),
         'kd_semester' => set_value('kd_semester',$data_ta->kd_semester),
@@ -125,7 +125,7 @@ class tahun_akademik extends CI_Controller{
     }
   }
 
-  public function aksiubah(){
+  public function aksiupdate(){
     $this->_rules();
     //2014/2015
     //012345678
