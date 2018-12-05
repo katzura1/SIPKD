@@ -44,7 +44,7 @@ $this->load->view('template/sidebar');
                 <label style="color:white;">CARI</label>
                 <button type="submit" name="button" class="btn btn-success" style="display:block;">
                   <i class="fa fa-search"></i>
-                  FILTER
+                  CARI
                 </button>
               </div>
             </form>

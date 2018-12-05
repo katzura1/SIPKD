@@ -52,7 +52,7 @@ $this->load->view('template/sidebar');
               <?php endif; ?>
               <div class="col-md-2">
                 <label style="color:white;display:block">BUTTON</label>
-                <button class="btn btn-primary" type="submit" name="btnFilter">FILTER</button>
+                <button class="btn btn-primary" type="submit" name="btnFilter">CARI</button>
               </div>
             </form>
           </div>

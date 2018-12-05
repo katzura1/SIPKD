@@ -45,7 +45,7 @@ $this->load->view('template/sidebar');
               </div>
               <div class="col-md-2">
                 <label style="color:white">Button</label>
-                <button type="submit" class='btn btn-primary' style="display:block">FILTER</button>
+                <button type="submit" class='btn btn-primary' style="display:block">CARI</button>
               </div>
             </form>
           </div>
@@ -102,7 +102,7 @@ $this->load->view('template/sidebar');
               </div>
               <div class="col-md-2">
                 <label style="color:white">Button</label>
-                <button type="submit" form="form1" class='btn btn-primary' style="display:block">FILTER</button>
+                <button type="submit" form="form1" class='btn btn-primary' style="display:block">CARI</button>
               </div>
           </div>
           <div style="margin-top:15px;">
