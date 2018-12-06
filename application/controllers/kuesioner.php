@@ -358,7 +358,8 @@ class Kuesioner extends CI_Controller
       );
 
       $this->load->view('kuesioner/list_nilai',$data);
-    }else{
+    }
+    else{
       //pk-1
       $kode_prodi = set_value('kode_prodi','');
 
@@ -380,6 +381,7 @@ class Kuesioner extends CI_Controller
         'nama_header' => $this->prodi_model->get_institusi($kode_institusi),
         'url' => $url,
         'penilai' => $penilai,
+        'kode_prodi' => $kode_prodi,
         'kode' => $kode,
         'dd_ta' => $this->tahun_akademik_model->get_dd_thn_akademik(),
         'thnAkademik' => $thnAkademik,

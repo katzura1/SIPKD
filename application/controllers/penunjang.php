@@ -23,6 +23,7 @@ class Penunjang extends CI_Controller {
   public function __construct(){
     parent::__construct();
     $this->load->library('form_validation');
+    $this->load->library('datatables');
     $this->load->model('dosen_model');
     $this->load->model('penunjang_model');
     $this->load->model('tahun_akademik_model');
@@ -180,7 +181,7 @@ class Penunjang extends CI_Controller {
           //gagal upload foto
         }
       }
-      $this->penunjang_model->updateData($data,$this->input->post('id',TRUE));
+      $this->penunjang_model->updatePenunjang($data,$this->input->post('id',TRUE));
       $this->session->set_flashdata('message', "<div class='alert alert-success alert-dismissible' role='alert'>Data Berhasil Diupdate!<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>");
       redirect(site_url('penunjang/list_penunjang'));
     }
@@ -218,7 +219,7 @@ class Penunjang extends CI_Controller {
     //apabila kode prodi sama dengan kaprodi nya maka lanjut update
     if($prodi_penunjang==$kode_prodi){
       $data['status_periksa'] = $status_periksa;
-      $this->penunjang_model->updateData($data,$id);
+      $this->penunjang_model->updatePenunjang($data,$id);
       $status = $data['status_periksa']=='belum'?'Batal':'Berhasil';
       $this->session->set_flashdata('message', "<div class='alert alert-success alert-dismissible' role='alert'>Data $status Divalidasi!<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>");
       redirect(site_url('penunjang/validasi'));
@@ -226,6 +227,23 @@ class Penunjang extends CI_Controller {
       $this->session->set_flashdata('message', "<div class='alert alert-danger alert-dismissible' role='alert'>Data Gagal Divalidasi!<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>");
       redirect('penunjang/validasi');
     }
+  }
+
+  public function get_list_prodi_json(){
+    $kode = $this->input->post('kode');
+    $thnAkademik = $this->input->post('thn_akademik');
+    $kd_semester = $this->input->post('kd_semester');
+    header('Content-Type: application/json');
+    echo $this->penunjang_model->get_penunjang_by_prodi($thnAkademik,$kd_semester,$kode);
+  }
+
+  public function get_list_insitusi_json(){
+    $kode = $this->input->post('kode');
+    $kode_institusi = $this->arr_institusi[$kode];
+    $thnAkademik = $this->input->post('thn_akademik');
+    $kd_semester = $this->input->post('kd_semester');
+    header('Content-Type: application/json');
+    echo $this->penunjang_model->get_penunjang_by_institusi($thnAkademik,$kd_semester,$kode_institusi);
   }
 
   public function list_prodi(){
@@ -236,13 +254,12 @@ class Penunjang extends CI_Controller {
     $thn_akademik = set_value('thnAkademik',$this->data_ta->tahunAkademik);
     $kd_semester = set_value('semester',$this->data_ta->kd_semester);
     $kode_prodi = $this->arr_prodi[$this->session->userdata('hak_akses')];
-    //ambil data berdasrakan filter
-    $data_penunjang = $this->penunjang_model->tampil_penunjang_prodi($thn_akademik, $kd_semester, $kode_prodi, '');
 
     $data = array(
       'action' => site_url('penunjang'),
       'title' => 'Data Penunjang Prodi',
-      'data_penunjang' => $data_penunjang,
+      'kode' => $kode_prodi,
+      'url' => site_url('penunjang/get_list_prodi_json'),
       'data_ta' => $data_ta,
       'thnAkademik' => set_value('thnAkademik', $thn_akademik),
       'semester' => set_value('semester', $kd_semester),
@@ -251,30 +268,36 @@ class Penunjang extends CI_Controller {
     $this->load->view('penunjang/list_prodi',$data);
   }
 
+
   public function list_institusi(){
-
-    $kode_institusi = $this->arr_institusi[$this->session->userdata('hak_akses')];
-    //cek apakah ada data POST jika tidak tampil berdasarkan tahun yang aktif
-    $thnAkademik = set_value('thnAkademik',$this->data_ta->tahunAkademik);
-    $kd_semester = set_value('semester',$this->data_ta->kd_semester);
-    //ambil data berdasrakan filter
-    if($this->input->post('kode_prodi')){
-      $data_penunjang = $this->penunjang_model->tampil_penunjang_prodi($thnAkademik, $kd_semester, $this->input->post('kode_prodi'), '');
+    $hak_akses = $this->session->userdata('hak_akses');
+    if($hak_akses<10 || $hak_akses>11){
+      redirect(site_url('kuesioner'));
     }else{
-      $data_penunjang = $this->penunjang_model->tampil_penunjang_institusi($thnAkademik, $kd_semester, $kode_institusi);
+      $kode_prodi = set_value('kode_prodi','');
+      $thnAkademik = set_value('thnAkademik',$this->data_ta->tahunAkademik);
+      $kd_semester = set_value('semester',$this->data_ta->kd_semester);
+      if($kode_prodi!=''){
+        //pencarian per prodi
+        $kode = $kode_prodi;
+        $url = site_url('penunjang/get_list_prodi_json');
+      }else{
+        //pencarian per institusi
+        $kode = $hak_akses;
+        $url = site_url('penunjang/get_list_insitusi_json');
+      }
+      $data = array(
+        'title' => 'List Penunjang Institusi',
+        'data_ta' => $this->tahun_akademik_model->get_dd_thn_akademik(),
+        'thnAkademik' => $thnAkademik,
+        'kd_semester' => $kd_semester,
+        'dd_prodi' => $this->prodi_model->get_dd_prodi($this->arr_institusi[$hak_akses]),
+        'kode_prodi' => $kode_prodi,
+        'kode' => $kode,
+        'url' => $url,
+      );
+      $this->load->view('penunjang/list_institusi_penunjang',$data);
     }
-
-    $data = array(
-      'title' => 'List Penunjang Institusi',
-      'data_ta' => $this->tahun_akademik_model->get_dd_thn_akademik(),
-      'thnAkademik' => $thnAkademik,
-      'kd_semester' => $kd_semester,
-      'data_prodi' => $this->prodi_model->get_dd_prodi($kode_institusi),
-      'kode_prodi' => set_value('kode_prodi',''),
-      'data_penunjang' => $data_penunjang
-    );
-
-    $this->load->view('penunjang/list_institusi_penunjang',$data);
   }
 
   public function list_penunjang(){

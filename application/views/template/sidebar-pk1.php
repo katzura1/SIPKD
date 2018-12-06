@@ -34,6 +34,7 @@
                     </ul>
                   </li>
                   <li><a href="<?=site_url('kuesioner')?>"><i class="fa fa-circle-o"></i> Kuesioner</a></li>
+                  <li><a href="<?=site_url('kuesioner/list_nilai')?>"><i class="fa fa-circle-o"></i> List Nilai Kuesioner</a></li>
               </ul>
             </li>
             <li class="treeview">

@@ -38,7 +38,9 @@ class Auth extends CI_Controller {
 		$recaptcha = $this->input->post('g-recaptcha-response');
 		$response = $this->recaptcha->verifyResponse($recaptcha);
 
-		if($this->form_validation->run() == FALSE || !isset($response['success']) || $response['success'] <> true){
+		if(!isset($response['success']) || $response['success'] <> true){
+			$this->index("Harap isi verifikasi chaptca");
+		}else if($this->form_validation->run() == FALSE){
 			//apabila login gagal kembali ke index
 			$this->index();
 		}else{

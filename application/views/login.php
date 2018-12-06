@@ -42,6 +42,7 @@
                     </div>
                     <div class="form-group">
                       <?=$captcha;?>
+                      <?=form_error('chaptca')?>
                     </div>
                     <div class="row">
                         <div class="col-xs-4">

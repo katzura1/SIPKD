@@ -38,7 +38,7 @@ $this->load->view('template/sidebar');
               </div>
               <div class="col-md-4">
                 <label>Program Studi</label>
-                <?=form_dropdown('kode_prodi',$data_prodi,$kode_prodi,"class='form-control'")?>
+                <?=form_dropdown('kode_prodi',$dd_prodi,$kode_prodi,"class='form-control'")?>
               </div>
               <div class="col-md-4">
                 <label style="color:white;">CARI</label>
@@ -63,29 +63,8 @@ $this->load->view('template/sidebar');
                 <th>Aksi</th>
               </tr>
             </thead>
-            <tbody>
-              <?php foreach ($data_penunjang as $data): ?>
-                <tr>
-                  <td></td>
-                  <td><?=$data->nama_kegiatan?></td>
-                  <td><?=$data->kd_dosen?></td>
-                  <td><?=($data->gelar_depan." ".$data->nm_dosen.", ".$data->gelar_belakang)?></td>
-                  <td><?=$data->nama_prodi?></td>
-                  <td><?=$data->status_periksa=='belum'?"<span class='label label-danger'>".ucfirst($data->status_periksa.' Validasi')."</span>":"<span class='label label-success'>".ucfirst($data->status_periksa.' Validasi')."</span>"?></td>
-                  <td>
-                    <a data-toggle="modal" onclick="javascript:load_penunjang(<?=$data->id?>)" class="btn btn-success">
-                      <i class="fa fa-eye"></i>
-                      View
-                    </a>
-                  </td>
-                </tr>
-              <?php endforeach; ?>
-            </tbody>
           </table>
         </div><!-- /.box-body -->
-        <div class="box-footer">
-            Footer
-        </div><!-- /.box-footer-->
     </div><!-- /.box -->
 
 </section><!-- /.content -->
@@ -98,25 +77,105 @@ $this->load->view('template/js');
 <script type="text/javascript" src="<?=base_url('assets/AdminLTE-2.0.5/plugins/datatables/jquery.dataTables.min.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('assets/AdminLTE-2.0.5/plugins/datatables/dataTables.bootstrap.js')?>"></script>
 <script>
-  $(document).ready(function() {
-      var t = $('#tablePenunjang').DataTable( {
-          "columnDefs": [
-              {
-                "targets": [ 0 ],
-                "orderable": false
-              },
-              {
-                "targets": [ 6 ],
-                "orderable": false
-              }
-          ]
-      } );
-      t.on( 'order.dt search.dt', function () {
-          t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
-              cell.innerHTML = i+1;
-          } );
-      } ).draw();
-  } );
+  // Setup datatables
+  $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
+  {
+      return {
+          "iStart": oSettings._iDisplayStart,
+          "iEnd": oSettings.fnDisplayEnd(),
+          "iLength": oSettings._iDisplayLength,
+          "iTotal": oSettings.fnRecordsTotal(),
+          "iFilteredTotal": oSettings.fnRecordsDisplay(),
+          "iPage": Math.ceil(oSettings._iDisplayStart / oSettings._iDisplayLength),
+          "iTotalPages": Math.ceil(oSettings.fnRecordsDisplay() / oSettings._iDisplayLength)
+      };
+  };
+
+  var table = $("#tablePenunjang").dataTable({
+      initComplete: function() {
+          var api = this.api();
+          $('#tablePenunjang_filter input')
+              .off('.DT')
+              .on('input.DT', function() {
+                  api.search(this.value).draw();
+          });
+      },
+          oLanguage: {
+          sProcessing: "<i class='fa fa-refresh fa-spin'></i>"
+      },
+          processing: true,
+          serverSide: true,
+          ajax: {
+            "type": "POST",
+            "url": "<?=$url?>",
+            "data" : {kode:<?=(int)$kode?>,thn_akademik:'<?=$thnAkademik?>',kd_semester:<?=$kd_semester?>},
+            },
+              columns: [
+                  {
+                    data: "kd_dosen",
+                    "orderable": false,
+                    width : '4%',
+                  },
+                  {
+                    data: "nama_kegiatan",
+                  },
+                  {
+                    data: "kd_dosen",
+                  },
+                  {
+                    data: "nm_dosen",
+                  },
+                  {
+                    data: "nama_prodi"
+                  },
+                  {
+                    data: "status_periksa",
+                    render : function(data,type,row){
+                      var f = row.status_periksa.charAt(0).toUpperCase();
+                      var s = row.status_periksa.slice(1);
+                      if(row.status_periksa=='belum'){
+                        return "<label class='label bg-red'>"+f+s+" Validasi"+"</label>";
+                      }else{
+                        return "<label class='label bg-green'>"+f+s+" Validasi"+"</label>";
+                      }
+
+                    },
+                  },
+                  {
+                    data: "action_view",
+                    searchable: false
+                  }
+            ],
+            order: [[5, 'desc']],
+      rowCallback: function(row, data, iDisplayIndex) {
+        var info = this.fnPagingInfo();
+        var page = info.iPage;
+        var length = info.iLength;
+        var index = page * length + (iDisplayIndex + 1);
+        $('td:eq(0)', row).html(index);
+      }
+
+  });
+  // end setup datatables
+  // $(document).ready(function() {
+  //     var t = $('#tablePenunjang').DataTable( {
+  //         "columnDefs": [
+  //             {
+  //               "targets": [ 0 ],
+  //               "orderable": false
+  //             },
+  //             {
+  //               "targets": [ 6 ],
+  //               "orderable": false
+  //             }
+  //         ]
+  //     } );
+  //     t.on( 'order.dt search.dt', function () {
+  //         t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+  //             cell.innerHTML = i+1;
+  //         } );
+  //     } ).draw();
+  // } );
 
   function load_penunjang(id){
     $.ajax({

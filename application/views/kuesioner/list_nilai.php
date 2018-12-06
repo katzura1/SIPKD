@@ -43,7 +43,7 @@ $this->load->view('template/sidebar');
               <?php if (isset($dd_prodi)): ?>
               <div class="col-md-2">
                 <label>Program Studi</label>
-                <?=form_dropdown('kode_prodi',$dd_prodi,$kode,"class='form-control'")?>
+                <?=form_dropdown('kode_prodi',$dd_prodi,$kode_prodi,"class='form-control'")?>
               </div>
               <div class="col-md-2">
                 <label>Penilai</label>
