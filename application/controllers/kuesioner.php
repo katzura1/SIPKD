@@ -251,7 +251,7 @@ class Kuesioner extends CI_Controller
     }
   }
 
-  public function aksi_update(){
+  public function aksi_ubah(){
     if(!$this->input->post('thnAkademik')){
       redirect(site_url('kuesioner'));
     }

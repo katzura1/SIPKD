@@ -29,29 +29,9 @@
             <td valign="center"><?=$data_modal->email?></td>
           </tr>
           <tr>
-            <td valign="center">Pendidikan S1</td>
-            <td valign="center">:</td>
-            <td valign="center"><?=$data_modal->S1?></td>
-          </tr>
-          <tr>
-            <td valign="center">Pendidikan S2</td>
-            <td valign="center">:</td>
-            <td valign="center"><?=$data_modal->S2?></td>
-          </tr>
-          <tr>
-            <td valign="center">Pendidikan S3</td>
-            <td valign="center">:</td>
-            <td valign="center"><?=$data_modal->S3?></td>
-          </tr>
-          <tr>
             <td valign="center">Jenis Kelamin</td>
             <td valign="center">:</td>
             <td valign="center"><?=$data_modal->jenis_kelamin?></td>
-          </tr>
-          <tr>
-            <td valign="center">Tanggal Lahir</td>
-            <td valign="center">:</td>
-            <td valign="center"><?=$data_modal->tgl_lahir?></td>
           </tr>
           <tr>
             <td valign="center">Foto</td>

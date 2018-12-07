@@ -58,6 +58,10 @@ $this->load->view('template/sidebar');
                   <?=form_error('tanggal')?>
                 </div>
                 <div class="form-group">
+                  <label>Jenis Kegiatan</label>
+                  <?=form_dropdown('id_tipe', $dd_kegiatan, $id_tipe, "class='form-control' required")?>
+                </div>
+                <div class="form-group">
                   <label>Nama Kegiatan</label>
                   <input type="text" name="nama_kegiatan" value="<?=$nama_kegiatan?>" class="form-control" required>
                   <?=form_error('nama_kegiatan')?>
@@ -84,14 +88,11 @@ $this->load->view('template/sidebar');
                   ?>
                   <?=form_error('dok_hasil')?>
                 </div>
+                <button type="submit" name="button" class="btn btn-primary"><?=$button?></button>
               </div>
             </div>
-            <button type="submit" name="button" class="btn btn-primary"><?=$button?></button>
           </form>
         </div><!-- /.box-body -->
-        <div class="box-footer">
-            Footer
-        </div><!-- /.box-footer-->
     </div><!-- /.box -->
 </section><!-- /.content -->
 

@@ -63,7 +63,7 @@ class Penunjang extends CI_Controller {
     $thn_akademik = $this->data_ta->tahunAkademik;
     $kd_semester = $this->data_ta->kd_semester;
     $data = array(
-      'title' => 'Tambah Data Penunjang',
+      'title' => 'Input Data Penunjang',
       'thnAkademik' => set_value('thnAkademik',$thn_akademik),
       'kd_semester' => set_value('kd_semester',$kd_semester),
       'nama_kegiatan' => set_value('nama_kegiatan',''),
@@ -72,6 +72,8 @@ class Penunjang extends CI_Controller {
       'alamat' => set_value('alamat',''),
       'button' => 'SIMPAN',
       'action' => site_url('penunjang/aksitambah'),
+      'dd_kegiatan' => $this->penunjang_model->get_dd_jenis(),
+      'id_tipe' => set_value('id_tipe','')
     );
     $this->load->view('penunjang/form_penunjang',$data);
   }
@@ -96,12 +98,13 @@ class Penunjang extends CI_Controller {
            'nama_kegiatan' => $this->input->post('nama_kegiatan',TRUE),
            'alamat' => $this->input->post('alamat',TRUE),
            'tempat' => $this->input->post('tempat',TRUE),
+           'id_kegiatan' => $this->input->post('id_tipe',TRUE),
            'dok_path' => $path,
            'dok_hasil' => $upload['file']['file_name'],
            'status_periksa' => 'belum'
          );
 
-         $this->penunjang_model->tambahData($data);
+         $this->penunjang_model->simpanPenunjang($data);
          $this->session->set_flashdata('message', "<div class='alert alert-success alert-dismissible' role='alert'>Data Berhasil Disimpan!<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>");
          redirect(site_url('penunjang/list_penunjang'));
       }else{
@@ -136,7 +139,9 @@ class Penunjang extends CI_Controller {
         'alamat' => set_value('alamat',$data_penunjang->alamat),
         'button' => 'UPDATE',
         'action' => site_url('penunjang/aksiupdate'),
-        'file' => base_url('./'.$data_penunjang->dok_path.'/'.$data_penunjang->dok_hasil)
+        'file' => base_url('./'.$data_penunjang->dok_path.'/'.$data_penunjang->dok_hasil),
+        'dd_kegiatan' => $this->penunjang_model->get_dd_jenis(),
+        'id_tipe' => set_value('id_tipe',$data_penunjang->id_kegiatan)
       );
       $this->load->view('penunjang/form_penunjang',$data);
     }else{
@@ -159,6 +164,7 @@ class Penunjang extends CI_Controller {
           'nama_kegiatan' => $this->input->post('nama_kegiatan',TRUE),
           'alamat' => $this->input->post('alamat',TRUE),
           'tempat' => $this->input->post('tempat',TRUE),
+          'id_kegiatan' => $this->input->post('id_tipe',TRUE)
         );
       }else{
         //upload dokumen
@@ -172,6 +178,7 @@ class Penunjang extends CI_Controller {
              'nama_kegiatan' => $this->input->post('nama_kegiatan',TRUE),
              'alamat' => $this->input->post('alamat',TRUE),
              'tempat' => $this->input->post('tempat',TRUE),
+             'id_kegiatan' => $this->input->post('id_tipe',TRUE),
              'dok_path' => $path,
              'dok_hasil' => $upload['file']['file_name'],
            );

@@ -27,7 +27,7 @@ class Prodi extends CI_Controller {
     $this->load->model('institusi_model');
 
     $data = array(
-      'title' => 'Tambah prodi',
+      'title' => 'Input prodi',
       'action' => site_url().'prodi/aksitambah',
       'kode_prodi' => set_value('kode_prodi',''),
       'nama_prodi' => set_value('nama_prodi',''),

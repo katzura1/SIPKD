@@ -28,7 +28,7 @@ class tahun_akademik extends CI_Controller{
 
   public function tambah(){
     $data = array(
-      'title' => 'Tambah Tahun Akademik',
+      'title' => 'Input Tahun Akademik',
       'action' => site_url('tahun_akademik/aksitambah'),
       'button' => 'SIMPAN',
       'tahun_akademik' => set_value('thnAkademik',''),

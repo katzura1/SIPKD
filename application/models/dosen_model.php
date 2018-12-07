@@ -41,7 +41,7 @@ class Dosen_model extends CI_Model
     $config = array(
       "file_name" => date('dmYHis').$_FILES['foto_dosen']['name'],
       "upload_path" => './gambar/',
-      "allowed_types" => "jpg|png|jpeg",
+      "allowed_types" => "jpg|png|jpeg|gif",
       "max_size" => "2048",
       "remove_space" => TRUE
     );

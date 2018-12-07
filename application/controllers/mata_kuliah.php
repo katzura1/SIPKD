@@ -45,7 +45,7 @@ class mata_kuliah extends CI_Controller
     public function tambah()
     {
         $data = array(
-            'title' => 'Tambah Mata Kuliah',
+            'title' => 'Input Mata Kuliah',
             'button' => 'SIMPAN',
             'action' => site_url('mata_kuliah/create_action'),
       	    'kode_mk' => set_value('kode_mk'),

@@ -76,7 +76,7 @@ $this->load->view('template/sidebar');
                     <td><?=$dko->nama_kompetensi?></td>
                     <td>
                       <input type="hidden" name="kd_kompetensi[]" value="<?=$dko->kd_kompetensi?>" >
-                      <input type="number" name="skor[]" min="1" max="5" class="form-control" value="<?=$dko->skor?$dko->skor:''?>" required>
+                      <input type="number" name="skor[]" onkeyup="javascript:handleChange(this)" min="1" max="5" maxlength="1" class="form-control" value="<?=$dko->skor?$dko->skor:'3'?>" required>
                     </td>
                   </tr>
                 <?php
@@ -99,6 +99,15 @@ $this->load->view('template/sidebar');
 $this->load->view('template/js');
 ?>
 <!--tambahkan custom js disini-->
+<script type="text/javascript">
+  function handleChange(input){
+    if(input.value<0){
+      input.value=0;
+    }else if(input.value>5){
+      input.value=5;
+    }
+  }
+</script>
 <?php
 $this->load->view('template/foot');
 ?>

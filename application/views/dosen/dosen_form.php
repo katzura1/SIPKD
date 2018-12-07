@@ -59,33 +59,12 @@ $this->load->view('template/sidebar');
                     <input type="email" name="email_dosen" class="form-control" value="<?=$email_dosen?>">
                     <?=form_error('email_dosen')?>
                   </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label>Pendidikan S1</label>
-                    <input type="text" name="s1" class="form-control" value="<?=$s1?>">
-                    <?=form_error('s1')?>
-                  </div>
-                  <div class="form-group">
-                    <label>Pendidikan S2</label>
-                    <input type="text" name="s2" class="form-control" value="<?=$s2?>">
-                    <?=form_error('s2')?>
-                  </div>
-                  <div class="form-group">
-                    <label>Pendidikan S3</label>
-                    <input type="text" name="s3" class="form-control" value="<?=$s3?>">
-                  </div>
                   <div class="form-group">
                     <label>Jenis Kelamin</label>
                     <select class="form-control" name="jenis_kelamin">
                       <option value="L" <?=$jenis_kelamin=='L'?'selected':''?>>Laki-Laki</option>
                       <option value="P" <?=$jenis_kelamin=='P'?'selected':''?>>Perempuan</option>
                     </select>
-                  </div>
-                  <div class="form-group">
-                    <label>Tanggal Lahir</label>
-                    <input type="date" name="tgl_lahir" class="form-control" value="<?=$tgl_lahir?>">
-                    <?=form_error('tgl_lahir')?>
                   </div>
                   <div class="form-group">
                     <label>Foto</label>

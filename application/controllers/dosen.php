@@ -29,7 +29,7 @@ class Dosen extends CI_Controller
   function tambah($error = NULL){
     $this->load->model('prodi_model');
     $data = array(
-      'title' => 'Tambah Dosen',
+      'title' => 'Input Dosen',
       'action' => site_url('dosen/aksitambah'),
       'nik' => set_value('nik',''),
       'nama_dosen' => set_value('nama_dosen',''),
@@ -38,10 +38,6 @@ class Dosen extends CI_Controller
       'email_dosen' => set_value('email_dosen',''),
       'gelar_depan' => set_value('gelar_depan',''),
       'gelar_belakang' => set_value('gelar_belakang',''),
-      's1' => set_value('s1',''),
-      's2' => set_value('s2',''),
-      's3' => set_value('s3',''),
-      'tgl_lahir' => set_value('tgl_lahir',''),
       'data_jurusan' => $this->prodi_model->tampil()->result(),
       'read_only' => '',
       'button' => 'SIMPAN'
@@ -53,10 +49,7 @@ class Dosen extends CI_Controller
   function form_valid(){
     $this->form_validation->set_error_delimiters('<div class="alert-danger" style="width:80%;padding:10px;">','</div>');
     $this->form_validation->set_rules('nama_dosen','<b>Nama Dosen</b>','required');
-    $this->form_validation->set_rules('tgl_lahir','<b>Tanggal Lahir</b>','required');
-    $this->form_validation->set_rules('s1','<b>Pendidikan S1</b>','required');
     $this->form_validation->set_rules('email_dosen','<b>Email</b>','required|valid_email');
-    $this->form_validation->set_rules('s2','<b>Pendidikan S2</b>','required');
     $this->form_validation->set_rules('gelar_belakang','<b>Gelar Belakang</b>','required');
   }
 
@@ -84,11 +77,7 @@ class Dosen extends CI_Controller
             'gelar_belakang' => $this->input->post('gelar_belakang',TRUE),
             'kode_prodi' => $this->input->post('kode_jurusan',TRUE),
             'email' => $this->input->post('email_dosen',TRUE),
-            's1' => $this->input->post('s1',TRUE),
-            's2' => $this->input->post('s2',TRUE),
-            's3' => $this->input->post('s3',TRUE),
             'jenis_kelamin' => $this->input->post('jenis_kelamin',TRUE),
-            'tgl_lahir' => $this->input->post('tgl_lahir',TRUE),
             'path_foto' => $upload['file']['file_name']
         );
 
@@ -116,10 +105,6 @@ class Dosen extends CI_Controller
       'email_dosen' => set_value('email_dosen',$data_dosen->email),
       'gelar_depan' => set_value('gelar_depan',$data_dosen->gelar_depan),
       'gelar_belakang' => set_value('gelar_belakang',$data_dosen->gelar_belakang),
-      's1' => set_value('s1',$data_dosen->S1),
-      's2' => set_value('s2',$data_dosen->S2),
-      's3' => set_value('s3',$data_dosen->S3),
-      'tgl_lahir' => set_value('tgl_lahir',$data_dosen->tgl_lahir),
       'data_jurusan' => $this->prodi_model->tampil()->result(),
       'read_only' => 'readonly',
       'button' => 'UPDATE'
@@ -143,11 +128,7 @@ class Dosen extends CI_Controller
             'gelar_belakang' => $this->input->post('gelar_belakang',TRUE),
             'kode_prodi' => $this->input->post('kode_jurusan',TRUE),
             'email' => $this->input->post('email_dosen',TRUE),
-            's1' => $this->input->post('s1',TRUE),
-            's2' => $this->input->post('s2',TRUE),
-            's3' => $this->input->post('s3',TRUE),
             'jenis_kelamin' => $this->input->post('jenis_kelamin',TRUE),
-            'tgl_lahir' => $this->input->post('tgl_lahir',TRUE),
         );
       }else{
         //upload foto
@@ -160,11 +141,7 @@ class Dosen extends CI_Controller
               'gelar_belakang' => $this->input->post('gelar_belakang',TRUE),
               'kode_prodi' => $this->input->post('kode_jurusan',TRUE),
               'email' => $this->input->post('email_dosen',TRUE),
-              's1' => $this->input->post('s1',TRUE),
-              's2' => $this->input->post('s2',TRUE),
-              's3' => $this->input->post('s3',TRUE),
               'jenis_kelamin' => $this->input->post('jenis_kelamin',TRUE),
-              'tgl_lahir' => $this->input->post('tgl_lahir',TRUE),
               'path_foto' => $upload['file']['file_name']
           );
           //delete foto lama

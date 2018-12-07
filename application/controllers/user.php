@@ -35,7 +35,7 @@ class user extends CI_Controller{
   function tambah(){
 
     $data = array(
-      'title' => 'Tambah Pengguna',
+      'title' => 'Input Pengguna',
       'action' => site_url('user/aksitambah'),
       'kd_dosen' => set_value('kd_dosen',''),
       'hak' => set_value('hak',''),
