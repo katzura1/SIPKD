@@ -134,17 +134,17 @@
     //   return $this->db->get()->result();
     // }
     //
-    // public function tampil_penunjang_prodi($thnAkademik,$kd_semester,$kode_prodi,$status_periksa){
-    //   //$this->db->select('id, nama_kegiatan, data_penunjang.kd_dosen, nm_dosen, nama_kegiatan, tanggal, tempat, alamat, dok_path, dok_hasil, status_periksa');
-    //   $this->db->from($this->nama_tb);
-    //   $this->db->join('dosen','dosen.kd_dosen=data_penunjang.kd_dosen');
-    //   $this->db->join('program_studi','program_studi.kode_prodi=dosen.kode_prodi');
-    //   $this->db->where('thnAkademik',$thnAkademik);
-    //   $this->db->where('kd_semester',$kd_semester);
-    //   $this->db->where('dosen.kode_prodi',$kode_prodi);
-    //   $this->db->like('status_periksa',$status_periksa);
-    //   $this->db->order_by('status_periksa','ASC');
-    //   return $this->db->get()->result();
-    // }
+    public function tampil_penunjang_prodi($thnAkademik,$kd_semester,$kode_prodi,$status_periksa){
+      //$this->db->select('id, nama_kegiatan, data_penunjang.kd_dosen, nm_dosen, nama_kegiatan, tanggal, tempat, alamat, dok_path, dok_hasil, status_periksa');
+      $this->db->from($this->nama_tb);
+      $this->db->join('dosen','dosen.kd_dosen=data_penunjang.kd_dosen');
+      $this->db->join('program_studi','program_studi.kode_prodi=dosen.kode_prodi');
+      $this->db->where('thnAkademik',$thnAkademik);
+      $this->db->where('kd_semester',$kd_semester);
+      $this->db->where('dosen.kode_prodi',$kode_prodi);
+      $this->db->like('status_periksa',$status_periksa);
+      $this->db->order_by('status_periksa','ASC');
+      return $this->db->get()->result();
+    }
   }
 ?>

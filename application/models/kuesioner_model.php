@@ -16,6 +16,7 @@ class Kuesioner_model extends CI_Model{
     $this->datatables->from('dosen as d');
     $this->datatables->join('program_studi','program_studi.kode_prodi=d.kode_prodi');
     $this->datatables->where('program_studi.kode_prodi',$kode_prodi);
+    $this->datatables->where('kd_dosen !=',$this->session->userdata('nik'));
     $this->datatables->add_column('action_nilai', anchor(site_url('kuesioner/isi/$1'),'NILAI','class="btn btn-success"'),'kd_dosen');
     $this->datatables->add_column('action_ubah',anchor(site_url('kuesioner/update/$2'),'UPDATE','class="btn btn-danger"')." ".anchor(site_url('kuesioner/detail/$2'),'VIEW','class="btn btn-primary"'),'kd_dosen,id');
     return $this->datatables->generate();
@@ -28,6 +29,7 @@ class Kuesioner_model extends CI_Model{
     $this->datatables->from('dosen as d');
     $this->datatables->join('program_studi','program_studi.kode_prodi=d.kode_prodi');
     $this->datatables->where_in('kode_institusi',$kode_institusi);
+    $this->datatables->where('kd_dosen !=',$this->session->userdata('nik'));
     $this->datatables->add_column('action_nilai', anchor(site_url('kuesioner/isi/$1'),'NILAI','class="btn btn-success"'),'kd_dosen');
     $this->datatables->add_column('action_ubah',anchor(site_url('kuesioner/update/$2'),'UPDATE','class="btn btn-danger"')." ".anchor(site_url('kuesioner/detail/$2'),'VIEW','class="btn btn-primary"'),'kd_dosen,id');
     return $this->datatables->generate();

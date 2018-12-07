@@ -101,8 +101,8 @@ $this->load->view('template/js');
 <!--tambahkan custom js disini-->
 <script type="text/javascript">
   function handleChange(input){
-    if(input.value<0){
-      input.value=0;
+    if(input.value<1){
+      input.value=1;
     }else if(input.value>5){
       input.value=5;
     }
