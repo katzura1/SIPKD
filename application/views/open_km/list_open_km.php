@@ -15,7 +15,7 @@ $this->load->view('template/sidebar');
         <small>Open KM</small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="<?=site_url('dashboard')?>"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="<?=site_url('open_km')?>">Open KM</a></li>
         <li class="active">List Open KM</li>
     </ol>

@@ -29,9 +29,9 @@ class Penunjang extends CI_Controller {
     $this->load->model('tahun_akademik_model');
     $this->load->model('prodi_model');
     //cek login
-    // if($this->session->userdata('logged')!=1){
-    //   redirect(site_url().'auth');
-    // }
+    if($this->session->userdata('logged')!=1){
+      redirect(site_url().'auth');
+    }
     //seleksi hak akses (cuma kaprodi yang boleh akses )
     //..kode
     $this->data_ta = $this->tahun_akademik_model->get_status_aktif();

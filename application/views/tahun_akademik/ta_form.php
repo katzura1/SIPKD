@@ -13,7 +13,7 @@ $this->load->view('template/sidebar');
         <small>Tahun Akademik</small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="<?=site_url('dashboard')?>"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="<?=site_url('tahun_akademik')?>">Tahun Akademik</a></li>
         <li class="active"><?=$title?></li>
     </ol>
