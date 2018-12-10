@@ -7,10 +7,6 @@ class Kategori_kinerja_model extends CI_Model
   private $nama_tb = 'kategori_kinerja';
   private $nama_pk = 'kd_kategori';
 
-  function tambahData($data){
-    $this->db->insert($this->nama_tb, $data);
-  }
-
   function get_all(){
     return $this->db->get($this->nama_tb)->result();
   }
@@ -42,7 +38,11 @@ class Kategori_kinerja_model extends CI_Model
     return $this->db->get()->row();
   }
 
-  function ubahData($data,$kd_kategori){
+  function simpanKategori($data){
+    $this->db->insert($this->nama_tb, $data);
+  }
+
+  function ubahKategori($data,$kd_kategori){
     $this->db->where($this->nama_pk,$kd_kategori);
     $this->db->update($this->nama_tb,$data);
   }

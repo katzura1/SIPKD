@@ -9,7 +9,7 @@ $this->load->view('template/sidebar');
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        Penilaia Kinerja Dosen
+        <?=$title?>
         <small>Nilai Kinerja</small>
     </h1>
     <ol class="breadcrumb">
@@ -52,41 +52,49 @@ $this->load->view('template/sidebar');
               <table class="table table-striped">
                 <thead>
                   <tr>
+                    <th>No</th>
                     <th>Komponen</th>
                     <th>Skor</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
+                    <td>1</td>
                     <td>Penilaian Atasan</td>
                     <td><?=$data_nilai->skor_kuisoner?></td>
                   </tr>
                   <tr>
+                    <td>2</td>
                     <td>IKD</td>
                     <td><?=$data_nilai->skor_ikd?></td>
                   </tr>
                   <tr>
+                    <td>3</td>
                     <td>Kumpul Soal/Nilai</td>
                     <td><?=$data_nilai->upload_soalnilai?></td>
                   </tr>
                   <tr>
-                    <td>pertemuan</td>
+                    <td>4</td>
+                    <td>Pertemuan</td>
                     <td><?=$data_nilai->skor_pertemuan?></td>
                   </tr>
                   <tr>
+                    <td>5</td>
                     <td>Upload Materi</td>
                     <td><?=$data_nilai->upload_materi?></td>
                   </tr>
                   <tr>
+                    <td>6</td>
                     <td>Penelitian dan Pengabdian</td>
                     <td><?=$data_nilai->lppm?></td>
                   </tr>
                   <tr>
+                    <td>7</td>
                     <td>Upload Open KM</td>
                     <td><?=$data_nilai->skor_open_km?></td>
                   </tr>
                   <tr>
-                    <th>Total</th>
+                    <th colspan="2" style="text-align:right;">Total</th>
                     <th><?=$data_nilai->total_skor?></th>
                   </tr>
                 </tbody>
@@ -114,7 +122,7 @@ var myChart = new Chart(ctx, {
         labels: ['Penilaian Atasan','IKD','Kumpul Soal/Nilai','Pertemuan','Upload Materi','PPM','Open KM'],
         datasets: [{
             label: 'Skor Penilaian Kuesioner',
-            data: [<?=(int)$data_nilai->skor_kuisoner?>,<?=(int)$data_nilai->skor_ikd?>,<?=(int)$data_nilai->upload_soalnilai?>,<?=(int)$data_nilai->skor_pertemuan?>,<?=(int)$data_nilai->upload_materi?>,<?=(int)$data_nilai->lppm?>,<?=(int)$data_nilai->skor_open_km?>],
+            data: [<?=(double)$data_nilai->skor_kuisoner?>,<?=(double)$data_nilai->skor_ikd?>,<?=(double)$data_nilai->upload_soalnilai?>,<?=(double)$data_nilai->skor_pertemuan?>,<?=(double)$data_nilai->upload_materi?>,<?=(double)$data_nilai->lppm?>,<?=(double)$data_nilai->skor_open_km?>],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -139,6 +147,11 @@ var myChart = new Chart(ctx, {
             yAxes: [{
                 ticks: {
                     beginAtZero:true
+                }
+            }],
+            xAxes: [{
+                ticks: {
+                  autoSkip: false
                 }
             }]
         }

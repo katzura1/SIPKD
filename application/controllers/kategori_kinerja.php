@@ -7,6 +7,10 @@ class Kategori_kinerja extends CI_Controller {
     parent::__construct();
     $this->load->model('kategori_kinerja_model');
     $this->load->library('form_validation');
+    //cek login
+    if($this->session->userdata('logged')!=1){
+      redirect(site_url().'auth');
+    }
   }
 
   public function index(){
@@ -56,7 +60,7 @@ class Kategori_kinerja extends CI_Controller {
       $data = array(
         'nama_kategori' => $this->input->post('nama_kategori'),
       );
-      $this->kategori_kinerja_model->tambahData($data);
+      $this->kategori_kinerja_model->simpanKategori($data);
       $this->session->set_flashdata('message', "<div class='alert alert-success alert-dismissible' role='alert'>Data Berhasil Disimpan!<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>");
       redirect(site_url('kategori_kinerja'));
     }
@@ -85,7 +89,7 @@ class Kategori_kinerja extends CI_Controller {
       $data = array(
         'nama_kategori' => $this->input->post('nama_kategori'),
       );
-      $this->kategori_kinerja_model->ubahData($data,$kd_kategori);
+      $this->kategori_kinerja_model->ubahKategori($data,$kd_kategori);
       $this->session->set_flashdata('message', "<div class='alert alert-success alert-dismissible' role='alert'>Data Berhasil Diupdate!<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>");
       redirect(site_url('kategori_kinerja'));
     }

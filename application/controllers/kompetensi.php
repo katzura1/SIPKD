@@ -8,6 +8,10 @@ class Kompetensi extends CI_Controller {
     $this->load->model('kompetensi_model');
 		$this->load->model('kategori_kinerja_model');
     $this->load->library('form_validation');
+		//cek login
+    if($this->session->userdata('logged')!=1){
+      redirect(site_url().'auth');
+    }
   }
 
 	public function index()
@@ -63,7 +67,7 @@ class Kompetensi extends CI_Controller {
 				'kd_kategori' => $this->input->post('kategori_kinerja',TRUE),
 				'nama_kompetensi' => $this->input->post('kompetensi',TRUE)
 			);
-			$this->kompetensi_model->tambahData($data);
+			$this->kompetensi_model->simpanKompetensi($data);
       $this->session->set_flashdata('message', "<div class='alert alert-success alert-dismissible' role='alert'>Data Berhasil Disimpan!<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>");
       redirect(site_url('kompetensi'));
 		}
@@ -97,7 +101,7 @@ class Kompetensi extends CI_Controller {
 				'kd_kategori' => $this->input->post('kategori_kinerja',TRUE),
 				'nama_kompetensi' => $this->input->post('kompetensi',TRUE)
 			);
-			$this->kompetensi_model->ubahData($data, $this->input->post('id'));
+			$this->kompetensi_model->ubahKompetensi($data, $this->input->post('id'));
       $this->session->set_flashdata('message', "<div class='alert alert-success alert-dismissible' role='alert'>Data Berhasil Diupdate!<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>");
       redirect(site_url('kompetensi'));
 		}

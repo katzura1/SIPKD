@@ -41,7 +41,6 @@ $this->load->view('template/sidebar');
                 <th>Kode Dosen</th>
                 <th>Nama Dosen</th>
                 <th>Nama Kegiatan</th>
-                <th>Dokumen Hasil</th>
                 <th>Status</th>
                 <th>Aksi</th>
               </tr>
@@ -53,9 +52,6 @@ $this->load->view('template/sidebar');
                   <td><?=$data->kd_dosen?></td>
                   <td><?=($data->gelar_depan." ".$data->nm_dosen.", ".$data->gelar_belakang)?></td>
                   <td><?=$data->nama_kegiatan?></td>
-                  <td>
-                    <a href="<?=base_url($data->dok_path.'/'.$data->dok_hasil)?>" target="_blank" class="btn btn-default">Unduh</a>
-                  </td>
                   <td><label class='label bg-red'><?=ucwords($data->status_periksa).' Validasi'?></label></td>
                   <td>
                     <a data-toggle="modal" onclick="javascript:load_penunjang(<?=$data->id?>)" class="btn btn-primary">View</a>
@@ -69,13 +65,10 @@ $this->load->view('template/sidebar');
                   <td><?=$data->kd_dosen?></td>
                   <td><?=($data->gelar_depan." ".$data->nm_dosen." ".$data->gelar_belakang)?></td>
                   <td><?=$data->nama_kegiatan?></td>
-                  <td>
-                    <a href="<?=base_url($data->dok_path.'/'.$data->dok_hasil)?>" target="_blank" class="btn btn-default">Unduh</a>
-                  </td>
                   <td><label class='label bg-green'><?=ucwords($data->status_periksa).' Validasi'?></label></td>
                   <td>
                     <a data-toggle="modal" onclick="javascript:load_penunjang(<?=$data->id?>)" class="btn btn-primary">View</a>
-                    <a href="<?=site_url('penunjang/aksivalidasi/'.$data->id.'/belum')?>" class="btn btn-danger">Batal Validasi</a>
+                    <a href="<?=site_url('penunjang/aksivalidasi/'.$data->id.'/belum')?>" class="btn btn-danger" title="Batal Validasi">Batal</a>
                   </td>
                 </tr>
               <?php endforeach; ?>
@@ -102,10 +95,6 @@ $this->load->view('template/js');
           "columnDefs": [
               {
                 "targets": [ 0 ],
-                "orderable": false
-              },
-              {
-                "targets": [ 4 ],
                 "orderable": false
               },
               {

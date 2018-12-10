@@ -58,7 +58,7 @@ class Prodi_model extends CI_Model{
     return $this->db->get()->row();
   }
 
-  public function tambahData($data){
+  public function simpanProdi($data){
     if($this->db->insert($this->nama_tabel,$data)){
       return true;
     }else{

@@ -53,7 +53,7 @@ class Prodi extends CI_Controller {
         'kode_institusi' => $this->input->post('kode_institusi')
       );
       $this->load->model('prodi_model');
-      if($this->prodi_model->tambahData($data)){
+      if($this->prodi_model->simpanProdi($data)){
         redirect(site_url().'prodi');
       }else{
 

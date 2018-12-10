@@ -171,16 +171,10 @@ PENUNJANG<br> TAHUN AKADEMIK <?=$thn_akademik?> SEMESTER <?=$semester?></span></
   <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif'>Tanggal</span></p>
   </td>
-  <td width=125 valign=top style='width:93.95pt;border:solid windowtext 1.0pt;
+  <td width=204 valign=top style='width:185pt;border:solid windowtext 1.0pt;
   border-left:none;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
   normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif'>Tempat</span></p>
-  </td>
-  <td width=125 valign=top style='width:93.95pt;border:solid windowtext 1.0pt;
-  border-left:none;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif'>Dokumen
-  Kegiatan</span></p>
   </td>
  </tr>
  <?php $i=0; foreach ($data_penunjang as $data):?>
@@ -203,17 +197,11 @@ PENUNJANG<br> TAHUN AKADEMIK <?=$thn_akademik?> SEMESTER <?=$semester?></span></
      <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
      normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif'><?=$data->tanggal?></span></p>
      </td>
-     <td width=125 valign=top style='width:93.95pt;border-top:none;border-left:
+     <td width=204 valign=top style='width:185pt;border-top:none;border-left:
      none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
      padding:0cm 5.4pt 0cm 5.4pt'>
      <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
      normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif'><?=$data->tempat.', '.$data->alamat?></span></p>
-     </td>
-     <td width=125 valign=top style='width:93.95pt;border-top:none;border-left:
-     none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-     padding:0cm 5.4pt 0cm 5.4pt'>
-     <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-     normal'><span style='font-size:12.0pt;font-family:"Times New Roman",serif'><?=$data->dok_hasil?></span></p>
      </td>
     </tr>
   <?php endif; ?>

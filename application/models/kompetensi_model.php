@@ -4,11 +4,11 @@ class kompetensi_model extends CI_Model
   private $nama_tb = 'kompetensi';
   private $nama_pk = 'kd_kompetensi';
 
-  public function tambahData($data){
+  public function simpanKompetensi($data){
     $this->db->insert($this->nama_tb,$data);
   }
 
-  public function ubahData($data,$id){
+  public function ubahKompetensi($data,$id){
     $this->db->where($this->nama_pk,$id);
     $this->db->update($this->nama_tb,$data);
   }

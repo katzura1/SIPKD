@@ -96,7 +96,7 @@ $(document).ready(function() {
                   {"data": "hak_akses"},
                   {"data": "view","orderable": false,}
             ],
-            order: [[0, 'asc']],
+            order: [[1, 'asc']],
       rowCallback: function(row, data, iDisplayIndex) {
         var info = this.fnPagingInfo();
         var page = info.iPage;

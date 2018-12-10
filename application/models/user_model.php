@@ -9,7 +9,8 @@ class User_model extends CI_Model{
   private $nama_pk = 'user.kd_dosen';
 
   public function get_all_user(){
-    $this->datatables->select('user.kd_dosen, nm_dosen, user.hak_akses');
+    //https://stackoverflow.com/questions/12126991/cast-from-varchar-to-int-mysql
+    $this->datatables->select('user.kd_dosen, nm_dosen, CAST(user.hak_akses AS UNSIGNED) as hak_akses');
     $this->datatables->from($this->nama_tb);
     $this->datatables->join('dosen','dosen.kd_dosen=user.kd_dosen');
     $this->datatables->add_column('view','<a href='.site_url('user/update/$1').' class="btn btn-success">Update</a>','kd_dosen');
@@ -22,7 +23,7 @@ class User_model extends CI_Model{
     return $this->db->get()->result();
   }
 
-  public function tambah($data){
+  public function simpanPengguna($data){
     $this->db->insert($this->nama_tb,$data);
   }
 
@@ -33,7 +34,7 @@ class User_model extends CI_Model{
     return $this->db->get()->row();
   }
 
-  public function update($data,$kd_dosen){
+  public function updatePengguna($data,$kd_dosen){
     $this->db->where($this->nama_pk,$kd_dosen);
     $this->db->update($this->nama_tb,$data);
   }
