@@ -28,7 +28,7 @@ $this->load->view('template/sidebar');
     <div class="box">
         <div class="box-body">
           <form action="<?=$action?>" method="post">
-            <div class="row">
+            <div class="row no-print">
               <div class="col-md-2">
                 <div class="form-group">
                   <label>Tahun Akademik</label>
@@ -49,7 +49,7 @@ $this->load->view('template/sidebar');
               </div>
             </div>
           </form>
-          <canvas id="areaChart" style="height:150px;width:500px;"></canvas>
+          <canvas id="areaChart" style="height:150px;width:600px;"></canvas>
           <table id="table1" class="table table-striped">
             <thead>
               <tr>
@@ -66,9 +66,9 @@ $this->load->view('template/sidebar');
               </tr>
             </thead>
             <tbody>
-            <?php foreach ($data_kinerja as $data): ?>
+            <?php $i=0; foreach ($data_kinerja as $data): $i++;?>
               <tr>
-                <td></td>
+                <td><?=$i?></td>
                 <td><?=$data->nama_prodi?></td>
                 <td><?=$data->mean_kuesioner?></td>
                 <td><?=$data->mean_ikd?></td>
@@ -142,22 +142,22 @@ var myChart = new Chart(ctx, {
 <script type="text/javascript" src="<?=base_url('assets/AdminLTE-2.0.5/plugins/datatables/jquery.dataTables.min.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('assets/AdminLTE-2.0.5/plugins/datatables/dataTables.bootstrap.js')?>"></script>
 <script>
-  $(document).ready(function() {
-      var t = $('#table1').DataTable( {
-          "columnDefs": [
-              {
-                "targets": [ 0 ],
-                "orderable": false
-              },
-          ],
-          "order" : [[9,'desc']]
-      } );
-      t.on( 'order.dt search.dt', function () {
-          t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
-              cell.innerHTML = i+1;
-          } );
-      } ).draw();
-  } );
+  // $(document).ready(function() {
+  //     var t = $('#table1').DataTable( {
+  //         "columnDefs": [
+  //             {
+  //               "targets": [ 0 ],
+  //               "orderable": false
+  //             },
+  //         ],
+  //         "order" : [[9,'desc']]
+  //     } );
+  //     t.on( 'order.dt search.dt', function () {
+  //         t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+  //             cell.innerHTML = i+1;
+  //         } );
+  //     } ).draw();
+  // } );
 </script>
 <?php
 $this->load->view('template/foot');
