@@ -59,5 +59,6 @@
               </a>
               <ul class="treeview-menu">
                   <li><a href="<?=site_url('kinerja_dosen/nilai_prodi')?>"><i class="fa fa-circle-o"></i> Kinerja Prodi</a></li>
+                  <li><a href="<?=site_url('kinerja_dosen/nilai_institusi')?>"><i class="fa fa-circle-o"></i> Kinerja Institusi</a></li>
               </ul>
             </li>

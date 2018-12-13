@@ -121,8 +121,8 @@ var myChart = new Chart(ctx, {
     data: {
         labels: ['Penilaian Atasan','IKD','Kumpul Soal/Nilai','Pertemuan','Upload Materi','PPM','Open KM'],
         datasets: [{
-            label: 'Skor Penilaian Kuesioner',
-            data: [<?=(double)$data_nilai->skor_kuisoner?>,<?=(double)$data_nilai->skor_ikd?>,<?=(double)$data_nilai->upload_soalnilai?>,<?=(double)$data_nilai->skor_pertemuan?>,<?=(double)$data_nilai->upload_materi?>,<?=(double)$data_nilai->lppm?>,<?=(double)$data_nilai->skor_open_km?>],
+            label: 'Komponen Penilaian',
+            data: [<?=$data_nilai->skor_kuisoner?>,<?=$data_nilai->skor_ikd?>,<?=$data_nilai->upload_soalnilai?>,<?=$data_nilai->skor_pertemuan?>,<?=$data_nilai->upload_materi?>,<?=$data_nilai->lppm?>,<?=$data_nilai->skor_open_km?>],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -140,7 +140,7 @@ var myChart = new Chart(ctx, {
                 'rgba(255, 159, 64, 1)'
             ],
             borderWidth: 1
-        }]
+        },]
     },
     options: {
         scales: {

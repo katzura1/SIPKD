@@ -28,7 +28,7 @@ $this->load->view('template/sidebar');
           <a href="<?=site_url('user/tambah')?>" class="btn btn-primary">TAMBAH</a><br><br>
           <?php
           if($this->session->userdata('message')!=''){
-            echo "<div class='alert alert-success'>".$this->session->userdata('message')."</div>'";
+            echo "<div class='alert alert-success'>".$this->session->userdata('message')."</div>";
           }
           ?>
           <table class="table table-striped" id="tableUser">

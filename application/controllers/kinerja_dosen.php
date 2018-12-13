@@ -49,6 +49,55 @@ class Kinerja_dosen extends CI_Controller
     echo $this->kinerja_dosen_model->get_nilai_by_prodi($kode,$thnAkademik,$kd_semester);
   }
 
+  function nilai_institusi(){
+    $hak_akses = $this->session->userdata('hak_akses');
+    $thnAkademik = set_value('thnAkademik',$this->data_ta->tahunAkademik);
+    $kd_semester = set_value('kd_semester',$this->data_ta->kd_semester);
+    $kode_institusi = $this->arr_institusi[$hak_akses];
+    $data_kinerja = $this->kinerja_dosen_model->get_nilai_per_institusi($kode_institusi,$thnAkademik,$kd_semester);
+    $arr_nm_prodi = array();
+    $arr_kuesioner = array();
+    $arr_ikd = array();
+    $arr_soalnilai = array();
+    $arr_pertemuan = array();
+    $arr_materi = array();
+    $arr_lppm = array();
+    $arr_open_km = array();
+    foreach ($data_kinerja as $value) {
+      $arr_nm_prodi[] = $value->nama_prodi;
+      $arr_kuesioner[] = $value->mean_kuesioner;
+      $arr_ikd[] = $value->mean_ikd;
+      $arr_soalnilai[] = $value->mean_soalnilai;
+      $arr_pertemuan[] = $value->mean_pertemuan;
+      $arr_materi[] = $value->mean_upload_materi;
+      $arr_lppm[] = $value->mean_lppm;
+      $arr_open_km[] = $value->mean_ok;
+    }
+    //
+    $data = array(
+      'title' => 'Penilaian Kinerja Dosen Prodi',
+      'nama_institusi' => $hak_akses==10?'STMIK,AMIK':'STIE',
+      'dd_ta' => $this->tahun_akademik_model->get_dd_thn_akademik(),
+      'dd_semester' => array('1'=>'Gasal', '2'=>'Genap'),
+      'thnAkademik' => $thnAkademik,
+      'kd_semester' => $kd_semester,
+      'action' => site_url('kinerja_dosen/nilai_institusi'),
+      'data_kinerja' => $data_kinerja,
+      'arr_nm_prodi' => $arr_nm_prodi,
+      'arr_kuesioner' => $arr_kuesioner,
+      'arr_ikd' => $arr_ikd,
+      'arr_soalnilai' => $arr_soalnilai,
+      'arr_pertemuan' => $arr_pertemuan,
+      'arr_materi' => $arr_materi,
+      'arr_lppm' => $arr_lppm,
+      'arr_open_km' => $arr_open_km
+    );
+    $this->load->view('kinerja/report_institusi',$data);
+    // query where in kode institusi
+    //beneri use case
+    //baca2 sekilas crm
+  }
+
   function nilai_prodi(){
     $hak_akses = $this->session->userdata('hak_akses');
     $thnAkademik = set_value('thnAkademik',$this->data_ta->tahunAkademik);
