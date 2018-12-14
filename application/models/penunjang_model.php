@@ -67,7 +67,7 @@
       return $this->datatables->generate();
     }
 
-    public function tampil_penunjang_dosen($kd_dosen, $thnAkademik, $kd_semester){
+    public function get_penunjang_by_dosen($kd_dosen, $thnAkademik, $kd_semester){
       $this->db->select('id, nama_kegiatan, data_penunjang.kd_dosen, nm_dosen, nama_kegiatan, tanggal, tempat, alamat, dok_path, dok_hasil, status_periksa');
       $this->db->from($this->nama_tb);
       $this->db->join('dosen','dosen.kd_dosen=data_penunjang.kd_dosen');

@@ -321,7 +321,7 @@ class Penunjang extends CI_Controller {
       $kd_semester = $this->data_ta->kd_semester;
     }
     //ambil data berdasrakan filter
-    $data_penunjang = $this->penunjang_model->tampil_penunjang_dosen($kd_dosen, $thn_akademik, $kd_semester);
+    $data_penunjang = $this->penunjang_model->get_penunjang_by_dosen($kd_dosen, $thn_akademik, $kd_semester);
 
     $data = array(
       'action' => site_url('penunjang'),
@@ -340,7 +340,7 @@ class Penunjang extends CI_Controller {
     $thnAkademik = $this->input->post('thnAkademik');
     $kd_semester = $this->input->post('semester');
     $data_dosen = $this->dosen_model->get_by_kd($kd_dosen);
-    $data_penunjang = $this->penunjang_model->tampil_penunjang_dosen($kd_dosen, $thnAkademik, $kd_semester);
+    $data_penunjang = $this->penunjang_model->get_penunjang_by_dosen($kd_dosen, $thnAkademik, $kd_semester);
     $data = array(
       'thn_akademik' => $thnAkademik,
       'semester' => $kd_semester=='1'?'GASAL':'GENAP',
