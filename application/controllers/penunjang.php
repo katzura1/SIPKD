@@ -73,7 +73,8 @@ class Penunjang extends CI_Controller {
       'button' => 'SIMPAN',
       'action' => site_url('penunjang/aksitambah'),
       'dd_kegiatan' => $this->penunjang_model->get_dd_jenis(),
-      'id_tipe' => set_value('id_tipe','')
+      'id_tipe' => set_value('id_tipe',''),
+      'tipe_dok' => set_value('tipe_dok','')
     );
     $this->load->view('penunjang/form_penunjang',$data);
   }
@@ -101,7 +102,8 @@ class Penunjang extends CI_Controller {
            'id_kegiatan' => $this->input->post('id_tipe',TRUE),
            'dok_path' => $path,
            'dok_hasil' => $upload['file']['file_name'],
-           'status_periksa' => 'belum'
+           'status_periksa' => 'belum',
+           'tipe_dok' => $this->input->post('tipe_dok')
          );
 
          $this->penunjang_model->simpanPenunjang($data);
@@ -141,7 +143,8 @@ class Penunjang extends CI_Controller {
         'action' => site_url('penunjang/aksiupdate'),
         'file' => base_url('./'.$data_penunjang->dok_path.'/'.$data_penunjang->dok_hasil),
         'dd_kegiatan' => $this->penunjang_model->get_dd_jenis(),
-        'id_tipe' => set_value('id_tipe',$data_penunjang->id_kegiatan)
+        'id_tipe' => set_value('id_tipe',$data_penunjang->id_kegiatan),
+        'tipe_dok' => set_value('tipe_dok',$data_penunjang->tipe_dok)
       );
       $this->load->view('penunjang/form_penunjang',$data);
     }else{
@@ -164,7 +167,8 @@ class Penunjang extends CI_Controller {
           'nama_kegiatan' => $this->input->post('nama_kegiatan',TRUE),
           'alamat' => $this->input->post('alamat',TRUE),
           'tempat' => $this->input->post('tempat',TRUE),
-          'id_kegiatan' => $this->input->post('id_tipe',TRUE)
+          'id_kegiatan' => $this->input->post('id_tipe',TRUE),
+          'tipe_dok' => $this->input->post('tipe_dok',TRUE)
         );
       }else{
         //upload dokumen
@@ -181,6 +185,7 @@ class Penunjang extends CI_Controller {
              'id_kegiatan' => $this->input->post('id_tipe',TRUE),
              'dok_path' => $path,
              'dok_hasil' => $upload['file']['file_name'],
+             'tipe_dok' => $this->input->post('tipe_dok',TRUE)
            );
            //delete file lama
            unlink('./'.$path.'/'.$this->penunjang_model->get_dok_hasil($this->input->post('id')));

@@ -77,6 +77,10 @@ $this->load->view('template/sidebar');
                   <?=form_error('tempat')?>
                 </div>
                 <div class="form-group">
+                  <label>Tipe Dokumen</label>
+                  <?=form_dropdown('tipe_dok',array('Sertifikat'=>'Sertifikat', 'Laporan'=>'Laporan','Surat Tugas'=>'Surat Tugas'),$tipe_dok,"class='form-control'")?>
+                </div>
+                <div class="form-group">
                   <label>Dokumen Hasil</label>
                   <input type="file" id="dok_hasil" accept=".jpeg,.jpg,.png,.pdf,.doc,.docx" onchange="validateFileType()" name="dok_hasil" class="form-control">
                   <p class="help-block">Format file : docx, pdf, doc, jpg, jpeg, png</p>

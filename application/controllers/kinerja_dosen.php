@@ -75,7 +75,7 @@ class Kinerja_dosen extends CI_Controller
     }
     //
     $data = array(
-      'title' => 'Penilaian Kinerja Dosen Prodi',
+      'title' => 'Penilaian Kinerja Dosen institusi',
       'nama_institusi' => $hak_akses==10?'STMIK,AMIK':'STIE',
       'dd_ta' => $this->tahun_akademik_model->get_dd_thn_akademik(),
       'dd_semester' => array('1'=>'Gasal', '2'=>'Genap'),

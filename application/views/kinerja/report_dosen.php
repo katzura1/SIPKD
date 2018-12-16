@@ -45,10 +45,19 @@ $this->load->view('template/sidebar');
                   <button type="submit" name="btnCetak" class="btn btn-primary"><i class="fa fa-search"></i> CARI</button>
                 </div>
               </div>
+              <div class="col-md-1">
+                <div class="form-group">
+                  <label style="color:white;display:block;">Semester</label>
+                  <button type="button" name="btnCetak" class="btn btn-primary"><i class="fa fa-search"></i> CETAK</button>
+                </div>
+              </div>
             </div>
           </form>
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
+              <canvas id="myChart" width="800" height="300"></canvas>
+            </div>
+            <div class="col-md-12">
               <table class="table table-striped">
                 <thead>
                   <tr>
@@ -100,9 +109,6 @@ $this->load->view('template/sidebar');
                 </tbody>
               </table>
             </div>
-            <div class="col-md-6">
-              <canvas id="myChart" width="400" height="300"></canvas>
-            </div>
           </div>
         </div><!-- /.box-body -->
     </div><!-- /.box -->
@@ -116,31 +122,33 @@ $this->load->view('template/js');
 <script type="text/javascript" src="<?=base_url('assets\chartjs\Chart.js')?>"></script>
 <script>
 var ctx = document.getElementById("myChart").getContext('2d');
+var data_nilai = [<?=$data_nilai->skor_kuisoner?>,<?=$data_nilai->skor_ikd?>,<?=$data_nilai->upload_soalnilai?>,<?=$data_nilai->skor_pertemuan?>,<?=$data_nilai->upload_materi?>,<?=$data_nilai->lppm?>,<?=$data_nilai->skor_open_km?>];
+var colors = ['rgba(255, 99, 132, 0.2)',
+'rgba(54, 162, 235, 0.2)',
+'rgba(255, 206, 86, 0.2)',
+'rgba(118, 192, 192, 0.2)',
+'rgba(153, 102, 255, 0.2)',
+'rgba(255, 159, 64, 0.2)'];
+var bcolors = ['rgba(255,99,132,1)',
+'rgba(54, 162, 235, 1)',
+'rgba(255, 206, 86, 1)',
+'rgba(118, 192, 192, 1)',
+'rgba(153, 102, 255, 1)',
+'rgba(255, 159, 64, 1)'];
+var keterangan = ['Penilaian Atasan','IKD','Kumpul Soal/Nilai','Pertemuan','Upload Materi','PPM','Open KM'];
 var myChart = new Chart(ctx, {
     type: 'bar',
+
     data: {
         labels: ['Penilaian Atasan','IKD','Kumpul Soal/Nilai','Pertemuan','Upload Materi','PPM','Open KM'],
-        datasets: [{
-            label: 'Komponen Penilaian',
-            data: [<?=$data_nilai->skor_kuisoner?>,<?=$data_nilai->skor_ikd?>,<?=$data_nilai->upload_soalnilai?>,<?=$data_nilai->skor_pertemuan?>,<?=$data_nilai->upload_materi?>,<?=$data_nilai->lppm?>,<?=$data_nilai->skor_open_km?>],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255,99,132,1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
+        datasets: [
+          {
+            data: data_nilai,
+            backgroundColor: colors,
+            borderColor: bcolors,
             borderWidth: 1
-        },]
+          },
+      ]
     },
     options: {
         scales: {
@@ -154,6 +162,16 @@ var myChart = new Chart(ctx, {
                   autoSkip: false
                 }
             }]
+        },
+        legend: {
+          display: false
+        },
+        tooltips: {
+          callbacks: {
+             label: function(tooltipItem) {
+                    return tooltipItem.yLabel;
+             }
+          }
         }
     }
 });

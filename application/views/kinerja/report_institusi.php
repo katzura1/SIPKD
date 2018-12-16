@@ -47,6 +47,12 @@ $this->load->view('template/sidebar');
                   <button type="submit" name="btnCetak" class="btn btn-primary"><i class="fa fa-search"></i> CARI</button>
                 </div>
               </div>
+              <div class="col-md-1">
+                <div class="form-group">
+                  <label style="color:white;display:block;">Semester</label>
+                  <button type="button" name="btnCetak" class="btn btn-primary"><i class="fa fa-search"></i> CETAK</button>
+                </div>
+              </div>
             </div>
           </form>
           <canvas id="areaChart" style="height:150px;width:600px;"></canvas>
