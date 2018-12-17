@@ -16,6 +16,10 @@ class user extends CI_Controller{
     if($this->session->userdata('logged')!=1){
       redirect(site_url().'auth');
     }
+    if ($this->session->userdata('hak_akses')<12) {
+      redirect(site_url().'dashboard');
+    }
+
   }
 
   function index(){

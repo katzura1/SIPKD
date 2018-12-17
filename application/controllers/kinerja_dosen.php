@@ -150,6 +150,28 @@ class Kinerja_dosen extends CI_Controller
     );
     $this->load->view('kinerja/report_dosen',$data);
   }
+
+  function cetak(){
+    $hak_akses = $this->session->userdata('hak_akses');
+    $kode_prodi = set_value('kode_prodi','');
+    $thnAkademik = set_value('thnAkademik','');
+    $kd_semester = set_value('kd_semester','');
+    if ($kode_prodi=='') {
+      $kode = $this->arr_institusi[$hak_akses];
+    }else{
+      $kode = $kode_prodi;
+    }
+    $data = array(
+      'thnAkademik' => $thnAkademik,
+      'kd_semester' => $kd_semester,
+      'hak_akses' => $hak_akses,
+      'kode_prodi' => $kode_prodi,
+      'nama_prodi' => $kode_prodi==''?'':$this->prodi_model->getByKode($kode_prodi)->nama_prodi,
+      'report' => $this->kinerja_dosen_model->report_prodi($kode,$thnAkademik,$kd_semester)
+    );
+
+    $this->load->view('kinerja/laporan_prodi',$data);
+  }
 }
 
 ?>

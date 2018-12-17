@@ -4,6 +4,7 @@ $this->load->view('template/head');
 <!--tambahkan custom css disini-->
 <!-- DataTables -->
   <link rel="stylesheet" href="<?=base_url('assets/AdminLTE-2.0.5/plugins/datatables/dataTables.bootstrap.css')?>">
+  <link rel="stylesheet" href="<?=base_url('assets/AdminLTE-2.0.5/plugins/datatables/buttons.dataTables.min.css')?>">
 <?php
 $this->load->view('template/topbar');
 $this->load->view('template/sidebar');
@@ -30,7 +31,7 @@ $this->load->view('template/sidebar');
             <h3 class="box-title">Dosen <?=isset($nama_prodi)?$nama_prodi:$nama_institusi?></h3>
         </div>
         <div class="box-body">
-          <form action="<?=$action?>" method="post">
+          <form method="post">
             <div class="row">
               <div class="col-md-2">
                 <div class="form-group">
@@ -55,13 +56,13 @@ $this->load->view('template/sidebar');
               <div class="col-md-1">
                 <div class="form-group">
                   <label style="color:white;display:block;">Semester</label>
-                  <button type="submit" name="btnCetak" class="btn btn-primary"><i class="fa fa-search"></i> CARI</button>
+                  <button type="submit" onclick="$('form').attr('target', '');" formaction="<?=$action?>" name="btnCetak" class="btn btn-primary"><i class="fa fa-search"></i> CARI</button>
                 </div>
               </div>
               <div class="col-md-1">
                 <div class="form-group">
                   <label style="color:white;display:block;">Semester</label>
-                  <button type="button" name="btnCetak" class="btn btn-primary"><i class="fa fa-search"></i> CETAK</button>
+                  <button type="submit" onclick="$('form').attr('target', '_blank');" formaction="<?=site_url('kinerja_dosen/cetak')?>" name="btnCetak" class="btn btn-primary"><i class="fa fa-print"></i> CETAK</button>
                 </div>
               </div>
             </div>
@@ -95,6 +96,8 @@ $this->load->view('template/js');
 <!--DataTables-->
 <script type="text/javascript" src="<?=base_url('assets/AdminLTE-2.0.5/plugins/datatables/jquery.dataTables.min.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('assets/AdminLTE-2.0.5/plugins/datatables/dataTables.bootstrap.js')?>"></script>
+<script type="text/javascript" src="<?=base_url('assets/AdminLTE-2.0.5/plugins/datatables/buttons.print.min.js')?>"></script>
+<script type="text/javascript" src="<?=base_url('assets/AdminLTE-2.0.5/plugins/datatables/dataTables.buttons.min')?>"></script>
 <script>
 // Setup datatables
 $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
@@ -118,6 +121,7 @@ var table = $("#table1").dataTable({
             .on('input.DT', function() {
                 api.search(this.value).draw();
         });
+
     },
         oLanguage: {
         sProcessing: "<i class='fa fa-refresh fa-spin'></i>"

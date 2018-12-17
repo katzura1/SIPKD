@@ -47,7 +47,7 @@
             </li>
             <li class="treeview">
               <a href="#">
-                  <i class="fa fa-archive"></i> <span>Data LPPM Institusi</span> <i class="fa fa-angle-left pull-right"></i>
+                  <i class="fa fa-archive"></i> <span>Data PPM Institusi</span> <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
                   <li><a href="<?=site_url('lppm')?>"><i class="fa fa-circle-o"></i> List LPPM Institusi</a></li>
