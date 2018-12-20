@@ -78,9 +78,10 @@ $this->load->view('template/sidebar');
             <thead>
               <tr>
                 <th>No.</th>
+                <th>Jenis Kegiatan</th>
                 <th>Nama Kegiatan</th>
                 <th>Tempat</th>
-                <th>Alamat</th>
+                <th>Dokumen</th>
                 <th>Status</th>
                 <th>Aksi</th>
               </tr>
@@ -89,9 +90,10 @@ $this->load->view('template/sidebar');
               <?php foreach ($data_penunjang as $data): ?>
                 <tr>
                   <td></td>
+                  <td><?=$data->jenis_kegiatan?></td>
                   <td><?=$data->nama_kegiatan?></td>
                   <td><?=$data->tempat?></td>
-                  <td><?=$data->alamat?></td>
+                  <td><?=$data->tipe_dok?></td>
                   <td><?=$data->status_periksa=='belum'?"<span class='label label-danger'>".ucfirst($data->status_periksa.' Validasi')."</span>":"<span class='label label-success'>".ucfirst($data->status_periksa.' Validasi')."</span>"?></td>
                   <td>
                     <center>

@@ -55,6 +55,7 @@ $this->load->view('template/sidebar');
             <thead>
               <tr>
                 <th>No.</th>
+                <th>Jenis Kegiatan</th>
                 <th>Nama Kegiatan</th>
                 <th>Kode Dosen</th>
                 <th>Nama Dosen</th>
@@ -115,6 +116,9 @@ $this->load->view('template/js');
                     data: "kd_dosen",
                     "orderable": false,
                     width : '4%',
+                  },
+                  {
+                    data: "jenis_kegiatan",
                   },
                   {
                     data: "nama_kegiatan",

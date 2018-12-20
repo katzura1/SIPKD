@@ -16,13 +16,13 @@ class user extends CI_Controller{
     if($this->session->userdata('logged')!=1){
       redirect(site_url().'auth');
     }
-    if ($this->session->userdata('hak_akses')<12) {
-      redirect(site_url().'dashboard');
-    }
 
   }
 
   function index(){
+    if ($this->session->userdata('hak_akses')<12) {
+      redirect(site_url().'dashboard');
+    }
     $rows = $this->user_model->tampil();
     $data = array(
       'title' => 'List Pengguna',
@@ -37,7 +37,9 @@ class user extends CI_Controller{
   }
 
   function tambah(){
-
+    if ($this->session->userdata('hak_akses')<12) {
+      redirect(site_url().'dashboard');
+    }
     $data = array(
       'title' => 'Input Pengguna',
       'action' => site_url('user/aksitambah'),
@@ -81,6 +83,9 @@ class user extends CI_Controller{
   }
 
   function update($kd_dosen){
+    if ($this->session->userdata('hak_akses')<12) {
+      redirect(site_url().'dashboard');
+    }
     $data_dosen = $this->user_model->get_by_kd($kd_dosen);
     $arr_dosen = array();
     array_push($arr_dosen,$data_dosen);

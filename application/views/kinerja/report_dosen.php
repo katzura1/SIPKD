@@ -48,7 +48,7 @@ $this->load->view('template/sidebar');
               <div class="col-md-1">
                 <div class="form-group">
                   <label style="color:white;display:block;">Semester</label>
-                  <button type="button" name="btnCetak" class="btn btn-primary"><i class="fa fa-search"></i> CETAK</button>
+                  <button type="button" name="btnCetak" class="btn btn-primary"><i class="fa fa-print"></i> CETAK</button>
                 </div>
               </div>
             </div>
@@ -123,12 +123,12 @@ $this->load->view('template/js');
 <script>
 var ctx = document.getElementById("myChart").getContext('2d');
 var data_nilai = [<?=$data_nilai->skor_kuisoner?>,<?=$data_nilai->skor_ikd?>,<?=$data_nilai->upload_soalnilai?>,<?=$data_nilai->skor_pertemuan?>,<?=$data_nilai->upload_materi?>,<?=$data_nilai->lppm?>,<?=$data_nilai->skor_open_km?>];
-var colors = ['rgba(255, 99, 132, 0.2)',
-'rgba(54, 162, 235, 0.2)',
-'rgba(255, 206, 86, 0.2)',
-'rgba(118, 192, 192, 0.2)',
-'rgba(153, 102, 255, 0.2)',
-'rgba(255, 159, 64, 0.2)'];
+var colors = ['rgba(255, 99, 132)',
+'rgba(54, 162, 235)',
+'rgba(255, 206, 86)',
+'rgba(118, 192, 192)',
+'rgba(153, 102, 255)',
+'rgba(255, 159, 64)'];
 var bcolors = ['rgba(255,99,132,1)',
 'rgba(54, 162, 235, 1)',
 'rgba(255, 206, 86, 1)',

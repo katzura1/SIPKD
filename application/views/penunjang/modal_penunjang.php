@@ -19,6 +19,11 @@
             <td><?=$data_penunjang->kd_semester?></td>
           </tr>
           <tr>
+            <td valign="center">Jenis Kegiatan</td>
+            <td valign="center">:</td>
+            <td valign="center"><?=$data_penunjang->jenis_kegiatan?></td>
+          </tr>
+          <tr>
             <td valign="center">Nama Kegiatan</td>
             <td valign="center">:</td>
             <td valign="center"><?=$data_penunjang->nama_kegiatan?></td>
@@ -44,7 +49,12 @@
             <td valign="center"><?=ucfirst($data_penunjang->status_periksa.' Validasi')?></td>
           </tr>
           <tr>
-            <td valign="center">Dokumen Hasil</td>
+            <td valign="center">Tipe</td>
+            <td valign="center">:</td>
+            <td valign="center"><?=$data_penunjang->tipe_dok?></td>
+          </tr>
+          <tr>
+            <td valign="center">Download Dokumen</td>
             <td valign="center">:</td>
             <td valign="center">
               <a href="<?=base_url($data_penunjang->dok_path.'/'.$data_penunjang->dok_hasil)?>" class="btn btn-primary" target="_blank">

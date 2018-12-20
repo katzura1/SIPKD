@@ -153,11 +153,18 @@ class Kinerja_dosen extends CI_Controller
 
   function cetak(){
     $hak_akses = $this->session->userdata('hak_akses');
+    if($hak_akses<3 && $hak_akses>11){
+      redirect('kinerja_dosen/nilai_dosen');
+    }
     $kode_prodi = set_value('kode_prodi','');
     $thnAkademik = set_value('thnAkademik','');
     $kd_semester = set_value('kd_semester','');
     if ($kode_prodi=='') {
-      $kode = $this->arr_institusi[$hak_akses];
+      if($hak_akses>2 && $hak_akses<10){
+        $kode = $this->arr_prodi[$hak_akses];
+      }else{
+        $kode = $this->arr_institusi[$hak_akses];
+      }
     }else{
       $kode = $kode_prodi;
     }

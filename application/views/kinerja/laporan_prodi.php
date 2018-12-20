@@ -18,7 +18,7 @@
         margin: 0;
       }
       body{
-        padding: 30px;
+        padding: 40px;
       }
       tbody td, thead th{
         text-align: center;

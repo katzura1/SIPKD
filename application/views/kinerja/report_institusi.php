@@ -100,12 +100,12 @@ $this->load->view('template/js');
 <script type="text/javascript" src="<?=base_url('assets\chartjs\Chart.js')?>"></script>
 <script>
 var ctx = document.getElementById("areaChart").getContext('2d');
-var colors = ['rgba(255, 99, 132, 0.2)',
-'rgba(54, 162, 235, 0.2)',
-'rgba(255, 206, 86, 0.2)',
-'rgba(118, 192, 192, 0.2)',
-'rgba(153, 102, 255, 0.2)',
-'rgba(255, 159, 64, 0.2)'];
+var colors = ['rgba(255, 99, 132)',
+'rgba(54, 162, 235)',
+'rgba(255, 206, 86)',
+'rgba(118, 192, 192)',
+'rgba(153, 102, 255)',
+'rgba(255, 159, 64)'];
 var bcolors = ['rgba(255,99,132,1)',
 'rgba(54, 162, 235, 1)',
 'rgba(255, 206, 86, 1)',

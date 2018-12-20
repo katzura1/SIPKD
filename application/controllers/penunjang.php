@@ -308,7 +308,7 @@ class Penunjang extends CI_Controller {
         'kode' => $kode,
         'url' => $url,
       );
-      $this->load->view('penunjang/list_institusi_penunjang',$data);
+      $this->load->view('penunjang/list_institusi',$data);
     }
   }
 

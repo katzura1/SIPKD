@@ -257,14 +257,17 @@ class Kuesioner extends CI_Controller
     }
 
     $thnAkademik = $this->input->post('thnAkademik');
+    $kd_semester = $this->input->post('kd_semester');
     $kd_dosen = $this->input->post('kd_dosen');
     $penilai = $this->input->post('penilai');
     $data = array(
       'thnAkademik' => $thnAkademik,
       'kd_dosen' => $kd_dosen,
       'penilai' => $penilai,
+      'kd_semester'=> $kd_semester
     );
     $id = $this->kuesioner_model->get_id($data);
+    
     //update tgl_ubah
     $ubah['tgl_ubah'] = date('Y-m-d');
     $this->kuesioner_model->update_tgl_ubah($ubah,$id);

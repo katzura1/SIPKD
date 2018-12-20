@@ -135,9 +135,7 @@ class Kuesioner_model extends CI_Model{
   public function get_id($data){
     $this->db->select('id');
     $this->db->from($this->tb);
-    $this->db->where('thnAkademik',$data['thnAkademik']);
-    $this->db->where('kd_dosen',$data['kd_dosen']);
-    $this->db->where('penilai',$data['penilai']);
+    $this->db->where($data);
     return $this->db->get()->row()->id;
   }
 

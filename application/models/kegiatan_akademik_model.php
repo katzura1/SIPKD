@@ -4,6 +4,11 @@
  */
 class Kegiatan_akademik_model extends CI_Model
 {
+  public function get_all_dosen($kode_prodi){
+    $this->db->from('dosen as d');
+    $this->db->where('d.kode_prodi',$kode_prodi);
+    return $this->db->get()->result();
+  }
   public function get_upload_materi_not_done($kode_prodi,$thnAkademik,$kd_semester){
     $this->db->from('dosen as d');
     $this->db->where(" NOT EXISTS (SELECT kd_dosen FROM kegiatan_akademik as ka WHERE thnAkademik='$thnAkademik' AND kd_semester='$kd_semester' AND ka.kd_dosen=d.kd_dosen AND upload_materi IS NOT NULL)");
@@ -20,6 +25,31 @@ class Kegiatan_akademik_model extends CI_Model
     $this->db->where('upload_materi IS NOT NULL');
     // echo $this->db->get_compiled_select();
     // die();
+    return $this->db->get()->result();
+  }
+
+  public function get_not_done($kode_dosen, $thnAkademik, $kd_semester, $key){
+    $this->db->select('p.kd_dosen, p.kode_mk, kkm.keterangan, p.kelas');
+    $this->db->from('pertemuan as p');
+    $this->db->join('kurikulummdp as kkm', 'kkm.kode_mk=p.kode_mk');
+    $this->db->where(" NOT EXISTS (SELECT kd_dosen FROM kegiatan_akademik as ka INNER JOIN detail_kegiatan_akademik as dka ON ka.id=dka.id WHERE ka.thnAkademik='$thnAkademik' AND ka.kd_semester='$kd_semester' AND ka.kd_dosen=p.kd_dosen AND dka.kode_mk=p.kode_mk AND dka.kelas=p.kelas AND dka.upload_$key IS NOT NULL)");
+    $this->db->where('p.kd_dosen', $kode_dosen);
+    $this->db->where('thnAkademik',$thnAkademik);
+    $this->db->where('kd_semester',$kd_semester);
+    $this->db->group_by(array('p.kd_dosen', 'p.kode_mk','p.kelas'));
+    //echo $this->db->get_compiled_select();
+    return $this->db->get()->result();
+  }
+
+  public function get_done($kode_dosen,$thnAkademik,$kd_semester,$key){
+    $this->db->select('ka.kd_dosen, dka.kode_mk, k.keterangan, dka.kelas, dka.upload_soal, dka.upload_nilai, dka.upload_materi');
+    $this->db->from('kegiatan_akademik as ka');
+    $this->db->join('detail_kegiatan_akademik as dka','dka.id=ka.id');
+    $this->db->join('kurikulummdp as k', 'k.kode_mk=dka.kode_mk');
+    $this->db->where('thnAkademik',$thnAkademik);
+    $this->db->where('kd_semester',$kd_semester);
+    $this->db->where('kd_dosen',$kode_dosen);
+    $this->db->where('dka.upload_'.$key.' IS NOT NULL');
     return $this->db->get()->result();
   }
 
@@ -59,6 +89,13 @@ class Kegiatan_akademik_model extends CI_Model
     return $this->db->get()->result();
   }
 
+  public function get_id($data){
+    $this->db->select('id');
+    $this->db->from('kegiatan_akademik as ka');
+    $this->db->where($data);
+    return $this->db->get()->row()->id;
+  }
+
   public function get_num_row($thnAkademik,$kd_semester,$kd_dosen){
     $this->db->from('kegiatan_akademik as ka');
     $this->db->where('thnAkademik',$thnAkademik);
@@ -67,8 +104,24 @@ class Kegiatan_akademik_model extends CI_Model
     return $this->db->get()->num_rows();
   }
 
+  public function get_nums_row($array){
+    $this->db->from('kegiatan_akademik as ka');
+    $this->db->join('detail_kegiatan_akademik as dka','dka.id=ka.id');
+    $this->db->where($array);
+    return $this->db->get()->num_rows();
+  }
+
   public function simpanIsiNilai($data){
     $this->db->insert('kegiatan_akademik',$data);
+  }
+
+  public function simpanDetail($data){
+    $this->db->insert('detail_kegiatan_akademik',$data);
+  }
+
+  public function updateDetail($data, $array){
+    $this->db->where($array);
+    $this->db->update('detail_kegiatan_akademik',$data);
   }
 
   public function ubahIsiNilai($data,$thnAkademik,$kd_semester,$kd_dosen){
@@ -77,6 +130,58 @@ class Kegiatan_akademik_model extends CI_Model
     $this->db->where('kd_dosen',$kd_dosen);
     $this->db->update('kegiatan_akademik',$data);
   }
+
+  /* FUNCTION TAMPIL LAMA
+  public function get_soal_not_done($kode_dosen, $thnAkademik, $kd_semester){
+    $this->db->select('p.kd_dosen, p.kode_mk, kkm.keterangan, p.kelas');
+    $this->db->from('pertemuan as p');
+    $this->db->join('kurikulummdp as kkm', 'kkm.kode_mk=p.kode_mk');
+    $this->db->where(" NOT EXISTS (SELECT kd_dosen FROM kegiatan_akademik as ka INNER JOIN detail_kegiatan_akademik as dka ON ka.id=dka.id WHERE ka.thnAkademik='$thnAkademik' AND ka.kd_semester='$kd_semester' AND ka.kd_dosen=p.kd_dosen AND dka.kode_mk=p.kode_mk AND dka.kelas=p.kelas AND dka.upload_soal IS NOT NULL)");
+    $this->db->where('p.kd_dosen', $kode_dosen);
+    $this->db->where('thnAkademik',$thnAkademik);
+    $this->db->where('kd_semester',$kd_semester);
+    $this->db->group_by(array('p.kd_dosen', 'p.kode_mk','p.kelas'));
+    //echo $this->db->get_compiled_select();
+    return $this->db->get()->result();
+  }
+
+  public function get_nilai_not_done($kode_dosen, $thnAkademik, $kd_semester){
+    $this->db->select('p.kd_dosen, p.kode_mk, kkm.keterangan, p.kelas');
+    $this->db->from('pertemuan as p');
+    $this->db->join('kurikulummdp as kkm', 'kkm.kode_mk=p.kode_mk');
+    $this->db->where(" NOT EXISTS (SELECT kd_dosen FROM kegiatan_akademik as ka INNER JOIN detail_kegiatan_akademik as dka ON ka.id=dka.id WHERE ka.thnAkademik='$thnAkademik' AND ka.kd_semester='$kd_semester' AND ka.kd_dosen=p.kd_dosen AND dka.kode_mk=p.kode_mk AND dka.kelas=p.kelas AND dka.upload_nilai IS NOT NULL)");
+    $this->db->where('p.kd_dosen', $kode_dosen);
+    $this->db->where('thnAkademik',$thnAkademik);
+    $this->db->where('kd_semester',$kd_semester);
+    $this->db->group_by(array('p.kd_dosen', 'p.kode_mk','p.kelas'));
+    //echo $this->db->get_compiled_select();
+    return $this->db->get()->result();
+  }
+
+  public function get_soal_done($kode_dosen,$thnAkademik,$kd_semester){
+    $this->db->select('ka.kd_dosen, dka.kode_mk, k.keterangan, dka.kelas, dka.upload_soal, dka.upload_nilai, dka.upload_materi');
+    $this->db->from('kegiatan_akademik as ka');
+    $this->db->join('detail_kegiatan_akademik as dka','dka.id=ka.id');
+    $this->db->join('kurikulummdp as k', 'k.kode_mk=dka.kode_mk');
+    $this->db->where('thnAkademik',$thnAkademik);
+    $this->db->where('kd_semester',$kd_semester);
+    $this->db->where('kd_dosen',$kode_dosen);
+    $this->db->where('dka.upload_soal IS NOT NULL');
+    return $this->db->get()->result();
+  }
+
+  public function get_nilai_done($kode_dosen,$thnAkademik,$kd_semester){
+    $this->db->select('ka.kd_dosen, dka.kode_mk, k.keterangan, dka.kelas, dka.upload_soal, dka.upload_nilai, dka.upload_materi');
+    $this->db->from('kegiatan_akademik as ka');
+    $this->db->join('detail_kegiatan_akademik as dka','dka.id=ka.id');
+    $this->db->join('kurikulummdp as k', 'k.kode_mk=dka.kode_mk');
+    $this->db->where('thnAkademik',$thnAkademik);
+    $this->db->where('kd_semester',$kd_semester);
+    $this->db->where('kd_dosen',$kode_dosen);
+    $this->db->where('dka.upload_nilai IS NOT NULL');
+    return $this->db->get()->result();
+  }
+  */
 }
 
 ?>

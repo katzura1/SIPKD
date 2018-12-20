@@ -105,6 +105,38 @@ class Lppm_model extends CI_Model
     return $this->db->get()->row();
   }
 
+  public function get_jumlah_penelitian($kode_prodi,$thnAkademik,$kd_semester){
+    $this->db->select('*, count(id) as total');
+    $this->db->from('data_penelitian as dp');
+    $this->db->join('data_dosen_penelitian as ddp', 'ddp.id_penelitian=dp.id');
+    $this->db->join('dosen as d', 'd.kd_dosen=ddp.kd_dosen');
+    $this->db->join('program_studi as pd','pd.kode_prodi=d.kode_prodi');
+    if (is_array($kode_prodi)) {
+      $this->db->where_in('pd.kode_institusi',$kode_prodi);
+    }else{
+      $this->db->where('d.kode_prodi',$kode_prodi);
+    }
+    $this->db->where('dp.thn_akademik',$thnAkademik);
+    $this->db->where('dp.kd_semester',$kd_semester);
+    return $this->db->get()->row();
+  }
+
+  public function get_jumlah_pengabdian($kode_prodi,$thnAkademik,$kd_semester){
+    $this->db->select('*, count(id) as total');
+    $this->db->from('data_proposal as dp');
+    $this->db->join('data_dosen_proposal as ddp', 'ddp.id_proposal=dp.id');
+    $this->db->join('dosen as d', 'd.kd_dosen=ddp.kd_dosen');
+    $this->db->join('program_studi as pd','pd.kode_prodi=d.kode_prodi');
+    if (is_array($kode_prodi)) {
+      $this->db->where_in('pd.kode_institusi',$kode_prodi);
+    }else{
+      $this->db->where('d.kode_prodi',$kode_prodi);
+    }
+    $this->db->where('thn_akademik',$thnAkademik);
+    $this->db->where('kd_semester',$kd_semester);
+    return $this->db->get()->row();
+  }
+
   public function get_jumlah_pengabdian_by_dosen($kd_dosen,$thnAkademik,$kd_semester){
     $this->db->select('*, count(id) as total');
     $this->db->from('data_proposal as dp');
