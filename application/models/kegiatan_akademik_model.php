@@ -96,17 +96,32 @@ class Kegiatan_akademik_model extends CI_Model
     return $this->db->get()->row()->id;
   }
 
-  public function get_num_row($thnAkademik,$kd_semester,$kd_dosen){
-    $this->db->from('kegiatan_akademik as ka');
-    $this->db->where('thnAkademik',$thnAkademik);
-    $this->db->where('kd_semester',$kd_semester);
-    $this->db->where('kd_dosen', $kd_dosen);
-    return $this->db->get()->num_rows();
+  public function get_mean($data,$key){
+    $this->db->select("
+    IFNULL((SELECT upload_$key FROM kegiatan_akademik as ka JOIN detail_kegiatan_akademik as dka ON ka.id=dka.id WHERE ka.kd_dosen=p.kd_dosen AND ka.thnAkademik=p.thnAkademik AND ka.kd_semester=p.kd_semester AND dka.kode_mk=p.kode_mk AND dka.kelas=p.kelas),0) as total
+    ");
+    $this->db->from('pertemuan as p');
+    $this->db->where('p.kd_dosen',$data['kd_dosen']);
+    $this->db->where('p.thnAkademik',$data['thnAkademik']);
+    $this->db->where('p.kd_semester',$data['kd_semester']);
+    $this->db->group_by(array('p.kd_dosen', 'p.kode_mk','p.kelas'));
+    $arr = $this->db->get()->result();
+    $temp = 0;
+    foreach ($arr as $data) {
+      $temp+=$data->total;
+    }
+    return ($temp/count($arr));
   }
 
   public function get_nums_row($array){
     $this->db->from('kegiatan_akademik as ka');
-    $this->db->join('detail_kegiatan_akademik as dka','dka.id=ka.id');
+    $this->db->where($array);
+    return $this->db->get()->num_rows();
+  }
+
+  public function get_nums_row_detail($array){
+    $this->db->from('kegiatan_akademik as ka');
+    $this->db->from('detail_kegiatan_akademik as dka','dka.id=ka.id');
     $this->db->where($array);
     return $this->db->get()->num_rows();
   }
@@ -124,10 +139,8 @@ class Kegiatan_akademik_model extends CI_Model
     $this->db->update('detail_kegiatan_akademik',$data);
   }
 
-  public function ubahIsiNilai($data,$thnAkademik,$kd_semester,$kd_dosen){
-    $this->db->where('thnAkademik',$thnAkademik);
-    $this->db->where('kd_semester',$kd_semester);
-    $this->db->where('kd_dosen',$kd_dosen);
+  public function ubahIsiNilai($data,$array){
+    $this->db->where($array);
     $this->db->update('kegiatan_akademik',$data);
   }
 

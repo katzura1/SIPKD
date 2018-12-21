@@ -168,15 +168,17 @@ $this->load->view('template/js');
             $('#'+id).addClass('btn-warning');
           },
           success: function(data){
-            if(aksi=='simpan'){
-              $("#"+id).html("UBAH");
-              $('#'+id).data("action","ubah");
-            }else{
-              $("#"+id).html("UBAH");
-            }
-            $('#'+id).removeClass('btn-primary');
-            $('#'+id).removeClass('btn-warning');
-            $('#'+id).addClass('btn-success');
+            setTimeout(function(){
+              if(aksi=='simpan'){
+                $("#"+id).html("UBAH");
+                $('#'+id).data("action","ubah");
+              }else{
+                $("#"+id).html("UBAH");
+              }
+              $('#'+id).removeClass('btn-primary');
+              $('#'+id).removeClass('btn-warning');
+              $('#'+id).addClass('btn-success');
+            },3000);
           }
         });
       });

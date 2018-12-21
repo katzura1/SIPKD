@@ -51,6 +51,10 @@ class Kinerja_dosen extends CI_Controller
 
   function nilai_institusi(){
     $hak_akses = $this->session->userdata('hak_akses');
+    if ($hak_akses<10 || $hak_akses>11) {
+      redirect(site_url('dashboard'));
+    }
+
     $thnAkademik = set_value('thnAkademik',$this->data_ta->tahunAkademik);
     $kd_semester = set_value('kd_semester',$this->data_ta->kd_semester);
     $kode_institusi = $this->arr_institusi[$hak_akses];
@@ -99,6 +103,10 @@ class Kinerja_dosen extends CI_Controller
   }
 
   function nilai_prodi(){
+    $hak_akses = $this->session->userdata('hak_akses');
+    if ($hak_akses<3 || $hak_akses>11) {
+      redirect(site_url('dashboard'));
+    }
     $hak_akses = $this->session->userdata('hak_akses');
     $thnAkademik = set_value('thnAkademik',$this->data_ta->tahunAkademik);
     $kd_semester = set_value('kd_semester',$this->data_ta->kd_semester);

@@ -134,37 +134,26 @@ class Kegiatan_akademik extends CI_Controller
     }
     $id = $this->kegiatan_akademik_model->get_id($data); // get id
     //cek apakah udah ada detail
-    $data_detail = array(
-      'kd_dosen' => $kd_dosen,
-      'kode_mk' => $kode_mk,
-      'kelas' => $kelas,
-      'thnAkademik' => $thnAkademik,
-      'kd_semester' => $kd_semester,
-    );
-    $jum_data = $this->kegiatan_akademik_model->get_nums_row($data_detail);
+    $data_detail = array('kd_dosen' => $kd_dosen, 'kode_mk' => $kode_mk,'kelas' => $kelas,'thnAkademik' => $thnAkademik,'kd_semester' => $kd_semester,);
+    $jum_data = $this->kegiatan_akademik_model->get_nums_row_detail($data_detail);
     if($jum_data==0){
       //insert record detail
-      $data_detail = array(
-        'id' => $id,
-        'kode_mk' => $kode_mk,
-        'kelas' => $kelas,
-        'upload_'.$key => $skor
-      );
+      $data_detail = array('id' => $id,'kode_mk' => $kode_mk,'kelas' => $kelas,'upload_'.$key => $skor);
       $this->kegiatan_akademik_model->simpanDetail($data_detail);
       echo "INSERT";
     }else{
       //update record detail
-      $data_where = array(
-        'id' => $id,
-        'kode_mk' => $kode_mk,
-        'kelas' => $kelas,
-      );
-      $data_detail = array(
-        'upload_'.$key => $skor
-      );
+      $data_where = array('id' => $id,'kode_mk' => $kode_mk,'kelas' => $kelas,);
+      $data_detail = array('upload_'.$key => $skor);
       $this->kegiatan_akademik_model->updateDetail($data_detail,$data_where);
       echo "UPDATE";
     }
+    //update mean
+    $data_detail = array('kd_dosen' => $kd_dosen,'thnAkademik' => $thnAkademik,'kd_semester' => $kd_semester);
+    $mean = $this->kegiatan_akademik_model->get_mean($data_detail,$key);
+    echo $mean;
+    $data = array('mean_u'.$key => $mean);
+    $this->kegiatan_akademik_model->ubahIsiNilai($data,$data_detail);
   }
 
   function upload_soal(){

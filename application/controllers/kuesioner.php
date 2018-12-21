@@ -185,18 +185,22 @@ class Kuesioner extends CI_Controller
     $kd_semester = $this->input->post('kd_semester');
     $kd_dosen = $this->input->post('kd_dosen');
     $penilai = $this->input->post('penilai');
+    $kd_kompetensi = $this->input->post('kd_kompetensi');
+    $skor = $this->input->post('skor');
+    $total_skor = 0;
+    for ($i=0; $i < count($kd_kompetensi) ; $i++) {
+      $total_skor+=$skor[$i];
+    }
     $data = array(
       'thnAkademik' => $thnAkademik,
       'kd_semester' => $kd_semester,
       'kd_dosen' => $kd_dosen,
       'penilai' => $penilai,
       'tgl_isi' => date('Y-m-d'),
-      'tgl_ubah' => date('Y-m-d')
+      'tgl_ubah' => date('Y-m-d'),
+      'total' => $total_skor
     );
     $id = $this->kuesioner_model->simpanKuesioner($data);
-
-    $kd_kompetensi = $this->input->post('kd_kompetensi');
-    $skor = $this->input->post('skor');
 
     for ($i=0; $i < count($kd_kompetensi); $i++) {
       $data_detail =array(
@@ -260,6 +264,12 @@ class Kuesioner extends CI_Controller
     $kd_semester = $this->input->post('kd_semester');
     $kd_dosen = $this->input->post('kd_dosen');
     $penilai = $this->input->post('penilai');
+    $kd_kompetensi = $this->input->post('kd_kompetensi');
+    $skor = $this->input->post('skor');
+    $total_skor = 0;
+    for ($i=0; $i < count($kd_kompetensi) ; $i++) {
+      $total_skor+=$skor[$i];
+    }
     $data = array(
       'thnAkademik' => $thnAkademik,
       'kd_dosen' => $kd_dosen,
@@ -267,13 +277,11 @@ class Kuesioner extends CI_Controller
       'kd_semester'=> $kd_semester
     );
     $id = $this->kuesioner_model->get_id($data);
-    
-    //update tgl_ubah
-    $ubah['tgl_ubah'] = date('Y-m-d');
-    $this->kuesioner_model->update_tgl_ubah($ubah,$id);
 
-    $kd_kompetensi = $this->input->post('kd_kompetensi');
-    $skor = $this->input->post('skor');
+    //update tgl_ubah dan total_skor
+    $ubah['tgl_ubah'] = date('Y-m-d');
+    $ubah['total'] = $total_skor;
+    $this->kuesioner_model->update_tgl_ubah($ubah,$id);
 
     for ($i=0; $i < count($kd_kompetensi); $i++) {
       $data_detail =array(

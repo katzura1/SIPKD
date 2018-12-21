@@ -128,13 +128,13 @@ var colors = ['rgba(255, 99, 132)',
 'rgba(255, 206, 86)',
 'rgba(118, 192, 192)',
 'rgba(153, 102, 255)',
-'rgba(255, 159, 64)'];
+'rgba(255, 159, 80)'];
 var bcolors = ['rgba(255,99,132,1)',
 'rgba(54, 162, 235, 1)',
 'rgba(255, 206, 86, 1)',
 'rgba(118, 192, 192, 1)',
 'rgba(153, 102, 255, 1)',
-'rgba(255, 159, 64, 1)'];
+'rgba(255, 159, 80, 1)'];
 var keterangan = ['Penilaian Atasan','IKD','Kumpul Soal/Nilai','Pertemuan','Upload Materi','PPM','Open KM'];
 var myChart = new Chart(ctx, {
     type: 'bar',
