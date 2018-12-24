@@ -55,7 +55,7 @@ class Dashboard extends CI_Controller {
 				'kd_semester' => $data_ta->kd_semester,
 				'jum_penelitian' => $this->lppm_model->get_jumlah_penelitian($kode_prodi,$data_ta->tahunAkademik,$data_ta->kd_semester)->total,
 				'jum_pengabdian' => $this->lppm_model->get_jumlah_pengabdian($kode_prodi,$data_ta->tahunAkademik,$data_ta->kd_semester)->total,
-				'jum_penunjang' => $this->penunjang_model->get_jumlah_penunjang($kode_prodi,$data_ta->tahunAkademik,$data_ta->kd_semester)->total,
+				'jum_penunjang' => $this->penunjang_model->get_jumlah_penunjang($kode_prodi,$data_ta->tahunAkademik,$data_ta->kd_semester,'')->total,
 			);
 		}else if($hak_akses>=10 && $hak_akses<=11){
 			//pk-1
@@ -67,7 +67,7 @@ class Dashboard extends CI_Controller {
 				'kd_semester' => $data_ta->kd_semester,
 				'jum_penelitian' => $this->lppm_model->get_jumlah_penelitian($kode_institusi,$data_ta->tahunAkademik,$data_ta->kd_semester)->total,
 				'jum_pengabdian' => $this->lppm_model->get_jumlah_pengabdian($kode_institusi,$data_ta->tahunAkademik,$data_ta->kd_semester)->total,
-				'jum_penunjang' => $this->penunjang_model->get_jumlah_penunjang($kode_institusi,$data_ta->tahunAkademik,$data_ta->kd_semester)->total,
+				'jum_penunjang' => $this->penunjang_model->get_jumlah_penunjang($kode_institusi,$data_ta->tahunAkademik,$data_ta->kd_semester,'')->total,
 			);
 		}
 		$this->load->view('dashboard/'.$view,$data);

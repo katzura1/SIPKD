@@ -88,7 +88,7 @@ $autoload['drivers'] = array();
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url','form_helper');
+$autoload['helper'] = array('url','form_helper','jum_penunjang');
 
 
 /*

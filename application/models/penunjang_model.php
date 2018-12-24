@@ -114,7 +114,7 @@
       return $this->db->get()->row();
     }
 
-    public function get_jumlah_penunjang($kode,$thnAkademik,$kd_semester){
+    public function get_jumlah_penunjang($kode,$thnAkademik,$kd_semester,$status){
       $this->db->select('count(id) as total');
       $this->db->from($this->nama_tb);
       $this->db->join('dosen as d','d.kd_dosen=data_penunjang.kd_dosen');
@@ -123,6 +123,9 @@
         $this->db->where_in('pd.kode_institusi',$kode);
       }else{
         $this->db->where('d.kode_prodi',$kode);
+      }
+      if ($status!='') {
+        $this->db->where('status_periksa',$status);
       }
       $this->db->where('thnAkademik',$thnAkademik);
       $this->db->where('kd_semester',$kd_semester);

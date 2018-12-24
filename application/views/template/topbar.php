@@ -16,6 +16,26 @@
                 </a>
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
+                      <?php if ($this->session->userdata('hak_akses')>=3 && $this->session->userdata('hak_akses')<=9): ?>
+                        <li class="dropdown notifications-menu">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-bell-o"></i>
+                            <span class="label label-warning"><?=get_jum($this->session->userdata('hak_akses'))?></span>
+                          </a>
+                          <ul class="dropdown-menu">
+                            <li>
+                              <!-- inner menu: contains the actual data -->
+                              <ul class="menu">
+                                <li>
+                                  <a href="<?=site_url('penunjang/validasi')?>">
+                                    <i class="fa fa-bookmark text-aqua"></i> <?=get_jum($this->session->userdata('hak_akses'))?> penunjang belum divalidasi
+                                  </a>
+                                </li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </li>
+                      <?php endif; ?>
                         <!-- User Account: style can be found in dropdown.less -->
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
