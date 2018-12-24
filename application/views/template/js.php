@@ -18,6 +18,8 @@
 <script src='<?php echo base_url('assets/AdminLTE-2.0.5/plugins/fastclick/fastclick.min.js') ?>'></script>
 <!-- AdminLTE App -->
 <script src="<?php echo base_url('assets/AdminLTE-2.0.5/dist/js/app.min.js') ?>" type="text/javascript"></script>
+<!--Simple Toast-->
+<script src="<?php echo base_url('assets/js/simply-toast.js') ?>" type="text/javascript"></script>
 <script type="text/javascript">
 var url = window.location;
 // for sidebar menu but not for treeview submenu

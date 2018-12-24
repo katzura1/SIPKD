@@ -6,6 +6,8 @@
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <!-- Bootstrap 3.3.2 -->
         <link href="<?php echo base_url('assets/AdminLTE-2.0.5/bootstrap/css/bootstrap.min.css') ?>" rel="stylesheet" type="text/css" />
+        <!--Simply Toast-->
+        <link href="<?php echo base_url('assets/bootstrap/css/simply-toast.css') ?>" rel="stylesheet" type="text/css" />
         <!-- Font Awesome Icons -->
         <link href="<?php echo base_url('assets/font-awesome-4.3.0/css/font-awesome.min.css') ?>" rel="stylesheet" type="text/css" />
         <!-- Ionicons -->

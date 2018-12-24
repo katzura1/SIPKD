@@ -47,7 +47,7 @@ class Lppm extends CI_Controller
   public function get_data_penelitian(){
     $id = $this->input->post('id');
     $data = array(
-      'data_penelitian' => $this->lppm_model->get_data_modal($id,'data_penelitian'),
+      'data_penelitian' => $this->lppm_model->get_data_modal($id,'data_proposal_penelitian'),
     );
     $this->load->view('lppm/modal_penelitian',$data);
   }
@@ -154,10 +154,11 @@ class Lppm extends CI_Controller
 
   function lihat_data(){
     $kd_dosen = $this->session->userdata('nik');
-    $ta_penelitian = set_value('ta_penelitian','');
-    $s_penelitian = set_value('s_penelitian','');
-    $ta_pengabdian = set_value('ta_pengabdian','');
-    $s_pengabdian = set_value('s_pengabdian','');
+    $data_ta =  $this->tahun_akademik_model->get_status_aktif();
+    $ta_penelitian = set_value('ta_penelitian',$data_ta->tahunAkademik);
+    $s_penelitian = set_value('s_penelitian',$data_ta->kd_semester);
+    $ta_pengabdian = set_value('ta_pengabdian',$data_ta->tahunAkademik);
+    $s_pengabdian = set_value('s_pengabdian',$data_ta->kd_semester);
 
     $data = array(
       'title' => 'Laporan Penelitian dan Pengabdian Masyarakat',

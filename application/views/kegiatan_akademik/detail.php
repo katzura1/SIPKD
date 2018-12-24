@@ -171,14 +171,21 @@ $this->load->view('template/js');
             setTimeout(function(){
               if(aksi=='simpan'){
                 $("#"+id).html("UBAH");
+                $('#'+id).removeClass('btn-primary');
                 $('#'+id).data("action","ubah");
+                $.simplyToast('Berhasil Disimpan!', 'success');
               }else{
                 $("#"+id).html("UBAH");
+                $.simplyToast('Berhasil Diupdate!', 'success');
               }
-              $('#'+id).removeClass('btn-primary');
               $('#'+id).removeClass('btn-warning');
               $('#'+id).addClass('btn-success');
-            },3000);
+            },1000);
+          },
+          error: function(xhr, textStatus, error){
+              console.log(xhr.statusText);
+              console.log(textStatus);
+              console.log(error);
           }
         });
       });
