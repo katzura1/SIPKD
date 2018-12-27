@@ -25,7 +25,7 @@ $this->load->view('template/sidebar');
     <!-- Default box -->
     <div class="box">
         <div class="box-body">
-          <form action="<?=$action?>" method="post">
+          <form method="post">
             <div class="row">
               <div class="col-md-2">
                 <div class="form-group">
@@ -41,14 +41,14 @@ $this->load->view('template/sidebar');
               </div>
               <div class="col-md-1">
                 <div class="form-group">
-                  <label style="color:white;display:block;">Semester</label>
-                  <button type="submit" name="btnCetak" class="btn btn-primary"><i class="fa fa-search"></i> CARI</button>
+                  <label style="color:white;display:block;">CARI</label>
+                  <button type="submit" name="btnCetak" class="btn btn-primary" formaction="<?=$action?>" ><i class="fa fa-search"></i> CARI</button>
                 </div>
               </div>
               <div class="col-md-1">
                 <div class="form-group">
-                  <label style="color:white;display:block;">Semester</label>
-                  <button type="button" name="btnCetak" class="btn btn-primary"><i class="fa fa-print"></i> CETAK</button>
+                  <label style="color:white;display:block;">CETAK</label>
+                  <button type="submit" name="btnCetak" class="btn btn-primary" onclick="$('form').attr('target', '_blank');" formaction="<?=site_url('kinerja_dosen/laporan_dosen')?>"><i class="fa fa-print"></i> CETAK</button>
                 </div>
               </div>
             </div>

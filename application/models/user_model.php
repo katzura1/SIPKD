@@ -34,6 +34,13 @@ class User_model extends CI_Model{
     return $this->db->get()->row();
   }
 
+  public function get_by_lv($level){
+    $this->db->from($this->nama_tb);
+    $this->db->join('dosen','dosen.kd_dosen=user.kd_dosen');
+    $this->db->where('hak_akses',$level);
+    return $this->db->get()->row();
+  }
+
   public function updatePengguna($data,$kd_dosen){
     $this->db->where($this->nama_pk,$kd_dosen);
     $this->db->update($this->nama_tb,$data);

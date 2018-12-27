@@ -62,7 +62,7 @@ $this->load->view('template/sidebar');
               <div class="col-md-1">
                 <div class="form-group">
                   <label style="color:white;display:block;">Semester</label>
-                  <button type="submit" onclick="$('form').attr('target', '_blank');" formaction="<?=site_url('kinerja_dosen/cetak')?>" name="btnCetak" class="btn btn-primary"><i class="fa fa-print"></i> CETAK</button>
+                  <button type="submit" onclick="$('form').attr('target', '_blank');" formaction="<?=site_url('kinerja_dosen/laporan_prodi')?>" name="btnCetak" class="btn btn-primary"><i class="fa fa-print"></i> CETAK</button>
                 </div>
               </div>
             </div>

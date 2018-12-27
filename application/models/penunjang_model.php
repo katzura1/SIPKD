@@ -26,6 +26,7 @@
 
     public function simpanPenunjang($data){
       $this->db->insert($this->nama_tb,$data);
+      return $this->db->insert_id();
     }
 
     public function updatePenunjang($data,$id){

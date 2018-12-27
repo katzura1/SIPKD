@@ -28,6 +28,7 @@ class Penunjang extends CI_Controller {
     $this->load->model('penunjang_model');
     $this->load->model('tahun_akademik_model');
     $this->load->model('prodi_model');
+    $this->load->model('user_model');
     //cek login
     if($this->session->userdata('logged')!=1){
       redirect(site_url().'auth');
@@ -105,14 +106,57 @@ class Penunjang extends CI_Controller {
            'status_periksa' => 'belum',
            'tipe_dok' => $this->input->post('tipe_dok')
          );
-
-         $this->penunjang_model->simpanPenunjang($data);
+         $id = $this->penunjang_model->simpanPenunjang($data);
+         $this->send_email($id);
          $this->session->set_flashdata('message', "<div class='alert alert-success alert-dismissible' role='alert'>Data Berhasil Disimpan!<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>");
          redirect(site_url('penunjang/list_penunjang'));
       }else{
         $this->session->set_flashdata('message', "<div class='alert alert-danger alert-dismissible' role='alert'>Gambar gagal diupload!<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>");
         $this->tambah();
       }
+    }
+  }
+
+  public function send_email($id = null){
+    $nik = $this->session->userdata('nik');
+    $data_dosen = $this->dosen_model->get_by_kd($nik);
+    $level_kaprodi = array_search($data_dosen->kode_prodi, $this->arr_prodi);
+    $data_kaprodi = $this->user_model->get_by_lv($level_kaprodi);
+
+    //https://masrud.com/post/kirim-email-dengan-smtp-gmail
+    //konfigurasi email
+    $config = [
+      'mailtype'  => 'html',
+      'charset'   => 'utf-8',
+      'protocol'  => 'smtp',
+      'smtp_host' => 'ssl://smtp.gmail.com',
+      'smtp_user' => 'email_anda',
+      'smtp_pass' => 'password_anda',
+      'smtp_port' => 465,
+      'crlf'      => "\r\n",
+      'newline'   => "\r\n"
+    ];
+    //load library email dengan config
+    $this->load->library('email',$config);
+
+    //Email dan Nama Pengirim
+    $this->email->from('denny.az45@mhs.mdp.ac.id','SIPKD');
+
+    // Subject email
+    $this->email->subject('SIPKD | Penunjang #'.$id);
+
+    //Email penerima
+    $this->email->to($data_kaprodi->email);
+
+    $nama = $data_kaprodi->jenis_kelamin=='L'?'Pak ':'Bu '.$data_kaprodi->nm_dosen;
+    //Isi email
+    $this->email->message("Halo, $nama<br>Dosen $data_dosen->nm_dosen telah menginput penunjang, silahkan divalidasi pada link berikut <a href='".site_url('penunjang/validasi')."'>klik</a><br>==========================<br><a href='".site_url('penunjang/validasi')."'>".site_url('penunjang/validasi')."</a><br>==========================<br>");
+
+    // Tampilkan pesan sukses atau error
+    if ($this->email->send()) {
+        echo 'Sukses! email berhasil dikirim.';
+    } else {
+        echo 'Error! email tidak dapat dikirim.';
     }
   }
 
@@ -279,7 +323,6 @@ class Penunjang extends CI_Controller {
     );
     $this->load->view('penunjang/list_prodi',$data);
   }
-
 
   public function list_institusi(){
     $hak_akses = $this->session->userdata('hak_akses');

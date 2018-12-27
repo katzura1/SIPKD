@@ -24,7 +24,7 @@ class Kategori_kinerja extends CI_Controller {
   }
 
   public function cek_unik(){
-    $key_nama = $this->input->post('key_ta');
+    $key_nama = $this->input->post('key_nama');
     $nama_kategori = $this->input->post('nama_kategori');
     if ($key_nama==$nama_kategori) {
       return TRUE;

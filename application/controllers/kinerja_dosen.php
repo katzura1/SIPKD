@@ -26,6 +26,7 @@ class Kinerja_dosen extends CI_Controller
     parent::__construct();
     $this->load->library('datatables');
     //load model
+    $this->load->model('dosen_model');
     $this->load->model('tahun_akademik_model');
     $this->load->model('kinerja_dosen_model');
     $this->load->model('prodi_model');
@@ -154,12 +155,29 @@ class Kinerja_dosen extends CI_Controller
       'thnAkademik' => $thnAkademik,
       'kd_semester' => $kd_semester,
       'data_nilai' => $data_nilai,
-      'action' => site_url('kinerja_dosen/nilai_dosen')
+      'action' => site_url('kinerja_dosen/nilai_dosen'),
+      'action_cetak' => site_url('kinerja_dosen/laporan_dosen'),
     );
     $this->load->view('kinerja/report_dosen',$data);
   }
 
-  function cetak(){
+  function laporan_dosen(){
+    $kd_dosen = $this->session->userdata('nik');
+    $thnAkademik = $this->input->post('thnAkademik');
+    $kd_semester = $this->input->post('kd_semester');
+    $data_dosen = $this->dosen_model->get_by_kd($kd_dosen);
+    $data_nilai = $this->kinerja_dosen_model->get_nilai_by_dosen($kd_dosen,$thnAkademik,$kd_semester);
+    $data = array(
+      'title' => 'Penilaian Kinerja Dosen',
+      'thn_akademik' => $thnAkademik,
+      'semester' => $kd_semester,
+      'data_dosen' => $data_dosen,
+      'data_nilai' => $data_nilai,
+    );
+    $this->load->view('kinerja/laporan_dosen',$data);
+  }
+
+  function laporan_prodi(){
     $hak_akses = $this->session->userdata('hak_akses');
     if($hak_akses<3 && $hak_akses>11){
       redirect('kinerja_dosen/nilai_dosen');
