@@ -34,6 +34,7 @@ class Kegiatan_akademik extends CI_Controller
       'dd_prodi' => $this->prodi_model->get_dd_all_prodi(),
       'action' => site_url('kegiatan_akademik/upload_soal'),
       'url_action' => site_url('kegiatan_akademik/detail/soal/'),
+      'key' => 'soal',
       'thnAkademik' => $thnAkademik,
       'kd_semester' => $kd_semester,
       'data_dosen' => $this->kegiatan_akademik_model->get_all_dosen($kode_prodi)
@@ -51,6 +52,7 @@ class Kegiatan_akademik extends CI_Controller
       'dd_prodi' => $this->prodi_model->get_dd_all_prodi(),
       'action' => site_url('kegiatan_akademik/upload_materi'),
       'url_action' => site_url('kegiatan_akademik/detail/materi/'),
+      'key' => 'materi',
       'thnAkademik' => $thnAkademik,
       'kd_semester' => $kd_semester,
       'data_dosen' => $this->kegiatan_akademik_model->get_all_dosen($kode_prodi)
@@ -68,11 +70,28 @@ class Kegiatan_akademik extends CI_Controller
       'dd_prodi' => $this->prodi_model->get_dd_all_prodi(),
       'action' => site_url('kegiatan_akademik/upload_nilai'),
       'url_action' => site_url('kegiatan_akademik/detail/nilai/'),
+      'key' => 'nilai',
       'thnAkademik' => $thnAkademik,
       'kd_semester' => $kd_semester,
       'data_dosen' => $this->kegiatan_akademik_model->get_all_dosen($kode_prodi)
     );
     $this->load->view('kegiatan_akademik/list_dosen',$data);
+  }
+
+  function get_data_modal(){
+    $thnAkademik = $this->data_ta->tahunAkademik;
+    $kd_semester = $this->data_ta->kd_semester;
+    $key = $this->input->post('key');
+    $kode_dosen = $this->input->post('kd_dosen');
+    $data = array(
+      'thnAkademik' => $thnAkademik,
+      'kd_semester' => $kd_semester,
+      'data_not_done' => $this->kegiatan_akademik_model->get_not_done($kode_dosen, $thnAkademik, $kd_semester, $key),
+      'data_done' => $this->kegiatan_akademik_model->get_done($kode_dosen, $thnAkademik, $kd_semester, $key),
+      'data_dosen' => $this->dosen_model->get_by_kd($kode_dosen),
+      'key' => $key,
+    );
+    $this->load->view('kegiatan_akademik/modal_ka',$data);
   }
 
   function detail($key, $kode_dosen){

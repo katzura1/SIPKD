@@ -66,7 +66,7 @@ $this->load->view('template/sidebar');
                   <td><?=$data->gelar_depan.' '.$data->nm_dosen.', '.$data->gelar_belakang?></td>
                   <td>
                     <a href="<?=$url_action.$data->kd_dosen?>" class="btn btn-success" value="INPUT">INPUT</a>
-                    <a href="<?=$url_action.$data->kd_dosen?>" class="btn btn-primary" value="LIHAT">LIHAT</a>
+                    <a data-toggle="modal" onclick="load_modal('<?=$key?>','<?=$data->kd_dosen?>')" class="btn btn-primary" value="LIHAT">LIHAT</a>
                   </td>
                 </tr>
               <?php endforeach; ?>
@@ -106,7 +106,23 @@ $this->load->view('template/js');
           } );
       } ).draw();
   } );
+
+  function load_modal(key, kd_dosen){
+    $.ajax({
+      type:"POST",
+      url:"<?=site_url('kegiatan_akademik/get_data_modal')?>",
+      data:{key,kd_dosen},
+      success: function(response){
+        $(".displaycontent").html(response);
+        $(".displaycontent").modal('show');
+      }
+    });
+  }
 </script>
+<!-- .modal -->
+<div class="modal fade displaycontent" tabindex="-1" role="dialog" id="myModal">
+</div>
+<!-- /.modal -->
 <?php
 $this->load->view('template/foot');
 ?>
