@@ -5,6 +5,7 @@ $this->load->view('template/head');
 <!-- DataTables -->
   <link rel="stylesheet" href="<?=base_url('assets/AdminLTE-2.0.5/plugins/datatables/dataTables.bootstrap.css')?>">
   <link rel="stylesheet" href="<?=base_url('assets/AdminLTE-2.0.5/plugins/datatables/buttons.dataTables.min.css')?>">
+  <link rel="stylesheet" href="<?=base_url('assets/AdminLTE-2.0.5/plugins/datatables/responsive.dataTables.min.css')?>">
 <?php
 $this->load->view('template/topbar');
 $this->load->view('template/sidebar');
@@ -13,7 +14,7 @@ $this->load->view('template/sidebar');
 <section class="content-header">
     <h1>
         <?=$title?>
-        <small>it all starts here</small>
+        <small>Kinerja Dosen</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="<?=site_url('dashboard')?>"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -96,8 +97,7 @@ $this->load->view('template/js');
 <!--DataTables-->
 <script type="text/javascript" src="<?=base_url('assets/AdminLTE-2.0.5/plugins/datatables/jquery.dataTables.min.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('assets/AdminLTE-2.0.5/plugins/datatables/dataTables.bootstrap.js')?>"></script>
-<script type="text/javascript" src="<?=base_url('assets/AdminLTE-2.0.5/plugins/datatables/buttons.print.min.js')?>"></script>
-<script type="text/javascript" src="<?=base_url('assets/AdminLTE-2.0.5/plugins/datatables/dataTables.buttons.min')?>"></script>
+<script type="text/javascript" src="<?=base_url('assets/AdminLTE-2.0.5/plugins/datatables/dataTables.responsive.min.js')?>"></script>
 <script>
 // Setup datatables
 $.fn.dataTableExt.oApi.fnPagingInfo = function(oSettings)
@@ -128,6 +128,7 @@ var table = $("#table1").dataTable({
     },
         processing: true,
         serverSide: true,
+        responsive: true,
         ajax: {
           "type": "POST",
           "url": "<?=$url?>",

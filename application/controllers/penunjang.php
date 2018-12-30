@@ -130,8 +130,8 @@ class Penunjang extends CI_Controller {
       'charset'   => 'utf-8',
       'protocol'  => 'smtp',
       'smtp_host' => 'ssl://smtp.gmail.com',
-      'smtp_user' => 'email_anda',
-      'smtp_pass' => 'password_anda',
+      'smtp_user' => 'denny.az45@mhs.mdp.ac.id',
+      'smtp_pass' => 'Daktauaku12',
       'smtp_port' => 465,
       'crlf'      => "\r\n",
       'newline'   => "\r\n"

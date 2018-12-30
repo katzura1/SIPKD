@@ -4,6 +4,7 @@ $this->load->view('template/head');
 <!--tambahkan custom css disini-->
 <!-- DataTables -->
   <link rel="stylesheet" href="<?=base_url('assets/AdminLTE-2.0.5/plugins/datatables/dataTables.bootstrap.css')?>">
+  <link rel="stylesheet" href="<?=base_url('assets/AdminLTE-2.0.5/plugins/datatables/responsive.dataTables.min.css')?>">
 <?php
 $this->load->view('template/topbar');
 $this->load->view('template/sidebar');
@@ -11,12 +12,12 @@ $this->load->view('template/sidebar');
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        Blank page
-        <small>it all starts here</small>
+        List Validasi
+        <small>Penunjang</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="<?=site_url('dashboard')?>"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="<?=site_url('penunjang/')?>">Penunjang Prodi</a></li>
+        <li><a href="<?=site_url('penunjang')?>">Penunjang Prodi</a></li>
         <li class="active"><?=$title?></li>
     </ol>
 </section>
@@ -89,6 +90,7 @@ $this->load->view('template/js');
 <!--DataTables-->
 <script type="text/javascript" src="<?=base_url('assets/AdminLTE-2.0.5/plugins/datatables/jquery.dataTables.min.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('assets/AdminLTE-2.0.5/plugins/datatables/dataTables.bootstrap.js')?>"></script>
+<script type="text/javascript" src="<?=base_url('assets/AdminLTE-2.0.5/plugins/datatables/dataTables.responsive.min.js')?>"></script>
 <script>
   $(document).ready(function() {
       var t = $('#table_validasi').DataTable( {
@@ -102,7 +104,8 @@ $this->load->view('template/js');
                 "orderable": false,
                 "searchable":false
               }
-          ]
+          ],
+          responsive: true,
       } );
       t.on( 'order.dt search.dt', function () {
           t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
@@ -120,7 +123,8 @@ $this->load->view('template/js');
                 "targets": [ 5 ],
                 "orderable": false
               }
-          ]
+          ],
+          scrollX: true,
       } );
       ta.on( 'order.dt search.dt', function () {
           ta.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {

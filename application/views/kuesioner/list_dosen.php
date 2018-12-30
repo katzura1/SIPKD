@@ -4,6 +4,7 @@ $this->load->view('template/head');
 <!--tambahkan custom css disini-->
 <!-- DataTables -->
   <link rel="stylesheet" href="<?=base_url('assets/AdminLTE-2.0.5/plugins/datatables/dataTables.bootstrap.css')?>">
+  <link rel="stylesheet" href="<?=base_url('assets/AdminLTE-2.0.5/plugins/datatables/responsive.dataTables.min.css')?>">
 <?php
 $this->load->view('template/topbar');
 $this->load->view('template/sidebar');
@@ -35,7 +36,7 @@ $this->load->view('template/sidebar');
             echo $this->session->userdata('message');
           }
           ?>
-          <table class="table table-striped responsive" id="tableDosen">
+          <table class="table table-striped" id="tableDosen">
             <thead>
               <tr>
                 <th>No.</th>
@@ -62,7 +63,7 @@ $this->load->view('template/js');
 <!--DataTables-->
 <script type="text/javascript" src="<?=base_url('assets/AdminLTE-2.0.5/plugins/datatables/jquery.dataTables.min.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('assets/AdminLTE-2.0.5/plugins/datatables/dataTables.bootstrap.js')?>"></script>
-
+<script type="text/javascript" src="<?=base_url('assets/AdminLTE-2.0.5/plugins/datatables/dataTables.responsive.min.js')?>"></script>
 <script>
 $(document).ready(function() {
   // Setup datatables
@@ -93,6 +94,7 @@ $(document).ready(function() {
       },
           processing: true,
           serverSide: true,
+          responsive: true,
           ajax: {
             "type": "POST",
             "url": "<?=$url?>",
@@ -102,11 +104,9 @@ $(document).ready(function() {
                   {
                     data: "kd_dosen",
                     "orderable": false,
-                    width : '4%',
                   },
                   {
                     data: "kd_dosen",
-                    width: '10%',
                   },
                   {
                     data: "nm_dosen",
@@ -133,7 +133,6 @@ $(document).ready(function() {
                         return row.action_ubah;
                       }
                     },
-                    width:"15%",
                     orderable: false,
                     searchable: false,
                   }
@@ -149,41 +148,6 @@ $(document).ready(function() {
 
   });
   // end setup datatables
-    // var t = $('#tableDosen').DataTable( {
-    //     "columnDefs": [
-    //         {
-    //           "targets": [ 0 ],
-    //           "orderable": false
-    //         },
-    //         {
-    //           "targets": [ 4 ],
-    //           "orderable": false
-    //         }
-    //     ]
-    // } );
-    // t.on( 'order.dt search.dt', function () {
-    //     t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
-    //         cell.innerHTML = i+1;
-    //     } );
-    // } ).draw();
-    //
-    // var u = $('#tableDosens').DataTable( {
-    //     "columnDefs": [
-    //         {
-    //           "targets": [ 0 ],
-    //           "orderable": false
-    //         },
-    //         {
-    //           "targets": [ 4 ],
-    //           "orderable": false
-    //         }
-    //     ]
-    // } );
-    // u.on( 'order.dt search.dt', function () {
-    //     u.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
-    //         cell.innerHTML = i+1;
-    //     } );
-    // } ).draw();
 } );
 </script>
 <?php

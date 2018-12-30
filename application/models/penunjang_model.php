@@ -34,15 +34,15 @@
       $this->db->update($this->nama_tb,$data);
     }
 
-    public function tampil_penunjang(){
-      $this->db->select('id, jenis_kegiatan, nama_kegiatan, data_penunjang.kd_dosen, nm_dosen, nama_kegiatan, tanggal, tempat, alamat, dok_path, dok_hasil, status_periksa');
-      $this->db->from($this->nama_tb);
-      $this->db->join('dosen','dosen.kd_dosen=data_penunjang.kd_dosen');
-      $this->db->join('tipe_kegiatan','tipe_kegiatan.id_kegiatan=data_penunjang.id_kegiatan');
-      $this->db->order_by('thnAkademik','DESC');
-      $this->db->order_by('kd_semester','ASC');
-      return $this->db->get()->result();
-    }
+    // public function tampil_penunjang(){
+    //   $this->db->select('id, jenis_kegiatan, nama_kegiatan, data_penunjang.kd_dosen, nm_dosen, nama_kegiatan, tanggal, tempat, alamat, dok_path, dok_hasil, status_periksa');
+    //   $this->db->from('$this->nama_tb');
+    //   $this->db->join('dosen','dosen.kd_dosen=data_penunjang.kd_dosen');
+    //   $this->db->join('tipe_kegiatan','tipe_kegiatan.id_kegiatan=data_penunjang.id_kegiatan');
+    //   $this->db->order_by('thnAkademik','DESC');
+    //   $this->db->order_by('kd_semester','ASC');
+    //   return $this->db->get()->result();
+    // }
 
     //server side datatables
     public function get_penunjang_by_institusi($thnAkademik,$kd_semester,$kode_institusi){

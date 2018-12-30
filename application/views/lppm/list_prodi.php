@@ -4,6 +4,7 @@ $this->load->view('template/head');
 <!--tambahkan custom css disini-->
 <!-- DataTables -->
   <link rel="stylesheet" href="<?=base_url('assets/AdminLTE-2.0.5/plugins/datatables/dataTables.bootstrap.css')?>">
+  <link rel="stylesheet" href="<?=base_url('assets/AdminLTE-2.0.5/plugins/datatables/responsive.dataTables.min.css')?>">
 <?php
 $this->load->view('template/topbar');
 $this->load->view('template/sidebar');
@@ -89,6 +90,7 @@ $this->load->view('template/js');
 <!--DataTables-->
 <script type="text/javascript" src="<?=base_url('assets/AdminLTE-2.0.5/plugins/datatables/jquery.dataTables.min.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('assets/AdminLTE-2.0.5/plugins/datatables/dataTables.bootstrap.js')?>"></script>
+<script type="text/javascript" src="<?=base_url('assets/AdminLTE-2.0.5/plugins/datatables/dataTables.responsive.min.js')?>"></script>
 <script>
 $(document).ready(function() {
   // Setup datatables
@@ -119,6 +121,7 @@ $(document).ready(function() {
       },
           processing: true,
           serverSide: true,
+          responsive: true,
           ajax: {"url": "<?php echo site_url('lppm/get_penelitian_prodi_json/'.$tahun_akademik.'/'.$kd_semester.'/'.$kode_prodi)?>", "type": "POST"},
               columns: [
                   {'data': "kd_dosen","orderable": false,},
@@ -152,6 +155,7 @@ $(document).ready(function() {
       },
           processing: true,
           serverSide: true,
+          responsive: true,
           ajax: {"url": "<?php echo site_url('lppm/get_pengabdian_prodi_json/'.$tahun_akademik.'/'.$kd_semester.'/'.$kode_prodi)?>", "type": "POST"},
               columns: [
                   {'data': "kd_dosen","orderable": false,},

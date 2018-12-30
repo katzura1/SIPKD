@@ -14,6 +14,6 @@ class Kurikulum extends CI_Controller {
       'title' => 'Kurikulum MDP',
       'data_kurikulum' => $this->kurikulum_model->get_all(),
     );
-		$this->load->view('kurikulum\list',$data);
+		$this->load->view('kurikulum\list_kurikulum',$data);
 	}
 }

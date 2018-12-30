@@ -79,7 +79,8 @@ $this->load->view('template/js');
                 "targets": [ 2 ],
                 "orderable": false
               }
-          ]
+          ],
+          scrollX: true,
       } );
       t.on( 'order.dt search.dt', function () {
           t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
