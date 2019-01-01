@@ -168,14 +168,14 @@ class Dosen extends CI_Controller
     $this->load->view('dosen/modal_dosen',$data);
   }
 
-  function grafik(){
-    $this->load->model('grafik_model');
-    $data_jumlah = $this->grafik_model->get_data_jum_jurusan();
-    $data = array(
-      'data_jumlah' => $data_jumlah
-    );
-    $this->load->view('grafik_jumlah',$data);
-  }
+  // function grafik(){
+  //   $this->load->model('grafik_model');
+  //   $data_jumlah = $this->grafik_model->get_data_jum_jurusan();
+  //   $data = array(
+  //     'data_jumlah' => $data_jumlah
+  //   );
+  //   $this->load->view('grafik_jumlah',$data);
+  // }
 }
 
 ?>
