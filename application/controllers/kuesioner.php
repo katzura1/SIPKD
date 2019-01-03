@@ -36,6 +36,11 @@ class Kuesioner extends CI_Controller
     if($this->session->userdata('logged')!=1){
       redirect(site_url().'auth');
     }
+    $hak = $this->session->userdata('hak_akses');
+    if($hak<3){
+      //redirect('kuesioner/lihat_data');
+      redirect(site_url('dashboard'));
+    }
     $this->data_ta = $this->tahun_akademik_model->get_status_aktif();
   }
 
@@ -43,7 +48,8 @@ class Kuesioner extends CI_Controller
     //cek hak akses
     $hak = $this->session->userdata('hak_akses');
     if($hak<3 || $hak>11){
-      redirect('kuesioner/lihat_data');
+      //redirect('kuesioner/lihat_data');
+      redirect(site_url('dashboard'));
     }
     //load list dosen
     $thnAkademik = $this->data_ta->tahunAkademik;
@@ -312,40 +318,40 @@ class Kuesioner extends CI_Controller
     $this->load->view('kuesioner/detail_kuesioner',$data);
   }
 
-  public function lihat_data(){
-    //cek hak akses
-    //..code
-    if($this->input->post('thnAkademik')){
-      $thnAkademik=$this->input->post('thnAkademik');
-      $kd_semester=$this->input->post('kd_semester');
-    }else{
-      $thnAkademik='';
-      $kd_semester='';
-    }
-    $kd_dosen = $this->session->userdata('nik');
-    $penilai = set_value('penilai','1');
-    $nilai = $this->kuesioner_model->get_nilai($kd_dosen,$thnAkademik,$kd_semester,$penilai);
-    $kategori = array();
-    $skor = array();
-    foreach ($nilai as $value) {
-      $kategori[] = $value->nama_kategori;
-      $skor[] = (int)$value->total_skor;
-    }
-    $data = array(
-      'title' => 'Nilai Kuesioner',
-      'action' => site_url('kuesioner/lihat_data'),
-      'penilai' => $penilai,
-      'dd_ta' => $this->kuesioner_model->get_dd_ta(),
-      'dd_semester' => array('1'=> 'Gasal', '2'=> 'Genap'),
-      'dd_ta_selected' => set_value('thnAkademik',''),
-      'dd_semester_selected' => set_value('kd_semester',''),
-      'data_nilai' => $nilai,
-      'json_kategori'=>json_encode($kategori),
-      'json_skor'=>json_encode($skor)
-    );
-
-    $this->load->view('kuesioner/report_dosen',$data);
-  }
+  // public function lihat_data(){
+  //   //cek hak akses
+  //   //..code
+  //   if($this->input->post('thnAkademik')){
+  //     $thnAkademik=$this->input->post('thnAkademik');
+  //     $kd_semester=$this->input->post('kd_semester');
+  //   }else{
+  //     $thnAkademik='';
+  //     $kd_semester='';
+  //   }
+  //   $kd_dosen = $this->session->userdata('nik');
+  //   $penilai = set_value('penilai','1');
+  //   $nilai = $this->kuesioner_model->get_nilai($kd_dosen,$thnAkademik,$kd_semester,$penilai);
+  //   $kategori = array();
+  //   $skor = array();
+  //   foreach ($nilai as $value) {
+  //     $kategori[] = $value->nama_kategori;
+  //     $skor[] = (int)$value->total_skor;
+  //   }
+  //   $data = array(
+  //     'title' => 'Nilai Kuesioner',
+  //     'action' => site_url('kuesioner/lihat_data'),
+  //     'penilai' => $penilai,
+  //     'dd_ta' => $this->kuesioner_model->get_dd_ta(),
+  //     'dd_semester' => array('1'=> 'Gasal', '2'=> 'Genap'),
+  //     'dd_ta_selected' => set_value('thnAkademik',''),
+  //     'dd_semester_selected' => set_value('kd_semester',''),
+  //     'data_nilai' => $nilai,
+  //     'json_kategori'=>json_encode($kategori),
+  //     'json_skor'=>json_encode($skor)
+  //   );
+  //
+  //   $this->load->view('kuesioner/report_dosen',$data);
+  // }
 
   function list_nilai(){
     $hak_akses = $this->session->userdata('hak_akses');

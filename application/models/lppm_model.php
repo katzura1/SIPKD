@@ -93,6 +93,40 @@ class Lppm_model extends CI_Model
     return $this->datatables->generate();
   }
 
+  //not sever side datatable
+  public function get_penelitian_dosen($ta,$s,$kode){
+    $this->db->select('ddp.kd_dosen, d.nm_dosen, p.nama_prodi, dp.judul, id');
+    $this->db->from('db_sipenamas.data_proposal_penelitian as dp');
+    $this->db->join('db_sipenamas.data_dosen_penelitian as ddp','ddp.id_penelitian=dp.id');
+    $this->db->join('dosen as d','d.kd_dosen=ddp.kd_dosen');
+    $this->db->join('program_studi as p','p.kode_prodi=d.kode_prodi');
+    $this->db->where('dp.thn_akademik',$ta);
+    $this->db->where('dp.semester',$s);
+    if (is_array($kode)) {
+      $this->db->where_in('p.kode_institusi',$kode);
+    }else{
+      $this->db->where('d.kode_prodi',$kode);
+    }
+    return $this->db->get()->result();
+  }
+
+  public function get_pengabdian_dosen($ta,$s,$kode){
+    $this->db->select('ddp.kd_dosen, d.nm_dosen, p.nama_prodi, dp.judul, id');
+    $this->db->from('db_sipenamas.data_proposal as dp');
+    $this->db->join('db_sipenamas.data_dosen_proposal as ddp','ddp.id_proposal=dp.id');
+    $this->db->join('dosen as d','d.kd_dosen=ddp.kd_dosen');
+    $this->db->join('program_studi as p','p.kode_prodi=d.kode_prodi');
+    $this->db->where('dp.thn_akademik',$ta);
+    $this->db->where('dp.semester',$s);
+    if (is_array($kode)) {
+      $this->db->where_in('p.kode_institusi',$kode);
+    }else{
+      $this->db->where('d.kode_prodi',$kode);
+    }
+    return $this->db->get()->result();
+  }
+  //
+
   public function get_data_modal($id,$tb){
     $this->db2->from($tb);
     $this->db2->where('id',$id);

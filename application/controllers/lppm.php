@@ -111,7 +111,18 @@ class Lppm extends CI_Controller
       'dd_s' => array('1'=>'Gasal','2'=>'Genap'),
       'action' => site_url('lppm'),
     );
-    $this->load->view('lppm/list_prodi',$data);
+    if ($this->input->post('btn-print')!==null) {
+      //add data ppm to data array
+      $ppm = array(
+        'data_pengabdian' => $this->lppm_model->get_pengabdian_dosen($thn_akademik, $kd_semester, $kode_prodi),
+        'data_penelitian' => $this->lppm_model->get_penelitian_dosen($thn_akademik, $kd_semester, $kode_prodi),
+        'title' => 'LAPORAN PPM'
+      );
+      $data = array_merge($data,$ppm);
+      $this->load->view('lppm/report_ppm',$data);
+    }else{
+      $this->load->view('lppm/list_prodi',$data);
+    }
   }
 
   function lihat_data_insititusi(){
@@ -128,10 +139,12 @@ class Lppm extends CI_Controller
     // die();
     if($this->input->post('kd_prodi')!==null && $this->input->post('kd_prodi')!='') {
       $kode = $this->input->post('kd_prodi');
+      $kode_lap = $kode;
       $url1 = site_url("lppm/get_penelitian_prodi_json/$thn_akademik/$kd_semester/$kode");
       $url2 = site_url("lppm/get_pengabdian_prodi_json/$thn_akademik/$kd_semester/$kode");
     }else{
       $kode = $hak_akses;
+      $kode_lap = $this->arr_institusi[$kode];
       $url1 = site_url("lppm/get_penelitian_institusi_json/$thn_akademik/$kd_semester/$kode");
       $url2 = site_url("lppm/get_pengabdian_institusi_json/$thn_akademik/$kd_semester/$kode");
     }
@@ -149,7 +162,19 @@ class Lppm extends CI_Controller
       'url1'=>$url1,
       'url2'=>$url2
     );
-    $this->load->view('lppm/list_institusi',$data);
+    if ($this->input->post('btn-print')!==null) {
+      //add data ppm to data array
+      $ppm = array(
+        'data_pengabdian' => $this->lppm_model->get_pengabdian_dosen($thn_akademik, $kd_semester, $kode_lap),
+        'data_penelitian' => $this->lppm_model->get_penelitian_dosen($thn_akademik, $kd_semester, $kode_lap),
+        'title' => 'LAPORAN PPM'
+      );
+      $data = array_merge($data,$ppm);
+      $this->load->view('lppm/report_ppm',$data);
+    }else{
+      $this->load->view('lppm/list_institusi',$data);
+    }
+
   }
 
   function lihat_data(){

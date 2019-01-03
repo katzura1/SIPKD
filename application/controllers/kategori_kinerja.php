@@ -11,6 +11,11 @@ class Kategori_kinerja extends CI_Controller {
     if($this->session->userdata('logged')!=1){
       redirect(site_url().'auth');
     }
+    $hak = $this->session->userdata('hak_akses');
+		if($hak<10 || $hak>11){
+      //redirect('kuesioner/lihat_data');
+      redirect(site_url('dashboard'));
+    }
   }
 
   public function index(){

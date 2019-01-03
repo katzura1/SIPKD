@@ -61,7 +61,7 @@ $this->load->view('template/sidebar');
               </div>
               <div class="col-md-1">
                 <label style="color:white;">CARI</label>
-                <button type="submit" formaction="<?=site_url('penunjang/list_penunjang')?>" name="button" class="btn btn-success" style="display:block;">
+                <button type="submit" formaction="<?=site_url('penunjang/list_penunjang')?>" onclick="$('form').attr('target', '_self');" name="button" class="btn btn-success" style="display:block;">
                   <i class="fa fa-search"></i>
                   CARI
                 </button>

@@ -14,6 +14,13 @@ $this->load->view('template/head');
         width: auto!important;
     }
   }
+
+  @media screen and (max-width: 600px){
+    .canvas-print div:first-child{
+       max-width: 70%;
+    }
+  }
+
   .canvas-print{
     margin-bottom: 20px;
   }
@@ -70,7 +77,9 @@ $this->load->view('template/sidebar');
             </div>
           </form>
           <div class="canvas-print">
-            <canvas id="areaChart" width="600" height="180"></canvas>
+            <div>
+              <canvas id="areaChart" width="600" height="180"></canvas>
+            </div>
           </div>
           <table id="table1" class="table table-striped">
             <thead>
@@ -115,14 +124,6 @@ $this->load->view('template/js');
 <!--tambahkan custom js disini-->
 <script type="text/javascript" src="<?=base_url('assets\chartjs\Chart.js')?>"></script>
 <script>
-window.onbeforeprint = function(event) {
-  function beforePrintHandler () {
-    for (var id in Chart.instances) {
-      Chart.instances[id].resize()
-    }
-  }
-}
-
 var ctx = document.getElementById("areaChart").getContext('2d');
 var colors = ['rgba(255, 99, 132)',
 'rgba(54, 162, 235)',

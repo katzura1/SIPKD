@@ -18,7 +18,7 @@ $this->load->view('template/sidebar');
     <ol class="breadcrumb">
         <li><a href="<?=site_url('dashboard')?>"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="#">LPPM</a></li>
-        <li class="active">List Prodi</li>
+        <li class="active"><?=$title?></li>
     </ol>
 </section>
 
@@ -32,7 +32,7 @@ $this->load->view('template/sidebar');
         </div>
         <div class="box-body">
           <div class="row" style="margin-bottom:10px;">
-            <form action="<?=$action?>" method="post">
+            <form method="post">
               <div class="col-md-2">
                 <label>Tahun Akademik</label>
                 <?=form_dropdown('thnAkademik',$dd_ta,$tahun_akademik,"class='form-control'")?>
@@ -41,13 +41,19 @@ $this->load->view('template/sidebar');
                 <label>Semester</label>
                 <?=form_dropdown('kd_semester',$dd_s,$kd_semester,"class='form-control'")?>
               </div>
-              <div class="col-md-4">
+              <div class="col-md-6">
                 <label>Program Studi</label>
-                <?=form_dropdown('kd_prodi',$dd_prodi,$kd_prodi,"class='form-control'")?>
-              </div>
-              <div class="col-md2">
-                <label style="color:white;display:block;">BUTTON</label>
-                <button type="submit" class="btn btn-primary">CARI</button>
+                <div class="row">
+                  <div class="col-md-4">
+                    <?=form_dropdown('kd_prodi',$dd_prodi,$kd_prodi,"class='form-control'")?>
+                  </div>
+                  <div class="col-md-2">
+                    <button type="submit" onclick="$('form').attr('target', '_self');" formaction="<?=$action?>" class="btn btn-primary"><i class="fa fa-search"></i> CARI</button>
+                  </div>
+                  <div class="col-md-2">
+                    <button type="submit" formaction="<?=$action?>" onclick="$('form').attr('target', '_blank');" name="btn-print" class="btn btn-primary"><i class="fa fa-print"></i> CETAK</button>
+                  </div>
+                </div>
               </div>
             </form>
           </div>
