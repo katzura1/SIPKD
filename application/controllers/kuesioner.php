@@ -220,7 +220,7 @@ class Kuesioner extends CI_Controller
     redirect(site_url('kuesioner'));
   }
 
-  public function update($id){
+  public function ubah($id){
     //cek hak akses
     $d_dosen = $this->kuesioner_model->get_by_id($id);
     $hak_akses = $this->session->userdata('hak_akses');

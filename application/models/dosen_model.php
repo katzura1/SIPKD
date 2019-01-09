@@ -21,6 +21,18 @@ class Dosen_model extends CI_Model
     return $this->db->get()->result();
   }
 
+  public function get_pk_1($kode_institusi){
+    if($kode_institusi=='1' || $kode_institusi=='3'){
+      $hak_akses = '10';
+    }else{
+      $hak_akses = '11';
+    }
+    $this->db->from($this->nama_tb.' as d');
+    $this->db->join('user as u','u.kd_dosen=d.kd_dosen');
+    $this->db->where('hak_akses',$hak_akses);
+    return $this->db->get()->row();
+  }
+
   public function get_by_kd($nik){
     $this->db->from($this->nama_tb);
     $this->db->where($this->pk,$nik);

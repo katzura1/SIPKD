@@ -57,7 +57,7 @@
             <td valign="center">Download Dokumen</td>
             <td valign="center">:</td>
             <td valign="center">
-              <a href="<?=base_url($data_penunjang->dok_path.'/'.$data_penunjang->dok_hasil)?>" class="btn btn-primary" target="_blank">
+              <a download href="<?=base_url($data_penunjang->dok_path.'/'.$data_penunjang->dok_hasil)?>" class="btn btn-primary" target="_blank">
                 <i class="fa fa-download"></i>
                 Unduh
               </a>

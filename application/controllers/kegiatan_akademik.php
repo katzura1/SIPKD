@@ -131,7 +131,7 @@ class Kegiatan_akademik extends CI_Controller
     $jum = $this->kegiatan_akademik_model->get_nums_row($data);
     if($jum==0){
       //insert new record
-      $this->kegiatan_akademik_model->simpanIsiNilai($data);
+      $this->kegiatan_akademik_model->simpanKA($data);
     }
     $id = $this->kegiatan_akademik_model->get_id($data); // get id
     //cek apakah udah ada detail
@@ -154,7 +154,7 @@ class Kegiatan_akademik extends CI_Controller
     $mean = $this->kegiatan_akademik_model->get_mean($data_detail,$key);
     echo $mean;
     $data = array('mean_u'.$key => $mean);
-    $this->kegiatan_akademik_model->ubahIsiNilai($data,$data_detail);
+    $this->kegiatan_akademik_model->updateKA($data,$data_detail);
   }
 
   // function aksi_isi($key = NULL){
@@ -176,12 +176,12 @@ class Kegiatan_akademik extends CI_Controller
   //     $count =  $this->kegiatan_akademik_model->get_num_row($thnAkademik,$kd_semester,$kd_dosen);
   //     if($count>0){
   //       //update existing data
-  //       $this->kegiatan_akademik_model->ubahIsiNilai($data,$thnAkademik,$kd_semester,$kd_dosen);
+  //       $this->kegiatan_akademik_model->updateKA($data,$thnAkademik,$kd_semester,$kd_dosen);
   //       $this->session->set_flashdata('message', "<div class='alert alert-success alert-dismissible' role='alert'>DATA BERHASIL DI".$this->input->post('btnSimpan')."!<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>");
   //     }else{
   //       //insert new record
   //       $this->session->set_flashdata('message', "<div class='alert alert-success alert-dismissible' role='alert'>DATA BERHASIL DI".$this->input->post('btnSimpan')."!<button type='button' class='close' data-dismiss='alert' aria-label='close'><span aria-hidden='true'>&times;</span></button></div>");
-  //       $this->kegiatan_akademik_model->simpanIsiNilai($data);
+  //       $this->kegiatan_akademik_model->simpanKA($data);
   //     }
   //     $this->session->set_flashdata('kode_prodi',$kd_prodi);
   //   }

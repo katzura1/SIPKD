@@ -166,6 +166,7 @@ class Kinerja_dosen extends CI_Controller
     $thnAkademik = $this->input->post('thnAkademik');
     $kd_semester = $this->input->post('kd_semester');
     $data_dosen = $this->dosen_model->get_by_kd($kd_dosen);
+    $data_pk_1 = $this->dosen_model->get_pk_1($data_dosen->kode_institusi);
     $data_nilai = $this->kinerja_dosen_model->get_nilai_by_dosen($kd_dosen,$thnAkademik,$kd_semester);
     $data = array(
       'title' => 'Penilaian Kinerja Dosen',
@@ -173,8 +174,9 @@ class Kinerja_dosen extends CI_Controller
       'semester' => $kd_semester,
       'data_dosen' => $data_dosen,
       'data_nilai' => $data_nilai,
+      'data_pk_1' => $data_pk_1
     );
-    $this->load->view('kinerja/laporan_dosen',$data);
+    $this->load->view('kinerja/laporan_dosen_v2',$data);
   }
 
   function laporan_prodi(){

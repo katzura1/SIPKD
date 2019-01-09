@@ -9,6 +9,7 @@ class Kegiatan_akademik_model extends CI_Model
     $this->db->where('d.kode_prodi',$kode_prodi);
     return $this->db->get()->result();
   }
+
   public function get_upload_materi_not_done($kode_prodi,$thnAkademik,$kd_semester){
     $this->db->from('dosen as d');
     $this->db->where(" NOT EXISTS (SELECT kd_dosen FROM kegiatan_akademik as ka WHERE thnAkademik='$thnAkademik' AND kd_semester='$kd_semester' AND ka.kd_dosen=d.kd_dosen AND upload_materi IS NOT NULL)");
@@ -126,7 +127,7 @@ class Kegiatan_akademik_model extends CI_Model
     return $this->db->get()->num_rows();
   }
 
-  public function simpanIsiNilai($data){
+  public function simpanKA($data){
     $this->db->insert('kegiatan_akademik',$data);
   }
 
@@ -139,7 +140,7 @@ class Kegiatan_akademik_model extends CI_Model
     $this->db->update('detail_kegiatan_akademik',$data);
   }
 
-  public function ubahIsiNilai($data,$array){
+  public function updateKA($data,$array){
     $this->db->where($array);
     $this->db->update('kegiatan_akademik',$data);
   }

@@ -13,15 +13,13 @@
     <!-- iCheck -->
     <link href="<?php echo base_url('assets/AdminLTE-2.0.5/plugins/iCheck/square/blue.css') ?>" rel="stylesheet" type="text/css" />
     <style>
-      @page {
-        size: auto;
-        margin: 0;
-      }
-      body{
-        padding: 40px;
-      }
       tbody td, thead th{
         text-align: center;
+      }
+      .img-center{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
       }
     </style>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -32,7 +30,9 @@
     <![endif]-->
   </head>
   <body onload="window.print()" onpageshow="setTimeout(function() {window.close()},0)">
+    <img src="<?=base_url("gambar/laporan_files/image001.png")?>" class="img-center"><br>
     <h3 style="text-align:center;">LAPORAN KINERJA PRODI <?=strtoupper($nama_prodi)?> TAHUN AKADEMIK <?=$thnAkademik?> SEMESTER <?=$kd_semester?></h3>
+    <br>
     <table class="table">
       <thead>
         <tr>

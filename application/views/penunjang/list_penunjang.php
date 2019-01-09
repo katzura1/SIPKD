@@ -52,26 +52,28 @@ $this->load->view('template/sidebar');
                   <?php endforeach; ?>
                 </select>
               </div>
-              <div class="col-md-2">
+              <div class="col-md-10">
                 <label>Semester</label>
-                <select class="form-control" name="semester">
-                  <option value="1" <?=$semester=='1'?'selected':''?>>Ganjil</option>
-                  <option value="2" <?=$semester=='2'?'selected':''?>>Genap</option>
-                </select>
-              </div>
-              <div class="col-md-1">
-                <label style="color:white;">CARI</label>
-                <button type="submit" formaction="<?=site_url('penunjang/list_penunjang')?>" onclick="$('form').attr('target', '_self');" name="button" class="btn btn-success" style="display:block;">
-                  <i class="fa fa-search"></i>
-                  CARI
-                </button>
-              </div>
-              <div class="col-md-1">
-                <label style="color:white;">CETAK</label>
-                <button type="submit" formaction="<?=site_url('penunjang/cetak')?>" name="button" class="btn btn-success" style="display:block;" onclick="$('form').attr('target', '_blank');">
-                  <i class="fa fa-print"></i>
-                  CETAK
-                </button>
+                <div class="row">
+                  <div class="col-md-2">
+                    <select class="form-control" name="semester">
+                      <option value="1" <?=$semester=='1'?'selected':''?>>Ganjil</option>
+                      <option value="2" <?=$semester=='2'?'selected':''?>>Genap</option>
+                    </select>
+                  </div>
+                  <div class="col-md-1">
+                    <button type="submit" formaction="<?=site_url('penunjang/list_penunjang')?>" onclick="$('form').attr('target', '_self');" name="button" class="btn btn-success" style="display:block;">
+                      <i class="fa fa-search"></i>
+                      CARI
+                    </button>
+                  </div>
+                  <div class="col-md-1">
+                    <button type="submit" formaction="<?=site_url('penunjang/cetak')?>" name="button" class="btn btn-success" style="display:block;" onclick="$('form').attr('target', '_blank');">
+                      <i class="fa fa-print"></i>
+                      CETAK
+                    </button>
+                  </div>
+                </div>
               </div>
             </form>
           </div>

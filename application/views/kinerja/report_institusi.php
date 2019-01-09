@@ -56,22 +56,24 @@ $this->load->view('template/sidebar');
                   <?=form_dropdown('thnAkademik',$dd_ta,$thnAkademik,"class='form-control'")?>
                 </div>
               </div>
-              <div class="col-md-2">
+              <div class="col-md-10">
                 <div class="form-group">
                   <label>Semester</label>
-                  <?=form_dropdown('kd_semester',$dd_semester,$kd_semester,"class='form-control'")?>
-                </div>
-              </div>
-              <div class="col-md-1 no-print">
-                <div class="form-group">
-                  <label style="color:white;display:block;">Semester</label>
-                  <button type="submit" name="btnCetak" class="btn btn-primary"><i class="fa fa-search"></i> CARI</button>
-                </div>
-              </div>
-              <div class="col-md-1 no-print">
-                <div class="form-group">
-                  <label style="color:white;display:block;">Semester</label>
-                  <button type="button" name="btnCetak" class="btn btn-primary" onclick="window.print()"><i class="fa fa-print" ></i> CETAK</button>
+                  <div class="row">
+                    <div class="col-md-2">
+                      <?=form_dropdown('kd_semester',$dd_semester,$kd_semester,"class='form-control'")?>
+                    </div>
+                    <div class="col-md-1 no-print">
+                      <div class="form-group">
+                        <button type="submit" name="btnCetak" class="btn btn-primary"><i class="fa fa-search"></i> CARI</button>
+                      </div>
+                    </div>
+                    <div class="col-md-1 no-print">
+                      <div class="form-group">
+                        <button type="button" name="btnCetak" class="btn btn-primary" onclick="window.print()"><i class="fa fa-print" ></i> CETAK</button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

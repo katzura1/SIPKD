@@ -41,7 +41,7 @@ class Dashboard extends CI_Controller {
 			$kode_prodi = $this->arr_prodi[$hak_akses];
 			$data = array(
 				'title' => 'Dashboard Dosen',
-				'small' => 'Dosen',
+				'small' => 'Kaprodi',
 				'thnAkdemik' => $data_ta->tahunAkademik,
 				'kd_semester' => $data_ta->kd_semester,
 				'jum_penelitian' => $this->lppm_model->get_jumlah_penelitian($kode_prodi,$data_ta->tahunAkademik,$data_ta->kd_semester)->total,
@@ -65,7 +65,7 @@ class Dashboard extends CI_Controller {
 			$view = 'dosen';
 			$data = array(
 				'title' => 'Dashboard Kaprodi',
-				'small' => 'Kaprodi',
+				'small' => 'Dosen',
 				'thnAkdemik' => $data_ta->tahunAkademik,
 				'kd_semester' => $data_ta->kd_semester,
 				'jum_penelitian' => $this->lppm_model->get_jumlah_penelitian_by_dosen($kd_dosen,$data_ta->tahunAkademik,$data_ta->kd_semester)->total,

@@ -47,25 +47,27 @@ $this->load->view('template/sidebar');
                 </div>
               </div>
               <?php if (isset($dd_prodi)): ?>
-              <div class="col-md-2">
+              <div class="col-md-8">
                 <div class="form-group">
                   <label>Program Studi</label>
-                  <?=form_dropdown('kode_prodi',$dd_prodi,$kode,"class='form-control'")?>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <?=form_dropdown('kode_prodi',$dd_prodi,$kode,"class='form-control'")?>
+                    </div>
+                    <div class="col-md-2">
+                      <div class="form-group">
+                        <button type="submit" onclick="$('form').attr('target', '');" formaction="<?=$action?>" name="btnCetak" class="btn btn-primary"><i class="fa fa-search"></i> CARI</button>
+                      </div>
+                    </div>
+                    <div class="col-md-1">
+                      <div class="form-group">
+                        <button type="submit" onclick="$('form').attr('target', '_blank');" formaction="<?=site_url('kinerja_dosen/laporan_prodi')?>" name="btnCetak" class="btn btn-primary"><i class="fa fa-print"></i> CETAK</button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <?php endif; ?>
-              <div class="col-md-1">
-                <div class="form-group">
-                  <label style="color:white;display:block;">Semester</label>
-                  <button type="submit" onclick="$('form').attr('target', '');" formaction="<?=$action?>" name="btnCetak" class="btn btn-primary"><i class="fa fa-search"></i> CARI</button>
-                </div>
-              </div>
-              <div class="col-md-1">
-                <div class="form-group">
-                  <label style="color:white;display:block;">Semester</label>
-                  <button type="submit" onclick="$('form').attr('target', '_blank');" formaction="<?=site_url('kinerja_dosen/laporan_prodi')?>" name="btnCetak" class="btn btn-primary"><i class="fa fa-print"></i> CETAK</button>
-                </div>
-              </div>
+            <?php endif; ?>
             </div>
           </form>
           <table id="table1" class="table table-striped responsive">
