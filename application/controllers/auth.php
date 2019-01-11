@@ -62,8 +62,6 @@ class Auth extends CI_Controller {
 						'hak_akses' => $row->hak_akses,
 						'hak' => $hak[ $row->hak_akses - 1],
 						'foto' => $row->path_foto,
-						'thn_akademik' => $data_ta->tahunAkademik,
-						'kd_semester' => $data_ta->kd_semester
 					);
 					$this->session->set_userdata($data_session);
 					redirect('dashboard');

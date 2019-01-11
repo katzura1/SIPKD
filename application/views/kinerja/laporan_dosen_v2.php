@@ -1,3 +1,7 @@
+<?php
+//set time zone
+date_default_timezone_set('Asia/Jakarta');
+?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -105,6 +109,7 @@
       </tr>
     </table>
     <br>
+
     <span style="float:right;text-align:right">
       Palembang , <?=date('d-m-Y')?>
       <br><br>
@@ -117,7 +122,7 @@
     <div style="clear:both">
       <b>Catatan:</b><br>
       Cetak dokumen ini dinyatakan sah apabila telah dilakukan validasi dengan cap dan tanda tangan yang berwenang dari pihak STMIK, AMIK atau STIE MDP.<br>
-      <i>Tanggal cetak : <?=date('D, d-m-Y, H:i')?></i>
+      <i>Tanggal cetak : <?=date(DATE_RFC2822)?></i>
     </div>
   </body>
 </html>

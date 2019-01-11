@@ -388,14 +388,16 @@ class Penunjang extends CI_Controller {
     $thnAkademik = $this->input->post('thnAkademik');
     $kd_semester = $this->input->post('semester');
     $data_dosen = $this->dosen_model->get_by_kd($kd_dosen);
+    $data_pk_1 = $this->dosen_model->get_pk_1($data_dosen->kode_institusi);
     $data_penunjang = $this->penunjang_model->get_penunjang_by_dosen($kd_dosen, $thnAkademik, $kd_semester);
     $data = array(
       'thn_akademik' => $thnAkademik,
       'semester' => $kd_semester=='1'?'GASAL':'GENAP',
       'data_dosen' => $data_dosen,
-      'data_penunjang' => $data_penunjang
+      'data_penunjang' => $data_penunjang,
+      'data_pk_1' => $data_pk_1
     );
-    $this->load->view('penunjang/laporan',$data);
+    $this->load->view('penunjang/laporan_v2',$data);
   }
 }
 ?>

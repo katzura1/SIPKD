@@ -56,7 +56,7 @@ class Kinerja_dosen_model extends CI_Model
     $this->db->select("IFNULL((SELECT FORMAT((mean_unilai+mean_usoal)/2,2) FROM kegiatan_akademik as ka WHERE ka.kd_dosen=d.kd_dosen AND thnAkademik='$thnAkademik' AND kd_semester='$kd_semester'),0) as upload_soalnilai");
     $this->db->select("IFNULL((SELECT skor FROM open_km as ok WHERE ok.kd_dosen=d.kd_dosen AND thnAkademik='$thnAkademik' AND kd_semester='$kd_semester'),0) as skor_open_km");
     $this->db->select("
-    (
+    FORMAT((
       (CASE
         WHEN (SELECT SUM(total)/2 FROM data_kuesioner dk WHERE dk.kd_dosen=d.kd_dosen AND thnAkademik='$thnAkademik' AND kd_semester='$kd_semester') BETWEEN 140 AND 155 THEN 5
         WHEN (SELECT SUM(total)/2 FROM data_kuesioner dk WHERE dk.kd_dosen=d.kd_dosen AND thnAkademik='$thnAkademik' AND kd_semester='$kd_semester') BETWEEN 125 AND 139 THEN 4
@@ -99,7 +99,7 @@ class Kinerja_dosen_model extends CI_Model
       IFNULL((SELECT FORMAT((mean_unilai+mean_usoal)/2,2) FROM kegiatan_akademik as ka WHERE ka.kd_dosen=d.kd_dosen AND thnAkademik='$thnAkademik' AND kd_semester='$kd_semester'),0)
       +
       IFNULL((SELECT skor FROM open_km as ok WHERE ok.kd_dosen=d.kd_dosen AND thnAkademik='$thnAkademik' AND kd_semester='$kd_semester'),0)
-    ) as 'total_skor'
+    ),2) as 'total_skor'
     ");
     $this->db->from('dosen as d');
     $this->db->join('program_studi as pd','pd.kode_prodi=d.kode_prodi');
@@ -271,10 +271,10 @@ class Kinerja_dosen_model extends CI_Model
       +
       IFNULL((SELECT mean_umateri FROM kegiatan_akademik as ka WHERE ka.kd_dosen=d.kd_dosen AND thnAkademik='$thnAkademik' AND kd_semester='$kd_semester'),0)
       +
-      IFNULL((SELECT (mean_usoal+mean_unilai)/2 FROM kegiatan_akademik as ka WHERE ka.kd_dosen=d.kd_dosen AND thnAkademik='$thnAkademik' AND kd_semester='$kd_semester'),0)
+      FORMAT(IFNULL((SELECT (mean_usoal+mean_unilai)/2 FROM kegiatan_akademik as ka WHERE ka.kd_dosen=d.kd_dosen AND thnAkademik='$thnAkademik' AND kd_semester='$kd_semester'),0),2)
       +
       IFNULL((SELECT skor FROM open_km as ok WHERE ok.kd_dosen=d.kd_dosen AND thnAkademik='$thnAkademik' AND kd_semester='$kd_semester'),0)
-    ),1)*1 as total_skor
+    ),2)*1 as total_skor
     ");
     $this->datatables->from('dosen as d');
     $this->datatables->join('program_studi as pd','pd.kode_prodi=d.kode_prodi');

@@ -46,14 +46,20 @@ $this->load->view('template/sidebar');
                   <?=form_dropdown('kd_semester',$dd_semester,$kd_semester,"class='form-control'")?>
                 </div>
               </div>
-              <?php if (isset($dd_prodi)): ?>
+              
               <div class="col-md-8">
                 <div class="form-group">
+                  <?php if (isset($dd_prodi)): ?>
                   <label>Program Studi</label>
+                  <?php else: ?>
+                  <label style="color:white;">Program Studi</label>
+                  <?php endif;?>
                   <div class="row">
+                    <?php if (isset($dd_prodi)): ?>
                     <div class="col-md-4">
                       <?=form_dropdown('kode_prodi',$dd_prodi,$kode,"class='form-control'")?>
                     </div>
+                    <?php endif; ?>
                     <div class="col-md-2">
                       <div class="form-group">
                         <button type="submit" onclick="$('form').attr('target', '');" formaction="<?=$action?>" name="btnCetak" class="btn btn-primary"><i class="fa fa-search"></i> CARI</button>
@@ -67,7 +73,7 @@ $this->load->view('template/sidebar');
                   </div>
                 </div>
               </div>
-            <?php endif; ?>
+           
             </div>
           </form>
           <table id="table1" class="table table-striped responsive">

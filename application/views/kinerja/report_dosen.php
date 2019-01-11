@@ -42,7 +42,7 @@ $this->load->view('template/sidebar');
               <div class="col-md-1">
                 <div class="form-group">
                   <label style="color:white;display:block;">CARI</label>
-                  <button type="submit" name="btnCetak" class="btn btn-primary" formaction="<?=$action?>" ><i class="fa fa-search"></i> CARI</button>
+                  <button type="submit" name="btnCetak" class="btn btn-primary" onclick="$('form').attr('target', '_self');" formaction="<?=$action?>" ><i class="fa fa-search"></i> CARI</button>
                 </div>
               </div>
               <div class="col-md-1">

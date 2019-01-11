@@ -24,7 +24,7 @@
     <body class="login-page">
         <div class="login-box">
             <div class="login-logo">
-                <a href="#"><b>Login</b> Page</a>
+                <a href="#"><b>SI</b>PKD MDP</a>
             </div><!-- /.login-logo -->
             <div class="login-box-body">
                 <p class="login-box-msg">Sign in to start your session</p>
