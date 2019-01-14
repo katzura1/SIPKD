@@ -31,7 +31,7 @@ class Kegiatan_akademik_model extends CI_Model
 
   public function get_not_done($kode_dosen, $thnAkademik, $kd_semester, $key){
     $this->db->select('p.kd_dosen, p.kode_mk, kkm.keterangan, p.kelas');
-    $this->db->from('db_polling.pertemuan as p');
+    $this->db->from('sipkdmdp_db_polling.pertemuan as p');
     $this->db->join('kurikulummdp as kkm', 'kkm.kode_mk=p.kode_mk');
     $this->db->where(" NOT EXISTS (SELECT kd_dosen FROM kegiatan_akademik as ka INNER JOIN detail_kegiatan_akademik as dka ON ka.id=dka.id WHERE ka.thnAkademik='$thnAkademik' AND ka.kd_semester='$kd_semester' AND ka.kd_dosen=p.kd_dosen AND dka.kode_mk=p.kode_mk AND dka.kelas=p.kelas AND dka.upload_$key IS NOT NULL)");
     $this->db->where('p.kd_dosen', $kode_dosen);
@@ -101,7 +101,7 @@ class Kegiatan_akademik_model extends CI_Model
     $this->db->select("
     IFNULL((SELECT upload_$key FROM kegiatan_akademik as ka JOIN detail_kegiatan_akademik as dka ON ka.id=dka.id WHERE ka.kd_dosen=p.kd_dosen AND ka.thnAkademik=p.thnAkademik AND ka.kd_semester=p.kd_semester AND dka.kode_mk=p.kode_mk AND dka.kelas=p.kelas),0) as total
     ");
-    $this->db->from('db_polling.pertemuan as p');
+    $this->db->from('sipkdmdp_db_polling.pertemuan as p');
     $this->db->where('p.kd_dosen',$data['kd_dosen']);
     $this->db->where('p.thnAkademik',$data['thnAkademik']);
     $this->db->where('p.kd_semester',$data['kd_semester']);
@@ -122,7 +122,7 @@ class Kegiatan_akademik_model extends CI_Model
 
   public function get_nums_row_detail($array){
     $this->db->from('kegiatan_akademik as ka');
-    $this->db->from('detail_kegiatan_akademik as dka','dka.id=ka.id');
+    $this->db->join('detail_kegiatan_akademik as dka','dka.id=ka.id');
     $this->db->where($array);
     return $this->db->get()->num_rows();
   }
