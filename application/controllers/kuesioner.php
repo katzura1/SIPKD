@@ -139,7 +139,7 @@ class Kuesioner extends CI_Controller
       $data_kategori = $this->kategori_kinerja_model->get_all();
       $data_kompetensi = $this->kompetensi_model->get_all();
       $data = array(
-        'title' => 'Daftar Kuesioner',
+        'title' => 'Kuesioner Penilaian Dosen',
         'thnAkademik' => $this->data_ta->tahunAkademik,
         'kd_semester' => $this->data_ta->kd_semester,
         'data_kategori' => $data_kategori,
