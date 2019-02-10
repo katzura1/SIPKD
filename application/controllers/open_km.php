@@ -56,7 +56,7 @@ class Open_km extends CI_Controller
     $thnAkademik = $this->input->post('thn_akademik');
     $kd_semester = $this->input->post('kd_semester');
     header('Content-Type: application/json');
-    echo $this->open_km_model->get_all_by_institusi_json($kode_institusi,$thnAkademik,$kd_semester);
+    echo $this->open_km_model->get_all($kode_institusi,$thnAkademik,$kd_semester);
   }
 
   function aksi_isi(){

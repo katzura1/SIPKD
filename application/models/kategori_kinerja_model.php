@@ -26,9 +26,9 @@ class Kategori_kinerja_model extends CI_Model
     return $dd;
   }
 
-  function get_row_by_nama($nama_kategori){
+  function get_row_by_nama($nama){
     $this->db->from($this->nama_tb);
-    $this->db->where('nama_kategori',$nama_kategori);
+    $this->db->where('nama_kategori',$nama);
     return $this->db->get()->num_rows();
   }
 

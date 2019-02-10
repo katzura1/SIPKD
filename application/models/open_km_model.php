@@ -4,7 +4,7 @@
  */
 class Open_km_model extends CI_Model
 {
-  function get_all_by_institusi_json($kode_institusi, $thnAkademik, $kd_semester){
+  function get_all($kode_institusi, $thnAkademik, $kd_semester){
     $this->datatables->select('d.kd_dosen, d.nm_dosen, pd.nama_prodi');
     $this->datatables->select(" IFNULL((SELECT skor FROM open_km as okm WHERE thnAkademik='$thnAkademik' AND kd_semester='$kd_semester' AND okm.kd_dosen=d.kd_dosen),'') as skor");
     $this->datatables->select(" IFNULL((SELECT id FROM open_km as okm WHERE thnAkademik='$thnAkademik' AND kd_semester='$kd_semester' AND okm.kd_dosen=d.kd_dosen),'0') as id");

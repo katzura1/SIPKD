@@ -1,0 +1,4 @@
+IFNULL((SELECT SUM((SELECT SUM(
+(SELECT pertemuan FROM db_polling.pertemuan as p1 WHERE tb.kd_dosen=p1.kd_dosen AND tb.kode_mk=p1.kode_mk AND tb.kelas=p1.kelas AND thnAkademik='$thnAkademik' AND kd_semester='$kd_semester' ORDER BY pertemuan DESC limit 1))/SUM(tb.jum_pert)
+FROM dosen as d1 JOIN (SELECT DISTINCT p.kode_mk, p.kelas, p.kd_dosen, CASE WHEN (Praktek='y' AND sks>=2) THEN 28 WHEN (Praktek='y' AND sks=1) THEN 14 WHEN (Praktek='t' AND (sks=3 or sks=1)) THEN 14 ELSE sks*7 END as jum_pert FROM db_polling.pertemuan as p JOIN kurikulummdp as k ON k.Kode_MK=p.KODE_MK WHERE thnAkademik='$thnAkademik' AND kd_semester='$kd_semester') as tb ON d1.kd_dosen=tb.kd_dosen WHERE d1.kd_dosen=d.kd_dosen)*100)/COUNT(kd_dosen)
+FROM db_skripsi.dosen as d WHERE d.kode_prodi=pd.kode_prodi),0)

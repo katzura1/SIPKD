@@ -103,10 +103,10 @@ class Prodi extends CI_Controller {
     }
   }
 
-  public function delete($kode_prodi){
-    $this->load->model('prodi_model');
-    $this->prodi_model->delete($kode_prodi);
-
-    redirect(site_url().'prodi');
-  }
+  // public function delete($kode_prodi){
+  //   $this->load->model('prodi_model');
+  //   $this->prodi_model->delete($kode_prodi);
+  //
+  //   redirect(site_url().'prodi');
+  // }
 }

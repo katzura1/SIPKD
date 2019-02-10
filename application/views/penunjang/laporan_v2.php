@@ -35,7 +35,7 @@ date_default_timezone_set('Asia/Jakarta');
   </head>
   <body onload="window.print()" onpageshow="setTimeout(function() {window.close()},0)">
     <img src="<?=base_url("gambar/laporan_files/image001.png")?>" class="img-center">
-    <h4>SURAT PERNYATAAN MELAKSANAKAN PENUNJANG TAHUN AKADEMIK <?=$thn_akademik?> SEMESTER <?=$semester?></h4>
+    <h4>SURAT PERNYATAAN MELAKSANAKAN PENUNJANG <br> TAHUN AKADEMIK <?=$thn_akademik?> SEMESTER <?=$semester?></h4>
     <div style="padding:10px">
       Dengan ini menyatakan bahwa:<br><br>
       <table>

@@ -21,11 +21,7 @@ class Kinerja_dosen_model extends CI_Model
     END as skor_kuisoner
     ");
     $this->db->select("
-    CASE
-      WHEN (SELECT AVG(ikd) FROM db_polling.rekapitulasi_polling rp WHERE rp.kd_dosen=d.kd_dosen AND tahunAkademik='$thnAkademik' AND kd_semester='$kd_semester')>=3.5 THEN 5
-      WHEN (SELECT AVG(ikd) FROM db_polling.rekapitulasi_polling rp WHERE rp.kd_dosen=d.kd_dosen AND tahunAkademik='$thnAkademik' AND kd_semester='$kd_semester') BETWEEN 3 AND 3.49 THEN 2
-      ELSE 0
-    END as skor_ikd
+    (SELECT AVG(ikd) FROM db_polling.rekapitulasi_polling rp WHERE rp.kd_dosen=d.kd_dosen AND tahunAkademik='$thnAkademik' AND kd_semester='$kd_semester') as skor_ikd
     ");
     $this->db->select("
     CASE
@@ -64,11 +60,7 @@ class Kinerja_dosen_model extends CI_Model
         ELSE 2
       END)
       +
-      (CASE
-        WHEN (SELECT AVG(ikd) FROM db_polling.rekapitulasi_polling rp WHERE rp.kd_dosen=d.kd_dosen AND tahunAkademik='$thnAkademik' AND kd_semester='$kd_semester')>=3.5 THEN 5
-        WHEN (SELECT AVG(ikd) FROM db_polling.rekapitulasi_polling rp WHERE rp.kd_dosen=d.kd_dosen AND tahunAkademik='$thnAkademik' AND kd_semester='$kd_semester') BETWEEN 3 AND 3.49 THEN 2
-        ELSE 0
-      END)
+      (SELECT AVG(ikd) FROM db_polling.rekapitulasi_polling rp WHERE rp.kd_dosen=d.kd_dosen AND tahunAkademik='$thnAkademik' AND kd_semester='$kd_semester')
       +
       (CASE
         WHEN(
@@ -118,9 +110,7 @@ class Kinerja_dosen_model extends CI_Model
     WHEN (SELECT SUM(total) FROM data_kuesioner as dk JOIN dosen as d ON dk.kd_dosen=d.kd_dosen WHERE d.kode_prodi=pd.kode_prodi AND thnAkademik='$thnAkademik' AND kd_semester='$kd_semester')/(SELECT COUNT(kd_dosen)*2 FROM dosen as d WHERE d.kode_prodi=pd.kode_prodi) BETWEEN 110 AND 124 THEN 3
     ELSE 2 END as mean_kuesioner");
     $this->db->select("
-    CASE WHEN (SELECT SUM(tb_ikd.ikd_dosen) FROM db_skripsi.dosen as d JOIN (SELECT kd_dosen, AVG(ikd) as ikd_dosen FROM db_polling.rekapitulasi_polling as rp WHERE tahunAkademik='$thnAkademik' AND kd_semester='$kd_semester' GROUP BY rp.kd_dosen) as tb_ikd ON tb_ikd.kd_dosen=d.kd_dosen WHERE d.kode_prodi=pd.kode_prodi) / (SELECT COUNT(kd_dosen) FROM dosen as d WHERE d.kode_prodi=pd.kode_prodi) >=3.5 THEN 5
-    WHEN (SELECT SUM(tb_ikd.ikd_dosen) FROM db_skripsi.dosen as d JOIN (SELECT kd_dosen, AVG(ikd) as ikd_dosen FROM db_polling.rekapitulasi_polling as rp WHERE tahunAkademik='$thnAkademik' AND kd_semester='$kd_semester' GROUP BY rp.kd_dosen) as tb_ikd ON tb_ikd.kd_dosen=d.kd_dosen WHERE d.kode_prodi=pd.kode_prodi) / (SELECT COUNT(kd_dosen) FROM dosen as d WHERE d.kode_prodi=pd.kode_prodi) BETWEEN 3 AND 3.49 THEN 2
-    ELSE 0 END as mean_ikd");
+    IFNULL(ROUND((SELECT SUM(tb_ikd.ikd_dosen) FROM db_skripsi.dosen as d JOIN (SELECT kd_dosen, AVG(ikd) as ikd_dosen FROM db_polling.rekapitulasi_polling as rp WHERE tahunAkademik='$thnAkademik' AND kd_semester='$kd_semester' GROUP BY rp.kd_dosen) as tb_ikd ON tb_ikd.kd_dosen=d.kd_dosen WHERE d.kode_prodi=pd.kode_prodi) / (SELECT COUNT(kd_dosen) FROM dosen as d WHERE d.kode_prodi=pd.kode_prodi),2),0) as mean_ikd");
     $this->db->select("
     ROUND(IFNULL((SELECT AVG(
       CASE WHEN( (SELECT COUNT(id) FROM db_sipenamas.data_proposal_penelitian as dp JOIN db_sipenamas.data_dosen_penelitian as ddp ON dp.id=ddp.id_penelitian WHERE ddp.kd_dosen=d.kd_dosen AND dp.thn_akademik='$thnAkademik' AND semester='$kd_semester')>0 and (SELECT COUNT(id) FROM db_sipenamas.data_proposal as dp JOIN db_sipenamas.data_dosen_proposal as ddp ON dp.id=ddp.id_proposal WHERE ddp.kd_dosen=d.kd_dosen AND dp.thn_akademik='$thnAkademik' AND semester='$kd_semester')>0) THEN 5
@@ -132,7 +122,6 @@ class Kinerja_dosen_model extends CI_Model
     WHEN (IFNULL((SELECT SUM((SELECT SUM((SELECT pertemuan FROM db_polling.pertemuan as p1 WHERE tb.kd_dosen=p1.kd_dosen AND tb.kode_mk=p1.kode_mk AND tb.kelas=p1.kelas AND thnAkademik='$thnAkademik' AND kd_semester='$kd_semester' ORDER BY pertemuan DESC limit 1))/SUM(tb.jum_pert) FROM dosen as d1 JOIN (SELECT DISTINCT p.kode_mk, p.kelas, p.kd_dosen, CASE WHEN (Praktek='y' AND sks>=2) THEN 28 WHEN (Praktek='y' AND sks=1) THEN 14 WHEN (Praktek='t' AND (sks=3 or sks=1)) THEN 14 ELSE sks*7 END as jum_pert FROM db_polling.pertemuan as p JOIN kurikulummdp as k ON k.Kode_MK=p.KODE_MK WHERE thnAkademik='$thnAkademik' AND kd_semester='$kd_semester') as tb ON d1.kd_dosen=tb.kd_dosen WHERE d1.kd_dosen=d.kd_dosen)*100)/COUNT(kd_dosen) FROM db_skripsi.dosen as d WHERE d.kode_prodi=pd.kode_prodi),0))>90 THEN 5
 
     WHEN (IFNULL((SELECT SUM((SELECT SUM((SELECT pertemuan FROM db_polling.pertemuan as p1 WHERE tb.kd_dosen=p1.kd_dosen AND tb.kode_mk=p1.kode_mk AND tb.kelas=p1.kelas AND thnAkademik='$thnAkademik' AND kd_semester='$kd_semester' ORDER BY pertemuan DESC limit 1))/SUM(tb.jum_pert) FROM dosen as d1 JOIN (SELECT DISTINCT p.kode_mk, p.kelas, p.kd_dosen, CASE WHEN (Praktek='y' AND sks>=2) THEN 28 WHEN (Praktek='y' AND sks=1) THEN 14 WHEN (Praktek='t' AND (sks=3 or sks=1)) THEN 14 ELSE sks*7 END as jum_pert FROM db_polling.pertemuan as p JOIN kurikulummdp as k ON k.Kode_MK=p.KODE_MK WHERE thnAkademik='$thnAkademik' AND kd_semester='$kd_semester') as tb ON d1.kd_dosen=tb.kd_dosen WHERE d1.kd_dosen=d.kd_dosen)*100)/COUNT(kd_dosen) FROM db_skripsi.dosen as d WHERE d.kode_prodi=pd.kode_prodi),0)) BETWEEN 80 AND 90 THEN 2
-
     ELSE 0
     END
     as mean_pertemuan");
@@ -150,9 +139,7 @@ class Kinerja_dosen_model extends CI_Model
     WHEN (SELECT SUM(total) FROM data_kuesioner as dk JOIN dosen as d ON dk.kd_dosen=d.kd_dosen WHERE d.kode_prodi=pd.kode_prodi AND thnAkademik='$thnAkademik' AND kd_semester='$kd_semester')/(SELECT COUNT(kd_dosen)*2 FROM dosen as d WHERE d.kode_prodi=pd.kode_prodi) BETWEEN 110 AND 124 THEN 3
     ELSE 2 END)
     +
-    (CASE WHEN (SELECT SUM(tb_ikd.ikd_dosen) FROM db_skripsi.dosen as d JOIN (SELECT kd_dosen, AVG(ikd) as ikd_dosen FROM db_polling.rekapitulasi_polling as rp WHERE tahunAkademik='$thnAkademik' AND kd_semester='$kd_semester' GROUP BY rp.kd_dosen) as tb_ikd ON tb_ikd.kd_dosen=d.kd_dosen WHERE d.kode_prodi=pd.kode_prodi) / (SELECT COUNT(kd_dosen) FROM dosen as d WHERE d.kode_prodi=pd.kode_prodi) >=3.5 THEN 5
-    WHEN (SELECT SUM(tb_ikd.ikd_dosen) FROM db_skripsi.dosen as d JOIN (SELECT kd_dosen, AVG(ikd) as ikd_dosen FROM db_polling.rekapitulasi_polling as rp WHERE tahunAkademik='$thnAkademik' AND kd_semester='$kd_semester' GROUP BY rp.kd_dosen) as tb_ikd ON tb_ikd.kd_dosen=d.kd_dosen WHERE d.kode_prodi=pd.kode_prodi) / (SELECT COUNT(kd_dosen) FROM dosen as d WHERE d.kode_prodi=pd.kode_prodi) BETWEEN 3 AND 3.49 THEN 2
-    ELSE 0 END)
+    (IFNULL(ROUND((SELECT SUM(tb_ikd.ikd_dosen) FROM db_skripsi.dosen as d JOIN (SELECT kd_dosen, AVG(ikd) as ikd_dosen FROM db_polling.rekapitulasi_polling as rp WHERE tahunAkademik='$thnAkademik' AND kd_semester='$kd_semester' GROUP BY rp.kd_dosen) as tb_ikd ON tb_ikd.kd_dosen=d.kd_dosen WHERE d.kode_prodi=pd.kode_prodi) / (SELECT COUNT(kd_dosen) FROM dosen as d WHERE d.kode_prodi=pd.kode_prodi),2),0))
     +
     (ROUND(IFNULL((SELECT AVG(
       CASE WHEN( (SELECT COUNT(id) FROM db_sipenamas.data_proposal_penelitian as dp JOIN db_sipenamas.data_dosen_penelitian as ddp ON dp.id=ddp.id_penelitian WHERE ddp.kd_dosen=d.kd_dosen AND dp.thn_akademik='$thnAkademik' AND semester='$kd_semester')>0 and (SELECT COUNT(id) FROM db_sipenamas.data_proposal as dp JOIN db_sipenamas.data_dosen_proposal as ddp ON dp.id=ddp.id_proposal WHERE ddp.kd_dosen=d.kd_dosen AND dp.thn_akademik='$thnAkademik' AND semester='$kd_semester')>0) THEN 5
@@ -195,11 +182,7 @@ class Kinerja_dosen_model extends CI_Model
     END as skor_kuisoner
     ");
     $this->datatables->select("
-    CASE
-      WHEN (SELECT AVG(ikd) FROM db_polling.rekapitulasi_polling rp WHERE rp.kd_dosen=d.kd_dosen AND tahunAkademik='$thnAkademik' AND kd_semester='$kd_semester')>=3.5 THEN 5
-      WHEN (SELECT AVG(ikd) FROM db_polling.rekapitulasi_polling rp WHERE rp.kd_dosen=d.kd_dosen AND tahunAkademik='$thnAkademik' AND kd_semester='$kd_semester') BETWEEN 3 AND 3.49 THEN 2
-      ELSE 0
-    END as skor_ikd
+    (SELECT AVG(ikd) FROM db_polling.rekapitulasi_polling rp WHERE rp.kd_dosen=d.kd_dosen AND tahunAkademik='$thnAkademik' AND kd_semester='$kd_semester') as skor_ikd
     ");
     $this->datatables->select("
     CASE
@@ -239,11 +222,7 @@ class Kinerja_dosen_model extends CI_Model
         ELSE 2
       END)
       +
-      (CASE
-        WHEN (SELECT AVG(ikd) FROM db_polling.rekapitulasi_polling rp WHERE rp.kd_dosen=d.kd_dosen AND tahunAkademik='$thnAkademik' AND kd_semester='$kd_semester')>=3.5 THEN 5
-        WHEN (SELECT AVG(ikd) FROM db_polling.rekapitulasi_polling rp WHERE rp.kd_dosen=d.kd_dosen AND tahunAkademik='$thnAkademik' AND kd_semester='$kd_semester') BETWEEN 3 AND 3.49 THEN 2
-        ELSE 0
-      END)
+      (SELECT AVG(ikd) FROM db_polling.rekapitulasi_polling rp WHERE rp.kd_dosen=d.kd_dosen AND tahunAkademik='$thnAkademik' AND kd_semester='$kd_semester')
       +
       (CASE
         WHEN(

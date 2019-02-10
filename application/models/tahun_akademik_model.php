@@ -3,11 +3,6 @@
 class tahun_akademik_model extends CI_Model{
   private $nama_tabel = 'tahun_akademik';
 
-  function __construct()
-  {
-      parent::__construct();
-  }
-
   public function get_all(){
     return $this->db->get($this->nama_tabel)->result();
   }
@@ -107,5 +102,4 @@ class tahun_akademik_model extends CI_Model{
     return $this->db->get()->row();
   }
 }
-
  ?>

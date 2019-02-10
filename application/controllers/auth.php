@@ -8,7 +8,7 @@ class Auth extends CI_Controller {
 		$this->load->library('form_validation');
 		$this->load->library('Recaptcha');
 		$this->load->model('auth_model');
-		$this->load->model('dosen_model');
+		$this->load->model('tahun_akademik_model');
 	}
 
 	public function index($error = NULL)
@@ -52,7 +52,7 @@ class Auth extends CI_Controller {
 				$row = $this->auth_model->data_login($nik);
 				if(password_verify($pass,$row->password)){
 					$hak = array('Dosen','BAA','KAPRODI SI', 'KAPRODI TI','KAPRODI KA','KAPRODI MI','KAPRODI TK','KAPRODI AK','KAPRODI MJ','PK-1 STMIK','PK-1 STIE','Admin');
-					$this->load->model('tahun_akademik_model');
+
 					$data_ta = $this->tahun_akademik_model->get_status_aktif();
 					//set session
 					$data_session = array(

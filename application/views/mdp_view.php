@@ -8,7 +8,7 @@
     <form action="<?=site_url('mdp')?>" method="post" enctype="multipart/form-data">
       <label>Gambar</label>
       <input type="file" name="gambar">
-      <button type="submit" name="btnupload">UPLOAD</button>
+      <button type="submit" name="btnupload">Upload</button>
     </form>
     <?php
     echo $pesan_upload;

@@ -1,0 +1,36 @@
+$this->datatables->add_column(
+'view', 
+'<a href="javascript:void(0);" class="edit_record btn btn-info btn-xs" data-kode="$1" data-nama="$2" data-harga="$3" data-kategori="$4">Edit</a>  <a href="javascript:void(0);" class="hapus_record btn btn-danger btn-xs" data-kode="$1">Hapus</a>',
+'barang_kode,barang_nama,barang_harga,kategori_id,kategori_nama'
+);
+
+<tbody>
+  <?php $i=0; foreach ($data_user as $data): $i++;?>
+	<tr>
+	  <td></td>
+	  <td><?=$data->kd_dosen?></td>
+	  <td><?=$data->gelar_depan.' '.$data->nm_dosen.' '.$data->gelar_belakang?></td>
+	  <td><?=$data->hak_akses?></td>
+	  <td>
+		<a href="<?=site_url('user/update/'.$data->kd_dosen)?>" class="btn btn-primary">UPDATE</a>
+		<a href="<?=site_url('user/none/'.$data->kd_dosen)?>" class="btn btn-info">LIHAT</a>
+	  </td>
+	</tr>
+  <?php endforeach; ?>
+</tbody>
+
+
+var t = $('#tableUser').DataTable( {
+"columnDefs": [
+	{
+	  "targets": [ 4 ],
+	  "orderable": false
+	}
+]
+} );
+
+t.on( 'order.dt search.dt', function () {
+t.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+	cell.innerHTML = i+1;
+} );
+    } ).draw();

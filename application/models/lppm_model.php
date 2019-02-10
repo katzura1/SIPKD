@@ -133,35 +133,35 @@ class Lppm_model extends CI_Model
     return $this->db2->get()->row();
   }
 
-  public function get_jumlah_penelitian($kode_prodi,$thnAkademik,$kd_semester){
+  public function get_jumlah_penelitian($kode,$thn,$kd_s){
     $this->db2->select('*, count(id) as total');
     $this->db2->from('data_proposal_penelitian as dp');
     $this->db2->join('data_dosen_penelitian as ddp', 'ddp.id_penelitian=dp.id');
     $this->db2->join('db_skripsi.dosen as d', 'd.kd_dosen=ddp.kd_dosen');
     $this->db2->join('db_skripsi.program_studi as pd','pd.kode_prodi=d.kode_prodi');
-    if (is_array($kode_prodi)) {
-      $this->db2->where_in('pd.kode_institusi',$kode_prodi);
+    if (is_array($kode)) {
+      $this->db2->where_in('pd.kode_institusi',$kode);
     }else{
-      $this->db2->where('d.kode_prodi',$kode_prodi);
+      $this->db2->where('d.kode_prodi',$kode);
     }
-    $this->db2->where('dp.thn_akademik',$thnAkademik);
-    $this->db2->where('dp.semester',$kd_semester);
+    $this->db2->where('dp.thn_akademik',$thn);
+    $this->db2->where('dp.semester',$kd_s);
     return $this->db2->get()->row();
   }
 
-  public function get_jumlah_pengabdian($kode_prodi,$thnAkademik,$kd_semester){
+  public function get_jumlah_pengabdian($kode,$thn,$kd_s){
     $this->db2->select('*, count(id) as total');
     $this->db2->from('data_proposal as dp');
     $this->db2->join('data_dosen_proposal as ddp', 'ddp.id_proposal=dp.id');
     $this->db2->join('db_skripsi.dosen as d', 'd.kd_dosen=ddp.kd_dosen');
     $this->db2->join('db_skripsi.program_studi as pd','pd.kode_prodi=d.kode_prodi');
-    if (is_array($kode_prodi)) {
-      $this->db2->where_in('pd.kode_institusi',$kode_prodi);
+    if (is_array($kode)) {
+      $this->db2->where_in('pd.kode_institusi',$kode);
     }else{
-      $this->db2->where('d.kode_prodi',$kode_prodi);
+      $this->db2->where('d.kode_prodi',$kode);
     }
-    $this->db2->where('thn_akademik',$thnAkademik);
-    $this->db2->where('semester',$kd_semester);
+    $this->db2->where('thn_akademik',$thn);
+    $this->db2->where('semester',$kd_s);
     return $this->db2->get()->row();
   }
 
